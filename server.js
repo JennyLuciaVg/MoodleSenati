@@ -1,31 +1,29 @@
+'use strict';
+
+// ================================================================
+// get all the tools we need
+// ================================================================
 var express = require('express');
-// var stormpath = require('express-stormpath');
- 
+var routes = require('./routes/index.js');
+var port = process.env.PORT || 3000;
+
 var app = express();
- 
-app.set('views', './views');
-app.set('view engine', 'jade');
 
-app.get("/", function(req, res) {
-	res.render('home', {
-	    title: 'Welcome'
-  	});
-});
-/*app.use(stormpath.init(app, {
-  expand: {
-    customData: true
-  }
-}));
- 
-app.get('/', stormpath.getUser, function(req, res) {
-  res.render('home', {
-    title: 'Welcome'
-  });
-});
- 
-app.on('stormpath.ready',function(){
-  console.log('Stormpath Ready');
-});
-*/
+// ================================================================
+// setup our express application
+// ================================================================
+app.use('/public', express.static(process.cwd() + '/public'));
+app.set('view engine', 'ejs');
 
-app.listen(3000);
+
+// ================================================================
+// setup routes
+// ================================================================
+routes(app);
+
+// ================================================================
+// start our server
+// ================================================================
+app.listen(port, function() {
+    console.log('Server listening on port ' + port + '...');
+});
