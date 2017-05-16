@@ -38,6 +38,126 @@
         <p> <span class="nota_importante">NOTA 2 :</span> Se pueden ordenar los cursos haciendo click en los campos subrayados (color blanco).</>
     </div>
 
+    	<div id="jsGrid"></div>
+
+    <script>
+    	
+    	$(function(){
+
+    		$("#jsGrid").jsGrid({
+    			height: "50%",
+                width: "100%",
+                autoload: true,
+                sorting: true,
+                //editing: true,
+                paging: true,
+                pageSize: 3,
+                selecting: true,
+                pagePrevText: "<",
+                pageNextText: ">",
+                pageFirstText: "<<",
+                pageLastText: ">>",
+                pageNavigatorNextText: "&#8230;",
+                pageNavigatorPrevText: "&#8230;",
+                onRefreshed: function ( args ) {
+                    //mostrar();              
+                },
+                controller: db,
+                fields:[
+                	{ name: "No", type: "number", width: 10 },
+                    { name: "id", type: "number",    width:10  , title:"Id Curso"},
+                    { name: "periodo", type: "number", width: 10, title: "Periodo"},
+                    {
+                    	name: "visible", type: "checkbox",
+                    	headerTemplate: function(){
+                    		return $("<p>").text("Visible");
+                    	},
+                    	itemTemplate: function(_, item){
+                    		var input = $("<input>").attr("type", "checkbox").attr("id","visible").attr('checked', item.visible).after("<div class='slider round'>");
+                    		return $("<label class='switch'>").append( $(input)).after("</label>");
+                    	},
+                    	width:10
+                    },
+                    {
+                    	name: "abierto", type: "checkbox",
+                    	headerTemplate: function(){
+                    		return $("<p>").text("Abierto");
+                    	},
+                    	itemTemplate: function(_, item){
+                    		var input = $("<input>").attr("type", "checkbox").attr("id","abierto").attr('checked', item.abierto).after("<div class='slider round'>");
+                    		return $("<label class='switch'>").append( $(input)).after("</label>");
+                    	},
+                    	width:10
+                    },
+                    {
+                    	name: "patron", type: "checkbox",
+                    	headerTemplate: function(){
+                    		return $("<p>").text("Patron");
+                    	},
+                    	itemTemplate: function(_, item){
+                    		var input = $("<input>").attr("type", "checkbox").attr("id","patron").attr('checked', item.patron).after("<div class='slider round'>");
+                    		return $("<label class='switch'>").append( $(input)).after("</label>");
+                    	},
+                    	width:10
+                    },
+                    {
+                    	name: "subsanacion", type: "checkbox",
+                    	headerTemplate: function(){
+                    		return $("<p>").text("Subsanacion");
+                    	},
+                    	itemTemplate: function(_, item){
+                    		var input = $("<input>").attr("type", "checkbox").attr("id","subsanacion").attr('checked', item.subsanacion).after("<div class='slider round'>");
+                    		return $("<label class='switch'>").append( $(input)).after("</label>");
+                    	},
+                    	width:10
+                    },
+                  	{
+                  		name: "induccion", type: "checkbox",
+                    	headerTemplate: function(){
+                    		return $("<p>").text("Induccion");
+                    	},
+                    	itemTemplate: function(_, item){
+                    		var input = $("<input>").attr("type", "checkbox").attr("id","induccion").attr('checked', item.induccion).after("<div class='slider round'>");
+                    		return $("<label class='switch'>").append( $(input)).after("</label>");
+                    	},
+                    	width:10
+                    },
+                    {
+                    	name: "presencial", type: "checkbox",
+                    	headerTemplate: function(){
+                    		return $("<p>").text("Presencial");
+                    	},
+                    	itemTemplate: function(_, item){
+                    		var input = $("<input>").attr("type", "checkbox").attr("id","presencial").attr('checked', item.presencial).after("<div class='slider round'>");
+                    		return $("<label class='switch'>").append( $(input)).after("</label>");
+                    	},
+                    	width:10
+                    },
+                    {
+                    	headerTemplate: function(){
+                    		return $("<p>").text("Publico");
+                    	},
+                    	itemTemplate: function(_, item){
+                    		$('<select>').append($('<option>', { 	value: 1,
+                    				text: 'My option'
+                    			}));
+                    	}
+                    },
+                    { name: "publico", type:"select", width: 20, items: db.publico, title:"Publico", valueField: "Id", textField: "Name" },
+                    { name: "fecha_de_Inicio", type:"number", width: 25, title: "Fecha de Inicio"},
+                    { name: "nombre", type:"text", width: 20, title:"Nombre"},
+                    { name: "secciones", type:"number", width: 10, title:"Secciones"},
+                    { name: "inscritos", type:"number", width: 10, title:"Inscritos"},
+                    { name: "AP_HA", type:"number", width:10, title:"AP_HA"},
+                    { name: "DE_HA", type:"number", width:10, title:"DE_HA"},
+                    { name: "RE_NP_NA", type:"number", width: 10, title:"RE_NP_NA"}
+                ] 
+    		});
+
+    	});
+
+    </script>
+
    
    <div id="notas">
 		<table id="tables">
