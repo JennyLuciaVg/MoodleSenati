@@ -76,7 +76,7 @@
                     		var input = $("<input>").attr("type", "checkbox").attr("id","visible").attr('checked', item.visible).after("<div class='slider round'>");
                     		return $("<label class='switch'>").append( $(input)).after("</label>");
                     	},
-                    	width:10
+                    	width:15
                     },
                     {
                     	name: "abierto", type: "checkbox",
@@ -87,7 +87,7 @@
                     		var input = $("<input>").attr("type", "checkbox").attr("id","abierto").attr('checked', item.abierto).after("<div class='slider round'>");
                     		return $("<label class='switch'>").append( $(input)).after("</label>");
                     	},
-                    	width:10
+                    	width:15
                     },
                     {
                     	name: "patron", type: "checkbox",
@@ -98,7 +98,7 @@
                     		var input = $("<input>").attr("type", "checkbox").attr("id","patron").attr('checked', item.patron).after("<div class='slider round'>");
                     		return $("<label class='switch'>").append( $(input)).after("</label>");
                     	},
-                    	width:10
+                    	width:15
                     },
                     {
                     	name: "subsanacion", type: "checkbox",
@@ -109,7 +109,7 @@
                     		var input = $("<input>").attr("type", "checkbox").attr("id","subsanacion").attr('checked', item.subsanacion).after("<div class='slider round'>");
                     		return $("<label class='switch'>").append( $(input)).after("</label>");
                     	},
-                    	width:10
+                    	width:15
                     },
                   	{
                   		name: "induccion", type: "checkbox",
@@ -120,7 +120,7 @@
                     		var input = $("<input>").attr("type", "checkbox").attr("id","induccion").attr('checked', item.induccion).after("<div class='slider round'>");
                     		return $("<label class='switch'>").append( $(input)).after("</label>");
                     	},
-                    	width:10
+                    	width:15
                     },
                     {
                     	name: "presencial", type: "checkbox",
@@ -131,19 +131,38 @@
                     		var input = $("<input>").attr("type", "checkbox").attr("id","presencial").attr('checked', item.presencial).after("<div class='slider round'>");
                     		return $("<label class='switch'>").append( $(input)).after("</label>");
                     	},
-                    	width:10
+                    	width:15
                     },
                     {
                     	headerTemplate: function(){
                     		return $("<p>").text("Publico");
                     	},
                     	itemTemplate: function(_, item){
-                    		$('<select>').append($('<option>', { 	value: 1,
-                    				text: 'My option'
-                    			}));
-                    	}
+
+                    		var myOptions = {
+							    '0' : 'N/E',
+							    '1' : 'Ex Alumnos',
+							    '2' : 'Tr. Emp. Apor.',
+							    '3' : 'Alumnos SENATI',
+							    '4' : 'Publico General',
+							    '5' : 'Trabajadores SENATI',
+							    '6' : 'Equipo SENATI VIRTUAL'
+							};
+							
+							var _select = $('<select>');
+							$.each(myOptions, function(val, text) {
+							
+								if(val == item.publico)
+						        	return $('<option>', {val: val, text: text}).appendTo(_select).attr('selected', 'selected');
+						        else
+						        	return $('<option>', {val: val, text: text}).appendTo(_select);
+							    
+							});
+							return $('<select>').append(_select.html());
+
+                    	},
+                    	width: 35
                     },
-                    { name: "publico", type:"select", width: 20, items: db.publico, title:"Publico", valueField: "Id", textField: "Name" },
                     { name: "fecha_de_Inicio", type:"number", width: 25, title: "Fecha de Inicio"},
                     { name: "nombre", type:"text", width: 20, title:"Nombre"},
                     { name: "secciones", type:"number", width: 10, title:"Secciones"},
