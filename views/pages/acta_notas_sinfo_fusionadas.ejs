@@ -138,7 +138,7 @@
 				]
             });
 
-            var data = [
+            var dataHistoriaAcademica = [
 			    { nameDetalle: "Aprobados", numDetalle: 10, porcentajeDetalle: "50%" },
 			    { nameDetalle: "Desaprobados", numDetalle: 10, porcentajeDetalle: "50%" },
 			    { nameDetalle: "Total", numDetalle: 20, porcentajeDetalle: "100%" },
@@ -157,7 +157,7 @@
 
                 controller: {
 			        loadData: function() {
-			            return data;
+			            return dataHistoriaAcademica;
 			        }
 			    },
 
@@ -168,9 +168,9 @@
 			            .append($("<th>").attr("colspan", 3).text("Detalles").addClass('lightblue')));
 			    },
                 fields: [
-                    { type: "text", name: "nameDetalle", width: 50 },
-        			{ type: "number", name: "numDetalle" , width: 50 },
-        			{ type: "text", name: "porcentajeDetalle" , width: 50 }
+                    { type: "text", name: "nameDetalle", width: 10 },
+        			{ type: "number", name: "numDetalle" , width: 10 },
+        			{ type: "text", name: "porcentajeDetalle" , width: 10 }
 				]
             });
         });

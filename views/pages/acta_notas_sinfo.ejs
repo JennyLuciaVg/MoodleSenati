@@ -39,6 +39,7 @@
 	
 
 	<div id="jsGridNotasSinfo"></div>
+	<div id="jsGridDetallesHistoriaAcademica"></div>
 	
 	<div id="notas">
 		<p class="bold">DE HiSTORiA ACADEMiCA</p>
@@ -124,6 +125,42 @@
 					{ name: "iD_Alumno_Moodle", type: "number", width: 30, title: "id Alumno Moodle"},
 					{ name: "Grupo", type: "text", width: 30}
 					
+				]
+            });
+
+            var dataHistoriaAcademica = [
+			    { nameDetalle: "Aprobados", numDetalle: 10, porcentajeDetalle: "50%" },
+			    { nameDetalle: "Desaprobados", numDetalle: 10, porcentajeDetalle: "50%" },
+			    { nameDetalle: "Total", numDetalle: 20, porcentajeDetalle: "100%" },
+			];
+
+
+            $("#jsGridDetallesHistoriaAcademica").jsGrid({
+                height: "auto",
+                width: "50%",
+                autoload: true,
+                sorting: true,
+                paging: true,
+                pageSize: 3,
+                selecting: false,
+                //	controller: db,
+
+                controller: {
+			        loadData: function() {
+			            return dataHistoriaAcademica;
+			        }
+			    },
+
+                headerRowRenderer: function() {
+			        var $result = $("<tr>").height(0);
+			            
+			        return $result = $result.add($("<tr>")
+			            .append($("<th>").attr("colspan", 3).text("Detalles").addClass('lightblue')));
+			    },
+                fields: [
+                    { type: "text", name: "nameDetalle", width: 10 },
+        			{ type: "number", name: "numDetalle" , width: 10 },
+        			{ type: "text", name: "porcentajeDetalle" , width: 10 }
 				]
             });
         });
