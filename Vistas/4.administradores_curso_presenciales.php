@@ -32,7 +32,7 @@
 
     <div id="etiquetas">
 		<caption><strong>Inscribir a TODO como Tutores a Cursos presenciales del Periodo :</strong> <input type="text" class="form-control"/> 
-		<button type="button" class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"></i>   Asignar como Tutores</button></caption>
+		<a type="button" class="btn btn-primary" onclick="asignar_tutores();"><i class="fa fa-check" aria-hidden="true"></i>   Asignar como Tutores</a></caption>
 	</div>
 	<div id="notas">
 	
@@ -50,8 +50,8 @@
 				</tr>
 				<tr>
 					 <td>BUSCAR POR PIDM</td>
-					<td><input type="text" class="form-control"></td>
-					<td> <button type="button" class="btn btn-primary" id="txt_pidm" onclick="buscar_pidm();"><i class="fa fa-search" aria-hidden="true"></i> Buscar </button>   </td>
+					<td><input type="text" class="form-control" id="txt_pidm"></td>
+					<td> <button type="button" class="btn btn-primary"  onclick="buscar_pidm();"><i class="fa fa-search" aria-hidden="true"></i> Buscar </button>   </td>
 				</tr>
 			</tbody>
 		</table>
@@ -119,7 +119,7 @@
     
 	<div>
 		 <p class="bold">EMAiLS DE TODOS LOS ADMiNiSTRADORES</p>
-         <textarea rows="10" cols="63"></textarea>
+         <textarea rows="10" cols="63" id="emails"></textarea>
 	</div>
            
 	<div id="etiquetas">
@@ -131,7 +131,6 @@
 			lista_centros();
 			
 		});
-	 
         $(function() {
 
             $("#jsGrid").jsGrid({
@@ -141,21 +140,26 @@
 				sorting: true,
 				paging: true,
 				pageSize: 2,
-				selecting: true,
 				controller: {
 						loadData: function() {
 							var d = $.Deferred();
-							$.ajax({
-								url: "http://localhost:80/Api/Api/DAO/ADMINISTRADORES_CURSOS_PRESENCIALES.php?action=ListaProfesores",
+						return	$.ajax({
+								type: "GET",
+								url: "http://localhost:8080/Api/Api/DAO/ADMINISTRADORES_CURSOS_PRESENCIALES.php?action=ListaProfesores",
+
 								dataType: "json"
 						}).done(function(response) {
-							d.resolve(response.value);
+							d.resolve(JSON.stringify(response));
+							
 						});
 		 
 						return d.promise();
 					}
 				}, 
-                // controller: db,
+				onDataLoaded:function(args) {
+					mostrar();
+				},				
+				
                 fields: [
                     { name: "nombre_zonal",type: "text",width: 180, title: "Zonal" },
                     { name: "camp_user", type: "text",width: 40, title: "Camp" },
@@ -174,6 +178,7 @@
                
                     { name: "id_user",    type: "number",    width: 55 , title:"ID User SV" },
                     { name: "pidm_banner",    type: "number",    width: 65 , title:"PIDM SINFO" },
+					{ name: "email",    type: "text",    width: 65 , title:"EMAIL" },   
                     {
                         headerTemplate:function(){
                             return $("<p>").text("Acciones");
@@ -183,12 +188,70 @@
 
                             },
                             width: 50
-                    }
-                                    
+                    },
+					           
                 ]
             });
 
         });
+		
+		
+		function mostrar(){
+		 
+			 
+			var f = $("#jsGrid .jsgrid-grid-body .jsgrid-table tbody tr").attr("id","js");
+				
+				  
+			$(f).each(function (index) 
+			{
+				var campo1, campo2, campo3,campo4,campo5,campo6,campo7,campo8;
+				$(this).children("td").each(function (index2) 
+				{
+					
+					switch (index2) 
+					{
+						case 0: campo1 = $(this).text();
+								break;
+						case 1: campo2 = $(this).text();
+								break;
+						case 2: campo3 = $(this).text(); 
+								break;
+						case 3: campo4 = $(this).text();
+								break;
+						case 4: campo5 = $(this).text(); 
+								break;
+						case 5: campo6 = $(this).text(); 
+								break;
+						case 6: campo7 = $(this).text(); 
+								break;		
+					}
+					
+					
+					
+				})
+				
+				if(campo7 === undefined){
+					
+				}else{
+					var x = document.getElementById("emails");
+					
+					x.innerHTML = (campo7);
+					
+				}
+				
+				
+				
+		
+			});
+      
+			
+			
+		}
+	
+		
+		function asignar_tutores(){
+			// falta
+		}
 		
 		var co = 0;
 		function buscar_apellido(){
@@ -196,15 +259,16 @@
 	
 		
 			$.ajax({
-				url: "http://localhost/Api/Api/DAO/ADMINISTRACION_GENERAL.php?action=BuscaApe&last="+ apellidos,
+				url: "http://localhost:8080/Api/Api/DAO/ADMINISTRADORES_CURSOS_PRESENCIALES.php?action=BuscaApe&lasts="+ apellidos,
 				type: "GET",
 				contentType: "application/json;charset=utf-8",
+				cache: false,
 				dataType: "json",
 				success: function(object){
 					if(co != 1)
 					{
 						var html = "";
-						$.each(result, function(key,item)
+						$.each(object, function(key,item)
 						{
 							html +='<td>'+ item.id +'</td>';
 							html +='<td>'+ item.lastname +', '+ item.firstname +'</td>';
@@ -213,10 +277,12 @@
 						});
 					
 						$(".tbody").html(html);
+						$("#tb_buscar").css("display","block")
 						$(".tbody").css("display","block")
 						co = 1;
 						
 					}else{
+						$("#tb_buscar").css("display","none")
 						$(".tbody").css("display","none")
 						co = 0;
 					}
@@ -231,11 +297,11 @@
 		
 		var pidm = 0;
 		function buscar_pidm(){
-			var pidm= document.getElementById("txt_pidm").value;
+			var pidms= document.getElementById("txt_pidm").value;
 		
 		
 			$.ajax({
-				url: "http://localhost/Api/Api/DAO/ADMINISTRACION_GENERAL.php?action=BuscaPIDM&pidm="+ pidm,
+				url: "http://localhost:8080/Api/Api/DAO/ADMINISTRADORES_CURSOS_PRESENCIALES.php?action=BuscaPIDM&pidm="+ pidms,
 				type: "GET",
 				contentType: "application/json;charset=utf-8",
 				dataType: "json",
@@ -244,7 +310,7 @@
 					{
 						var html = "";
           
-						$.each(result, function(key,item)
+						$.each(object, function(key,item)
 						{
 							html +='<td>'+ item.id +'</td>';
 							html +='<td>'+ item.lastname +', '+ item.firstname +'</td>';
@@ -253,10 +319,12 @@
 						});
 					
 						$(".tbpdim").html(html);
+						$("#tb_buscar_pidm").css("display","block")
 						$(".tbpdim").css("display","block")
 						pidm = 1;
 						
 					}else{
+						$("#tb_buscar_pidm").css("display","none")
 						$(".tbpdim").css("display","none")
 						pidm = 0;
 					}
@@ -272,7 +340,7 @@
 		function lista_centros(){
 			
 			$.ajax({
-				url : "http://localhost/Api/Api/DAO/ADMINISTRADORES_CURSOS_PRESENCIALES.php?action=ListarCentros",
+				url : "http://localhost:8080/Api/Api/DAO/ADMINISTRADORES_CURSOS_PRESENCIALES.php?action=ListarCentros",
 				type: "GET",
 				contentType: "application/json;charset=utf-8",
 				dataType: "json",
@@ -295,18 +363,22 @@
 		function registrar(){
 			var camp = document.getElementById('campus').options[document.getElementById('campus').selectedIndex].text;
 			var id_user_sv = document.getElementById("user_sv").value;
-
+			var objects = {
+				id_svx: camp,
+				campx: id_user_sv
+			};
 			if (camp!="" && id_user_sv!="")
 			{
 				$.ajax({
-					url: "http://localhost/Api/Api/DAO/ADMINISTRADORES_CURSOS_PRESENCIALESphp?action=Existe_Dupla&id_svx="+ id_user_sv + "&campx=" + camp,
+					url: "http://localhost:8080/Api/Api/DAO/ADMINISTRADORES_CURSOS_PRESENCIALES.php?action=Existe_Dupla",
 					type: "GET",
+					data: {f:JSON.stringify(objects)},
 					contentType: "application/json;charset=utf-8",
 					dataType: "json",
 					success: function(result){
 						
 							var html = "";
-							var existe="";
+							// var existe="";
 							$.each(result, function(key,item)
 							{
 								if(item.existe == "1")
@@ -315,13 +387,20 @@
 									
 								}else{
 									
+									var datos = {
+										id_svx: camp,
+										campx: id_user_sv
+									};
+									
 									$.ajax({
-										url : "http://localhost/Api/Api/DAO/ADMINISTRADORES_CURSOS_PRESENCIALES.php?action=Guarda",
+										url : "http://localhost:8080/Api/Api/DAO/ADMINISTRADORES_CURSOS_PRESENCIALES.php?action=Guarda",
 										type: "GET",
+										data: {x:JSON.stringify(datos)},
 										contentType: "application/json;charset=utf-8",
 										dataType: "json",
-										success: function(data2){
-												
+										success: function(result){
+											console.log(result);
+											console.log("asd");
 											alert("agreado correctamente");
 										},
 										error : function(xhr,errmsg,err) {
@@ -343,6 +422,8 @@
 				});	
 			}	
 		}
+		
+		
 		
     </script>
 
