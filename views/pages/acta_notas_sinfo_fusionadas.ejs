@@ -49,6 +49,7 @@
 	
 
 	<div id="jsGridNotasSinfo"></div>
+	<div id="jsGridDetallesHistoriaAcademica"></div>
 	
 	<div id="notas">
 		<p class="bold">DE HiSTORiA ACADEMiCA</p>
@@ -107,12 +108,12 @@
 		$(function() {
 
             $("#jsGridNotasSinfo").jsGrid({
-                height: "30%",
+                height: "auto",
                 width: "100%",
                 autoload: true,
                 sorting: true,
                 paging: true,
-                pageSize: 1,
+                pageSize: 10,
                 selecting: false,
                 controller: db,
                 fields: [
@@ -123,7 +124,7 @@
 					{ name: "Periodo", type: "numer", width: 30, title: "Periodo"},
 					{ name: "Nota_SV", type: "number", width: 30, title: "NOTA SV"},
 					{ name: "Nota_Sinfo", type: "number", width: 30, title: "Nota Sinfo SHRCMRK"},
-										{ name: "Nota_Sinfo", type: "number", width: 30, title: "Nota Sinfo SHRCMRKSE"},
+					{ name: "Nota_Sinfo", type: "number", width: 30, title: "Nota Sinfo SHRCMRKSE"},
 					{ name: "Estado_Sv", type: "text", width: 30, title: "Estado SV"},
 					{ name: "Status_Sinfo", type: "text", width: 30, title: "Status Sinfo"},
 					{ name: "Tutor_Sinfo", type: "text", width: 30, title: "Tutor Sinfo"},
@@ -134,6 +135,42 @@
 					{ name: "iD_Alumno_Moodle", type: "number", width: 30, title: "id Alumno Moodle"},
 					{ name: "Grupo", type: "text", width: 30}
 					
+				]
+            });
+
+            var data = [
+			    { nameDetalle: "Aprobados", numDetalle: 10, porcentajeDetalle: "50%" },
+			    { nameDetalle: "Desaprobados", numDetalle: 10, porcentajeDetalle: "50%" },
+			    { nameDetalle: "Total", numDetalle: 20, porcentajeDetalle: "100%" },
+			];
+
+
+            $("#jsGridDetallesHistoriaAcademica").jsGrid({
+                height: "auto",
+                width: "50%",
+                autoload: true,
+                sorting: true,
+                paging: true,
+                pageSize: 3,
+                selecting: false,
+                //	controller: db,
+
+                controller: {
+			        loadData: function() {
+			            return data;
+			        }
+			    },
+
+                headerRowRenderer: function() {
+			        var $result = $("<tr>").height(0);
+			            
+			        return $result = $result.add($("<tr>")
+			            .append($("<th>").attr("colspan", 3).text("Detalles").addClass('lightblue')));
+			    },
+                fields: [
+                    { type: "text", name: "nameDetalle", width: 50 },
+        			{ type: "number", name: "numDetalle" , width: 50 },
+        			{ type: "text", name: "porcentajeDetalle" , width: 50 }
 				]
             });
         });
