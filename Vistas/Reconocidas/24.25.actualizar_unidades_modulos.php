@@ -20,6 +20,7 @@
 </head>
 <body>        <img src="../../img/image001.png" />   	
 	<div >
+		<div id="jsGridActualizacionDeUnidades"></div>
 		<table>
 			<thead class="lightblue">
 				<tr>
@@ -139,6 +140,80 @@
 		  </tr>
 	  </table>	
 	</div>
+
+	<script>
+		$(function() {
+
+    //         $("#jsGridNotasSinfo").jsGrid({
+    //             height: "30%",
+    //             width: "100%",
+    //             autoload: true,
+    //             selecting: true,
+    //             sorting: true,
+    //             paging: true,
+    //             pageSize: 1,
+    //             controller: db,
+    //             fields: [
+    //                 { name: "id", type: "text", width: 30, title: "id "},
+    //                 { name: "id_SV", type: "number", width: 30, title: "id Sinfo" },
+    //                 { name: "Apellidos", type: "text", width: 30, title: "Apellidos, Nombres" },
+    //                 { name: "id", type: "text",width: 30, title: "PDiM"},
+    //                 { name: "Nrc", type: "number", width: 30, title: "NRC"},
+				// 	{ name: "Periodo", type: "numer", width: 30, title: "Periodo"},
+				// 	{ name: "Nota_SV", type: "number", width: 30, title: "NOTA SV"},
+				// 	{ name: "Nota_Sinfo", type: "number", width: 30, title: "Nota Sinfo"},
+				// 	{ name: "Estado_Sv", type: "text", width: 30, title: "Estado Sv"},
+				// 	{ name: "Status_Sinfo", type: "text", width: 30, title: "Status Sinfo"},
+				// 	{ name: "Tutor_Sinfo", type: "text", width: 30, title: "Tutor Sinfo"},
+				// 	{ name: "Bloque", type: "number", width: 30, title: "Bloque"},
+				// 	{ name: "Camp", type: "number", width: 30, title: "Camp"},
+				// 	{ name: "CARR", type: "number", width: 30,},
+				// 	{ name: "Carrera", type: "text", width: 30},
+				// 	{ name: "iD_Alumno_Moodle", type: "number", width: 30, title: "id Alumno Moodle"},
+				// 	{ name: "Grupo", type: "text", width: 30}
+					
+				// ]
+    //         });
+
+            var dataActualizacionUnidades = [
+			    { nameColumn: "Curso", nameDescription: "ATCL 201620 - Grupo B - Zonal Loreto"},
+			    { nameColumn: "iD Moodle", nameDescription: "7214" },
+			    { nameColumn: "Fecha de Inicio", nameDescription: "Lunes 26-09-2016 (D/M/A)" },
+			    { nameColumn: "Fecha Actual", nameDescription: "12-10-2016 (D/M/A)" }
+			];
+
+
+            $("#jsGridActualizacionDeUnidades").jsGrid({
+                height: "auto",
+                width: "50%",
+                autoload: true,
+                sorting: true,
+                paging: true,
+                pageSize: 4,
+                selecting: false,
+                //	controller: db,
+
+                controller: {
+			        loadData: function() {
+			            return dataActualizacionUnidades;
+			        }
+			    },
+
+                headerRowRenderer: function() {
+			        var $result = $("<tr>").height(0);
+			            
+			        return $result = $result.add($("<tr>")
+			            .append($("<th>").attr("colspan", 3).text("Actualizacion de Unidades (sections) y Recursos")
+			            	.addClass('lightblue').css('text-align', 'left')));
+			    },
+                fields: [
+                    { type: "text", name: "nameColumn", width: 10 },
+        			{ type: "text", name: "nameDescription" , width: 10 }
+				]
+            });
+        });
+    
+	</script>
   
 
 	       <img src="../../img/image002.png" />     </body>		
