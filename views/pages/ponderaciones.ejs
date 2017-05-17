@@ -27,9 +27,11 @@
 		 <p><strong>PONDERACiON DE NOTAS DE TAREAS y/o CUESTiONARiOS correspondientes al Curso :</strong></p>
          <p> <span class="blue"> inducci&oacute;n Titulaci&oacute;n Egresados - 2017 ELECTRONiCA ZLC GRUPO 1 </span> (<span class="bold">iD del CURSO </span> : 7788)</p>
     </div> 
-	
+
+    <!-- TABLA: TAREAS (Assignments) -->
+    <div id="jsGridTareas"></div>
 	<div>
-		<table>
+		<!--<table>
 			<thead class="lightblue">
 				<tr>
 					<th>TAREAS (assignments)</th>
@@ -44,11 +46,13 @@
 					<td> 1</td>
 				</tr>
 			</tbody>
-		</table>
+		</table>-->
 	</div>
 
+    <!-- TABLA: CUESTIONARIOS (QUIZ) -->
+    <div id="jsGridCuestionarios"></div>
 	<div id="notas">
-		<table >
+		<!--<table >
 			<thead class="lightblue">
 				<tr>
 					<th>CUESTiONARiOS (quiz)</th>
@@ -63,11 +67,11 @@
 					<td> 1</td>
 				</tr>
 			</tbody>
-		</table>
+		</table>-->
     </div>
-
+    <div id="jsGridForos"></div>
 	<div>
-		<table>
+		<!--<table>
 			<thead class="lightblue">
 				<tr>
 					<th>FOROS (forums)</th>
@@ -82,7 +86,7 @@
 					<td> 1</td>
 				</tr>
 			</tbody>
-    	</table>
+    	</table>-->
 	</div>
 
 	<div id="etiquetas">
@@ -108,8 +112,8 @@
         
         
         $(function() {
-            $("#jsGrid").jsGrid({
-                width: "auto",
+            $("#jsGridTareas").jsGrid({
+                width: "40%",
     			height: "auto",
                 autoload: true,
                 sorting: true,
@@ -125,19 +129,91 @@
                 onRefreshed: function ( args ) {
                     mostrar();              
                 },
-                //controller: db, 
+                controller: db, 
                 fields: [       
-                    { name: "tareas", type: "text", width: 10, title:"TAREAS (assignments)" },
+                    { name: "tareas", type: "text", width: 30, title:"TAREAS (assignments)"},
                     {
+                        name: "ponderado_tareas",
+                        type: "number",
                         headerTemplate: function() {
                         return $("<p>").text("Ponderación"); 
                         }, 
                         itemTemplate: function(_, item) { 
-                        return $("<input type='text' size='4' maxlength='3' class='form-control' />").text(item.Ponderación_HA) 
+                        return $("<input type='text' size='4' maxlength='3' class='form-control' />").text(item.Ponderación_HA);
                         },
-                        align: "start", 
+                        width: 15
                     },
-                    { name: "unidad",  type: "number",  width:20  , title:"Unidad" },
+                    { name: "unidad_tarea",  type: "number",  width:10  , title:"Unidad" },
+                ]
+            });
+
+            $("#jsGridCuestionarios").jsGrid({
+                width: "40%",
+                height: "auto",
+                autoload: true,
+                sorting: true,
+                paging: true,
+                pageSize: 2,
+                selecting: true,
+                pagePrevText: "<",
+                pageNextText: ">",
+                pageFirstText: "<<",
+                pageLastText: ">>",
+                pageNavigatorNextText: "&#8230;",
+                pageNavigatorPrevText: "&#8230;",
+                onRefreshed: function ( args ) {
+                    mostrar();              
+                },
+                controller: db, 
+                fields: [       
+                    { name: "cuestionarios", type: "text", width: 30, title:"CUESTIONARIOS (QUIZ)"},
+                    {
+                        name: "ponderado_cuestionario",
+                        type: "number",
+                        headerTemplate: function() {
+                        return $("<p>").text("Ponderación"); 
+                        }, 
+                        itemTemplate: function(_, item) { 
+                        return $("<input type='text' size='4' maxlength='3' class='form-control' />").text(item.Ponderación_HA);
+                        },
+                        width: 15
+                    },
+                    { name: "unidad_cuestionario",  type: "number",  width:10  , title:"Unidad" },
+                ]
+            });
+
+            $("#jsGridForos").jsGrid({
+                width: "40%",
+                height: "auto",
+                autoload: true,
+                sorting: true,
+                paging: true,
+                pageSize: 2,
+                selecting: true,
+                pagePrevText: "<",
+                pageNextText: ">",
+                pageFirstText: "<<",
+                pageLastText: ">>",
+                pageNavigatorNextText: "&#8230;",
+                pageNavigatorPrevText: "&#8230;",
+                onRefreshed: function ( args ) {
+                    mostrar();              
+                },
+                controller: db, 
+                fields: [       
+                    { name: "foros", type: "text", width: 30, title:"FOROS (forums)"},
+                    {
+                        name: "ponderado_foros",
+                        type: "number",
+                        headerTemplate: function() {
+                        return $("<p>").text("Ponderación"); 
+                        }, 
+                        itemTemplate: function(_, item) { 
+                        return $("<input type='text' size='4' maxlength='3' class='form-control' />").text(item.ponderado_foros);
+                        },
+                        width: 15
+                    },
+                    { name: "unidad_foros",  type: "number",  width:10  , title:"Unidad" },
                 ]
             });
         });
@@ -182,7 +258,7 @@
                         case 2: campo3 = $(this).text(); $(this).attr("id","unidad")
                                 break;                               
                     }
-                    $(this).css("background","#b6dbed");                    
+                    //$(this).css("background","#b6dbed");                    
                 })
             });
 
