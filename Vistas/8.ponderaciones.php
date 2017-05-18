@@ -1,25 +1,24 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html>
 <head>
     <meta http-equiv="X-UA-Compatible" content="iE=edge">
 	<meta charset="utf-8">
    <title>SV:  SV : Historia Academica - Acta de Aprobados - Lista Unificada</title>
-    <link rel="stylesheet" type="text/css" href="../css/demos.css" />
+    <link rel="stylesheet" type="text/css" href="/public/css/demos.css" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,600,400' rel='stylesheet' type='text/css'>
 
-    <link rel="stylesheet" type="text/css" href="../css/jsgrid.css" />
-    <link rel="stylesheet" type="text/css" href="../css/theme.css" />
+    <link rel="stylesheet" type="text/css" href="/public/css/jsgrid.css" />
+    <link rel="stylesheet" type="text/css" href="/public/css/theme.css" />
 
-    <script src="../external/jquery/jquery-1.8.3.js"></script>
-    <script src="db.js"></script>
-	<link rel="stylesheet" href="../css/font-awesome.css">
-    <script src="../js/jquery/jquery-1.8.3.js"></script>
-    <script src="../data/evaluaciones_curso_presenciales.js"></script>
-    <script src="../js/jsgrid/jsgrid.core.js"></script>
-    <script src="../js/jsgrid/jsgrid.load-indicator.js"></script>
-    <script src="../js/jsgrid/jsgrid.load-strategies.js"></script>
-    <script src="../js/jsgrid/jsgrid.sort-strategies.js"></script>
-    <script src="../js/jsgrid/jsgrid.field.js"></script>
+    <script src="/public/data/db.js"></script>
+	<link rel="stylesheet" href="/public/css/font-awesome.css">
+    <script src="/public/js/jquery/jquery-1.8.3.js"></script>
+    <script src="/public/data/evaluaciones_curso_presenciales.js"></script>
+    <script src="/public/js/jsgrid/jsgrid.core.js"></script>
+    <script src="/public/js/jsgrid/jsgrid.load-indicator.js"></script>
+    <script src="/public/js/jsgrid/jsgrid.load-strategies.js"></script>
+    <script src="/public/js/jsgrid/jsgrid.sort-strategies.js"></script>
+    <script src="/public/js/jsgrid/jsgrid.field.js"></script>
 </head>
 
 <body>	          
@@ -28,9 +27,11 @@
 		 <p><strong>PONDERACiON DE NOTAS DE TAREAS y/o CUESTiONARiOS correspondientes al Curso :</strong></p>
          <p> <span class="blue"> inducci&oacute;n Titulaci&oacute;n Egresados - 2017 ELECTRONiCA ZLC GRUPO 1 </span> (<span class="bold">iD del CURSO </span> : 7788)</p>
     </div> 
-	
+
+    <!-- TABLA: TAREAS (Assignments) -->
+    <div id="jsGridTareas"></div>
 	<div>
-		<table>
+		<!--<table>
 			<thead class="lightblue">
 				<tr>
 					<th>TAREAS (assignments)</th>
@@ -45,11 +46,13 @@
 					<td> 1</td>
 				</tr>
 			</tbody>
-		</table>
+		</table>-->
 	</div>
 
+    <!-- TABLA: CUESTIONARIOS (QUIZ) -->
+    <div id="jsGridCuestionarios"></div>
 	<div id="notas">
-		<table >
+		<!--<table >
 			<thead class="lightblue">
 				<tr>
 					<th>CUESTiONARiOS (quiz)</th>
@@ -64,11 +67,11 @@
 					<td> 1</td>
 				</tr>
 			</tbody>
-		</table>
+		</table>-->
     </div>
-
+    <div id="jsGridForos"></div>
 	<div>
-		<table>
+		<!--<table>
 			<thead class="lightblue">
 				<tr>
 					<th>FOROS (forums)</th>
@@ -83,7 +86,7 @@
 					<td> 1</td>
 				</tr>
 			</tbody>
-    	</table>
+    	</table>-->
 	</div>
 
 	<div id="etiquetas">
@@ -105,3 +108,165 @@
       
               </body>	
 </html>
+    <script>
+        
+        
+        $(function() {
+            $("#jsGridTareas").jsGrid({
+                width: "40%",
+    			height: "auto",
+                autoload: true,
+                sorting: true,
+                //paging: true,
+                pageSize: 2,
+                selecting: true,
+                pagePrevText: "<",
+                pageNextText: ">",
+                pageFirstText: "<<",
+                pageLastText: ">>",
+                pageNavigatorNextText: "&#8230;",
+                pageNavigatorPrevText: "&#8230;",
+                onRefreshed: function ( args ) {
+                    mostrar();              
+                },
+                controller: db, 
+                fields: [       
+                    { name: "tareas", type: "text", width: 30, title:"TAREAS (assignments)"},
+                    {
+                        name: "ponderado_tareas",
+                        type: "number",
+                        headerTemplate: function() {
+                        return $("<p>").text("Ponderación"); 
+                        }, 
+                        itemTemplate: function(_, item) { 
+                        return $("<input style='text-align:left' type='text' size='4' maxlength='3' class='form-control' />").text(item.Ponderación_HA);
+                        },
+                        width: 15
+                    },
+                    { name: "unidad_tarea",  type: "number",  width:10  , title:"Unidad" },
+                ]
+            });
+
+            $("#jsGridCuestionarios").jsGrid({
+                width: "40%",
+                height: "auto",
+                autoload: true,
+                sorting: true,
+                //paging: true,
+                pageSize: 2,
+                selecting: true,
+                pagePrevText: "<",
+                pageNextText: ">",
+                pageFirstText: "<<",
+                pageLastText: ">>",
+                pageNavigatorNextText: "&#8230;",
+                pageNavigatorPrevText: "&#8230;",
+                onRefreshed: function ( args ) {
+                    mostrar();              
+                },
+                controller: db, 
+                fields: [       
+                    { name: "cuestionarios", type: "text", width: 30, title:"CUESTIONARIOS (QUIZ)"},
+                    {
+                        name: "ponderado_cuestionario",
+                        type: "number",
+                        headerTemplate: function() {
+                        return $("<p>").text("Ponderación"); 
+                        }, 
+                        itemTemplate: function(_, item) { 
+                        return $("<input style='text-align:left' type='text' size='4' maxlength='3' class='form-control' />").text(item.Ponderación_HA);
+                        },
+                        width: 15
+                    },
+                    { name: "unidad_cuestionario",  type: "number",  width:10  , title:"Unidad" },
+                ]
+            });
+
+            $("#jsGridForos").jsGrid({
+                width: "40%",
+                height: "auto",
+                autoload: true,
+                sorting: true,
+                //paging: true,
+                pageSize: 2,
+                selecting: true,
+                pagePrevText: "<",
+                pageNextText: ">",
+                pageFirstText: "<<",
+                pageLastText: ">>",
+                pageNavigatorNextText: "&#8230;",
+                pageNavigatorPrevText: "&#8230;",
+                onRefreshed: function ( args ) {
+                    mostrar();              
+                },
+                controller: db, 
+                fields: [       
+                    { name: "foros", type: "text", width: 30, title:"FOROS (forums)"},
+                    {
+                        name: "ponderado_foros",
+                        type: "number",
+                        headerTemplate: function() {
+                        return $("<p>").text("Ponderación"); 
+                        }, 
+                        itemTemplate: function(_, item) { 
+                        return $("<input style='text-align:left' type='text' size='4' maxlength='3' class='form-control' />").text(item.ponderado_foros);
+                        },
+                        width: 15
+                    },
+                    { name: "unidad_foros",  type: "number",  width:10  , title:"Unidad" },
+                ]
+            });
+        });
+    
+    
+        function aunto_incre(){
+            var select, i, option,actual;
+            var fecha = new Date();
+            var year = fecha.getFullYear();
+            select = document.getElementById("yearField");
+            document.getElementById("fecha").innerHTML = year;
+            for (i=year;i>=2005;i--)
+            {   
+                option = document.createElement('option');
+                option.value = option.text = i;
+                select.add( option );   
+            }             
+        }
+    
+        //fecha
+        var anio;
+        function fecha(){
+            var imprimirResultado = function () {
+                anio = $("#yearField option:selected").text();
+                var fecha = document.getElementById("fecha");
+                fecha.innerHTML = anio;
+                //alert(anio);
+            }
+            $("#yearField").on("change", imprimirResultado).find("option:contains(2017)").prop("selected", true);
+        }
+    
+        function mostrar(){
+            var f = $("#jsGrid .jsgrid-grid-body .jsgrid-table tbody tr").attr("id","demo");
+            $(f).each(function (index){
+                var campo1, campo2, campo3;
+                $(this).children("td").each(function (index2){
+                    switch (index2) {
+                        case 0: campo1 = $(this).text(); $(this).attr("id","tareas");
+                                break;
+                        case 1: campo2 = $(this).text(); $(this).attr("id","Ponderación_HA")
+                                break;
+                        case 2: campo3 = $(this).text(); $(this).attr("id","unidad")
+                                break;                               
+                    }
+                    //$(this).css("background","#b6dbed");                    
+                })
+            });
+
+        }
+
+        $(document).ready(function(){
+            mostrar();
+            //fecha();
+            //aunto_incre();
+        });
+    </script>
