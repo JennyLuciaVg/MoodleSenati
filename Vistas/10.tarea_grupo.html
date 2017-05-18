@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+   <title>SV:  SV : Historia Academica - Acta de Aprobados - Lista Unificada</title>
+    <link rel="stylesheet" type="text/css" href="../css/demos.css" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,600,400' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="../css/jsgrid.css" />
+    <link rel="stylesheet" type="text/css" href="../css/theme.css" />
+
+   
+    <script src="db.js"></script>
+		<link rel="stylesheet" href="../css/font-awesome.css">
+		<script src="../js/jquery/jquery-1.8.3.js"></script>
+	  <link rel="stylesheet" href="../css/froala_editor.css">
+	  <link rel="stylesheet" href="../css/froala_style.css">
+	  <link rel="stylesheet" href="../css/plugins/char_counter.css">
+</head>
+
+<body>	          
+
+    <div>
+		 <p><strong>Creaci&oacute;n/Edici&oacute;n de Tareas por Grupo</strong></p>
+        
+    </div> 
+	
+	<div>
+		<p> <span class="blue">O CREAR UNA NUEVA TAREA o REEMPLAZAR UNA EXISTENTE</p>
+		<table>
+			<tbody>
+				<tr>
+					<th>TAREA</th>
+					<td><select></select></td>
+				</tr>
+				<tr>
+					<th>N&uacute;mero Grupo</th>
+					<td><select></select></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<a type="button" class="btn btn-primary">Guardar</a>
+	
+	<p>
+ <section id="editor">
+    
+    <div id='edit' style="margin-top: 30px;">
+      <p>You can type only 140 characters.</p>
+      <p>The maximum number of characters can be changed using the <a href="#" title="charCounterMax">charCounterMax</a> option.</p>
+    </div>
+  </section>
+	
+	<div id="notas">
+		<table >
+			<thead class="lightblue">
+				<tr>
+					<th colspan="4">Importar Tareas desde otro Curso - Se remplazaran la existentes (solo administradores)</th>
+					
+				</tr>
+			</thead>
+			<tbody>
+				<tr >
+					<th>Id Curso</td>
+					<td><input type="text" size="4" maxlength="3" class="form-control"/> </td>
+					
+				</tr>
+				<tr >
+					<th></td>
+					<td><a type="button" class="btn btn-default">Importar</a> </td>
+					
+				</tr>
+			</tbody>
+		</table>
+    </div>
+
+	
+  <script type="text/javascript" src="../js/froala_editor.min.js"></script>
+  <script type="text/javascript" src="../js/plugins/char_counter.min.js"></script>
+    <script>
+    $(function() {
+      $('#edit').froalaEditor({
+        // Set maximum number of characters.
+        charCounterMax: 140
+      })
+    });
+  </script>
+   </body>	
+</html>
