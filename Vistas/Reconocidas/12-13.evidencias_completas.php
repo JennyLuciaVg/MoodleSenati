@@ -32,8 +32,8 @@
 		<p class="red">NOTA iMPORTANTE : En la Tabla abajo mostrada se puede identificar al Tutor del GRUPO usando la tabla de arriba.</p>
 		<a href="file:///C:/Users/CristhianEnriqueSaav/Desktop/Senati/Modulo/Vistas/Reconocidas/14.notas_historia_academica.html">Pasar a Historia Academica(Regular, Presencial o induccion)</a>
 	</div>
-	<!-- <div id="jsGrid2"></div> -->
 	
+
 	<div id="notas">
 		<p>Los criterios para pasar a SUBSANACiON son : el % de evidencias entregadas debe ser mayor a 40% y la nota obtenida MAYOR a 4.
 		<br>Los Cursos de iNDUCCiON NO TiENEN SUBSANACiON al igual que los mismos cursos de SUBSANACiON, PRESENCiALES O TRABAJADORES.</p>
@@ -159,7 +159,9 @@
 		  <ul class="pagination pagination-lg pager" id="myPager"></ul>
 		</div>
 	</div>
-	
+	<div id="jsGrid2"></div>
+	<!-- TABLA: TAREA -->
+	<div id="jsGrid3"></div>
 	<div>
 		<table>
 			<thead class="lightblue">
@@ -192,7 +194,9 @@
 			</tbody>
 		</table>
     </div>
-	<div id="notas">
+    <!-- TABLA: CUESTIONARIO -->
+
+	<div >
 		<table>
 			<thead class="lightblue">
 				<tr>
@@ -214,6 +218,8 @@
 			</tbody>
 		</table>
 	</div>
+	<div id="jsGrid4"></div>
+	<div id="jsGrid5"></div>
 	
 	<div>
 		<table>
@@ -239,6 +245,9 @@
 			</tbody>
 		</table>
 	</div>
+
+	<div id="jsGrid6"></div>
+
 	
 	<div id="notas">
 		<table>
@@ -343,32 +352,93 @@
                 height: "50%",
                 width: "100%",
 				paging: true,
+				sorting: true,
 				autoload: true,
                 controller: db,
+                pageSize: 3,
+                //
+       //          rowRenderer: function() {
+			    //     var $result = $("<tr>").height(0);
+			            
+			    //     return $result = $result.add($("<tr>")
+			    //         .append($("<th>").attr("colspan", 2).text("Actualizacion de Unidades (sections) y Recursos")
+			    //         	.addClass('lightblue').css('text-align', 'left')));
+			    // },
+			    //
+                headerRowRenderer: function() {
+			        var $result = $("<tr>").height(0);
+			            
+			        $result = $result.add($("<tr>")
+			            .append($("<th>").attr("colspan", 1).text("Id Sinfo")
+			            	.addClass('lightblue').css('text-align', 'left'))
+			            .append($("<th>").attr("colspan", 1).text("Id SV")
+			            	.addClass('lightblue').css('text-align', 'left'))
+			            .append($("<th>").attr("colspan", 1).text("Apellidos, Nombres")
+			            	.addClass('lightblue').css('text-align', 'left'))
+			            .append($("<th>").attr("colspan", 1).text("Email")
+			            	.addClass('lightblue').css('text-align', 'left'))
+			            .append($("<th>").attr("colspan", 1).text("Status Sinfo")
+			            	.addClass('lightblue').css('text-align', 'left'))
+			            .append($("<th>").attr("colspan", 1).text("Grupo")
+			            	.addClass('lightblue').css('text-align', 'left'))
+			            .append($("<th>").attr("colspan", 1).text("Campus")
+			            	.addClass('lightblue').css('text-align', 'left'))
+			            .append($("<th>").attr("colspan", 1).text("Bloque")
+			            	.addClass('lightblue').css('text-align', 'left'))
+			            .append($("<th>").attr("colspan", 1).text("Tarea Unidad01")
+			            	.addClass('lightblue').css('text-align', 'left'))
+			            .append($("<th>").attr("colspan", 1).text("Tarea Unidad02")
+			            	.addClass('lightblue').css('text-align', 'left'))
+			            .append($("<th>").attr("colspan", 1).text("Evaluacion_U01")
+			            	.addClass('lightblue').css('text-align', 'left'))
+			            .append($("<th>").attr("colspan", 1).text("Caso EstudioU01")
+			            	.addClass('lightblue').css('text-align', 'left'))
+			            .append($("<th>").attr("colspan", 1).text("Evaluacion U02")
+			            	.addClass('lightblue').css('text-align', 'left'))
+			            .append($("<th>").attr("colspan", 1).text("Caso_EstudioU02")
+			            	.addClass('lightblue').css('text-align', 'left'))
+			            .append($("<th>").attr("colspan", 1).text("Evidencias Entregadas")
+			            	.addClass('lightblue').css('text-align', 'left'))
+			            .append($("<th>").attr("colspan", 1).text("Porcentaje Entregadas")
+			            	.addClass('lightblue').css('text-align', 'left'))
+			            .append($("<th>").attr("colspan", 1).text("Promedio Ponderado")
+			            	.addClass('lightblue').css('text-align', 'left'))
+			            .append($("<th>").attr("colspan", 1).text("Estado Actual")
+			            	.addClass('lightblue').css('text-align', 'left'))
+
+			            );
+
+			        return $result = $result.add($("<tr>")
+			        	.append($("<th>").attr("colspan", 8).text("Total Evidencias Entregables:" + " 3")
+			            	.addClass('lightblue').css('text-align', 'left'))
+			        	);
+
+			
+			    },
                 fields: [
 				 
-					{ name: "id", type: "number",width: 20,
+					{ name: "id", type: "number",width: 5,
 						 headerTemplate: function(value) {
 							 return $("<div>").addClass("address").append(value).text("id Sinfo");
 						 }
 					},
-					{ name: "id_SV", type: "number",width: 20},
-					{ name: "Apellidos" , type: "text",width: 20, title: "Apellidos, Nombres"},
-					{ name: "Email" , type: "text",width: 20},
-					{ name: "Status_Sinfo" , type: "text",width: 20},
-					{ name: "Grupo" , type: "text",width: 20},
-					{ name: "Campus" , type: "text",width: 20},
-					{ name: "Bloque" , type: "number",width: 20},
-					{ name: "Tarea_Unidad01" , type: "number",width: 20},
-					{ name: "Tarea_Unidad02" , type: "number",width: 20},
-					{ name: "Evaluacion_U01" , type: "number",width: 20},
-					{ name: "Caso_EstudioU01" , type: "number",width: 20},
-					{ name: "Evaluacion_U02" , type: "number",width: 20},
-					{ name: "Caso_EstudioU02" , type: "number",width: 20},
-					{ name: "Evidencias_Entregadas" , type: "number",width: 20},
-					{ name: "Porcentaje_Entregadas" , type: "number",width: 20},
-					{ name: "Promedio_Ponderado" , type: "number",width: 20},
-					{ name: "Estado_Actual" , type: "number",width: 20}
+					{ name: "id_SV", type: "number",width: 5},
+					{ name: "Apellidos" , type: "text",width: 5, title: "Apellidos, Nombres"},
+					{ name: "Email" , type: "text",width: 5},
+					{ name: "Status_Sinfo" , type: "text",width: 5},
+					{ name: "Grupo" , type: "text",width: 5},
+					{ name: "Campus" , type: "text",width: 5},
+					{ name: "Bloque" , type: "number",width: 5},
+					{ name: "Tarea_Unidad01" , type: "number",width: 5},
+					{ name: "Tarea_Unidad02" , type: "number",width: 5},
+					{ name: "Evaluacion_U01" , type: "number",width: 5},
+					{ name: "Caso_EstudioU01" , type: "number",width: 5},
+					{ name: "Evaluacion_U02" , type: "number",width: 5},
+					{ name: "Caso_EstudioU02" , type: "number",width: 5},
+					{ name: "Evidencias_Entregadas" , type: "number",width: 5},
+					{ name: "Porcentaje_Entregadas" , type: "number",width: 5},
+					{ name: "Promedio_Ponderado" , type: "number",width: 5},
+					{ name: "Estado_Actual" , type: "number",width: 5}
                 ]
             });
 
@@ -395,7 +465,7 @@
 		
 		$(function() {
             $("#jsGrid4").jsGrid({
-                height: "25%",
+                height: "auto",
                 width: "60%",
 				paging: true,
 				autoload: true,
@@ -427,7 +497,7 @@
 	
 		$(function() {
             $("#jsGrid5").jsGrid({
-                height: "25%",
+                height: "auto",
                 width: "60%",
 				paging: true,
 				autoload: true,
@@ -446,7 +516,7 @@
 
 		$(function() {
             $("#jsGrid6").jsGrid({
-                height: "25%",
+                height: "auto",
                 width: "60%",
 				autoload: true,
                 controller: db,
