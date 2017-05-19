@@ -110,7 +110,7 @@
 
 	<script>
 
-		var dataGrid = [
+		var dataActa = [
 			{ 
 				"numero": 1,
 				"idMoodle": 123123,
@@ -144,65 +144,66 @@
 		]
 		
         $("#jsGrid1").jsGrid({
-                height: "auto",
-                width: "80%	",
-                autoload: true,
-                sorting: true,
-                paging: true,
-                pageSize: 4,
-                selecting: false,
-                //	controller: db,
-                controller: {
-			        loadData: function() {
-			            return dataGrid;
-			        }
-			    },
-                fields: [
-                    { type: "number", name: "numero", width: 5, title: "N°" },
-        			{ type: "number", name: "idMoodle" , width: 5, title: "id Moodle" },
-        			{ type: "number", name: "PiDM", width: 5, title: "PiDM SiNFO"},
-        			{ type: "text", name: "NRC", width: 5, title: "NRC"},
-        			{ type: "text", name: "ciudad", width: 5, title: "Cuidad"},
-        			{
-                    	headerTemplate: function(){
-                   			return $("<p>").text("Nnota");
-                   		},
-                  		itemTemplate: function(_, item){
-                    		return $("<input type='text'>").addClass('form-control');;
-                   		},
-                   		width:20
-                    },
-        			{ type: "number", name: "Nota", width: 5, title: "Nota"},
-                    {
-                      	headerTemplate: function(){
-                      		return $("<p>").text("Estado");
-                      	},
-                      	itemTemplate: function(_, item){
+            height: "auto",
+            width: "70%	",
+            autoload: true,
+            sorting: true,
+            paging: true,
+            pageSize: 4,
+            selecting: false,
+            //	controller: db,
+            controller: {
+		        loadData: function() {
+		            return dataActa;
+		        }
+		    },
+            fields: [
+                { type: "number", name: "numero", width: 10, title: "N°" },
+    			{ type: "number", name: "idMoodle" , width: 10, title: "id Moodle" },
+    			{ type: "number", name: "PiDM", width: 10, title: "PiDM SiNFO"},
+    			{ type: "text", name: "apellidos_nombres" , width: 35, title: "Apellidos, Nombres" },
+    			{ type: "text", name: "NRC", width: 10, title: "NRC"},
+    			{ type: "text", name: "ciudad", width: 10, title: "Cuidad"},
+    			{
+                	headerTemplate: function(){
+               			return $("<p>").text("Nota");
+               		},
+              		itemTemplate: function(_, item){
+                		return $("<input type='text'>").addClass('form-control').attr('size', '4');
+               		},
+               		width:15
+                },
+                {
+                  	headerTemplate: function(){
+                  		return $("<p>").text("Estado");
+                  	},
+                  	itemTemplate: function(_, item){
 
-							var myOptions = {
-								'0' : 'Aprobado',
-								'1' : 'Desaprobado',
-								'2' : 'Retirado',
-								'3' : 'No participó'
-							};
+						var myOptions = {
+							'0' : 'Aprobado',
+							'1' : 'Desaprobado',
+							'2' : 'Retirado',
+							'3' : 'No participó'
+						};
 
-							var _select = $('<select>');
-							$.each(myOptions, function(val, text) {
-								if(val == item.publico)
-									return $('<option>', {val: val, text: text}).appendTo(_select).attr('selected', 'selected');
-								else
-									return $('<option>', {val: val, text: text}).appendTo(_select);
-							});
-							
-							return $('<select>').append(_select.html());
-						},
-						width: 35
-                    }
+						var _select = $('<select>');
+						$.each(myOptions, function(val, text) {
+							if(val == item.publico)
+								return $('<option>', {val: val, text: text}).appendTo(_select).attr('selected', 'selected');
+							else
+								return $('<option>', {val: val, text: text}).appendTo(_select);
+						});
+						
+						return $('<select>').append(_select.html());
+					},
+					width: 25
+                }
 
 
 
-				]
-            });
+			]
+        });
+
 
 
 	</script>
