@@ -21,7 +21,7 @@
 <body>        <img src="../../img/image001.png" />   	
 	<div >
 		<div id="jsGridActualizacionDeUnidades"></div>
-		<table>
+<!-- 		<table>
 			<thead class="lightblue">
 				<tr>
 				  <th colspan="2">Actualizacion de Unidades (sections) y Recursos</th>
@@ -45,11 +45,13 @@
 					  <td>12-10-2016 (D/M/A)</td>           
 				  </tr>      
 			</tbody>
-		</table>
+		</table> -->
 	</div>
   
 	<p><b>mdl_course_sections</b></p>
-	
+
+	<div id="jsGridEtapas"></div>
+	<div id="jsGridModulos"></div>
 	<div>
 		<table id="tabla05">
 			<thead class="lightblue">
@@ -144,48 +146,59 @@
 	<script>
 		$(function() {
 
-    //         $("#jsGridNotasSinfo").jsGrid({
-    //             height: "30%",
-    //             width: "100%",
-    //             autoload: true,
-    //             selecting: true,
-    //             sorting: true,
-    //             paging: true,
-    //             pageSize: 1,
-    //             controller: db,
-    //             fields: [
-    //                 { name: "id", type: "text", width: 30, title: "id "},
-    //                 { name: "id_SV", type: "number", width: 30, title: "id Sinfo" },
-    //                 { name: "Apellidos", type: "text", width: 30, title: "Apellidos, Nombres" },
-    //                 { name: "id", type: "text",width: 30, title: "PDiM"},
-    //                 { name: "Nrc", type: "number", width: 30, title: "NRC"},
-				// 	{ name: "Periodo", type: "numer", width: 30, title: "Periodo"},
-				// 	{ name: "Nota_SV", type: "number", width: 30, title: "NOTA SV"},
-				// 	{ name: "Nota_Sinfo", type: "number", width: 30, title: "Nota Sinfo"},
-				// 	{ name: "Estado_Sv", type: "text", width: 30, title: "Estado Sv"},
-				// 	{ name: "Status_Sinfo", type: "text", width: 30, title: "Status Sinfo"},
-				// 	{ name: "Tutor_Sinfo", type: "text", width: 30, title: "Tutor Sinfo"},
-				// 	{ name: "Bloque", type: "number", width: 30, title: "Bloque"},
-				// 	{ name: "Camp", type: "number", width: 30, title: "Camp"},
-				// 	{ name: "CARR", type: "number", width: 30,},
-				// 	{ name: "Carrera", type: "text", width: 30},
-				// 	{ name: "iD_Alumno_Moodle", type: "number", width: 30, title: "id Alumno Moodle"},
-				// 	{ name: "Grupo", type: "text", width: 30}
-					
-				// ]
-    //         });
 
+			// TABLA DE ETAPAS
+			var dataEtapas = [
+				{ 
+					"nombre_etapa": "PRIMERA UNIDAD",
+					"fecha_inicio": "26 de Septiembre",
+					"fecha_fin": "09 de Octubre"
+				},
+				{
+					"nombre_etapa": "SEGUNDA UNIDAD",
+					"fecha_inicio": "10 de Octubre",
+					"fecha_fin": "23 de Octubre"
+				},
+				{
+					"nombre_etapa": "CALIFICACION DE EViDENCiAS",
+					"fecha_inicio": "24 de Octubre",
+					"fecha_fin": "25 de Octubre"
+				}
+			];
+            $("#jsGridEtapas").jsGrid({
+                height: "auto",
+                width: "35%",
+                autoload: true,
+                selecting: true,
+                sorting: true,
+                paging: true,
+                pageSize: 3,
+                //controller: db,
+                controller: {
+			        loadData: function() {
+			            return dataEtapas;
+			        }
+			    },
+
+                fields: [
+                	{ name: "nombre_etapa", type: "text", width: 30, title: "ETAPAS"},
+                	{ name: "fecha_inicio", type: "text", width: 20, title: "INICIO"},
+                	{ name: "fecha_fin", type: "text", width: 20, title: "FIN"}
+					
+				]
+            });
+            // END: TABLA DE ETAPAS
+
+            //TABLA DE ACTUALIZACION DE UNIDADES
             var dataActualizacionUnidades = [
 			    { nameColumn: "Curso", nameDescription: "ATCL 201620 - Grupo B - Zonal Loreto"},
 			    { nameColumn: "iD Moodle", nameDescription: "7214" },
 			    { nameColumn: "Fecha de Inicio", nameDescription: "Lunes 26-09-2016 (D/M/A)" },
 			    { nameColumn: "Fecha Actual", nameDescription: "12-10-2016 (D/M/A)" }
 			];
-
-
             $("#jsGridActualizacionDeUnidades").jsGrid({
                 height: "auto",
-                width: "50%",
+                width: "35%",
                 autoload: true,
                 sorting: true,
                 paging: true,
@@ -203,14 +216,74 @@
 			        var $result = $("<tr>").height(0);
 			            
 			        return $result = $result.add($("<tr>")
-			            .append($("<th>").attr("colspan", 3).text("Actualizacion de Unidades (sections) y Recursos")
+			            .append($("<th>").attr("colspan", 2).text("Actualizacion de Unidades (sections) y Recursos")
 			            	.addClass('lightblue').css('text-align', 'left')));
 			    },
                 fields: [
-                    { type: "text", name: "nameColumn", width: 10 },
-        			{ type: "text", name: "nameDescription" , width: 10 }
+                    { type: "text", name: "nameColumn", width: 5 },
+        			{ type: "text", name: "nameDescription" , width: 5 }
 				]
             });
+            //END: TABLA DE ACTUALIZACION DE UNIDADES
+
+            //TABLA DE MODULOS
+            var dataModulos = [
+            	{
+            		"idMod": "131390",
+            		"Tipo": "Etiqueta",
+            		"TablaeId": "mdl_label (250990)",
+            		"nombreContenido": 1,
+            		"visible": 1,
+            		"extras": ""
+            	},
+            	{
+            		"idMod": "131391",
+            		"Tipo": "Etiqueta",
+            		"TablaeId": "mdl_label (250991)",
+            		"nombreContenido": "",
+            		"visible": "",
+            		"extras": ""
+            	}
+            ];
+            $("#jsGridModulos").jsGrid({
+                height: "auto",
+                width: "80%",
+                autoload: true,
+                sorting: true,
+                paging: true,
+                pageSize: 4,
+                selecting: false,
+                //	controller: db,
+
+                controller: {
+			        loadData: function() {
+			            return dataModulos;
+			        }
+			    },
+                fields: [
+                    { type: "text", name: "idMod", width: 5, title: "Id Mod" },
+        			{ type: "text", name: "Tipo" , width: 5, title: "Tipo" },
+        			{ type: "text", name: "TablaeId", width: 5, title: "Tabla e iD"},
+        			{ type: "number", name: "nombreContenido", width: 5, title: "Nombre o Contenido"},
+        			{
+                   		name: "nombreContenido", type: "text",
+                    	headerTemplate: function(){
+                   			return $("<p>").text("Nombre o Contenido");
+                   		},
+                  		itemTemplate: function(_, item){
+                    		return $("<div class='switch'>").html("<div id='jsGridEtapas'></div>");
+                   		}
+                   		//width:10
+                    },
+        			{ type: "number", name: "visible", width: 5, title: "Visible"},
+        			{ type: "number", name: "extras", width: 5, title: "Extras"}
+
+
+
+				]
+            });
+
+            //END: TABLA DE MODULOS
         });
     
 	</script>

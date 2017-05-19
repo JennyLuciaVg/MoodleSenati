@@ -64,7 +64,7 @@
     <div id="botones">
 		<a type="button" href="file:///C:/Users/CristhianEnriqueSaav/Desktop/Senati/Modulo/Vistas/Historia%20Academica/7.1.1.2EditarActa.html" class="btn btn-primary">Editar Acta </a>
     </div>
-
+    <div id="jsGrid1"></div>
     <div>
 		 <table>
 			<thead class="lightblue">
@@ -182,6 +182,85 @@
 		</table>
 	
 	</div>
+
+	<script>
+
+		var dataActa = [
+			{ 
+				"numero": 1,
+				"idMoodle": 123123,
+				"idSiNFO": 9876544,
+				"apellidos_nombres": "ABAD MAGUiñA, AARON SANTiAGO",
+				"Camp": "12",
+				"NRC": 15,
+				"periodo": "1",
+				"bloque": "12",
+				"carrera": "Ing",
+				"Nota": 12,
+				"Estado": "Aprobado"
+			},
+			{ 
+				"numero": 2,
+				"idMoodle": 7894566,
+				"idSiNFO": 1234565,
+				"apellidos_nombres": "ABAD, AARON SANTiAGO",
+				"Camp": "12",
+				"NRC": 12,
+				"periodo": "1",
+				"bloque": "12",
+				"carrera": "Ing",
+				"Nota": 15,
+				"Estado": "Aprobado"
+			},
+						{ 
+				"numero": 3,
+				"idMoodle": 456456,
+				"idSiNFO": 1234565,
+				"apellidos_nombres": "ABAD MAGUiñA, SANTiAGO",
+				"Camp": "12",
+				"NRC": 19,
+				"periodo": "1",
+				"bloque": "12",
+				"carrera": "Ing",
+				"Nota": 13,
+				"Estado": "Aprobado"
+			}
+		]
+		
+        $("#jsGrid1").jsGrid({
+            height: "auto",
+            width: "70%	",
+            autoload: true,
+            sorting: true,
+            paging: true,
+            pageSize: 4,
+            selecting: false,
+            //	controller: db,
+            controller: {
+		        loadData: function() {
+		            return dataActa;
+		        }
+		    },
+            fields: [
+                { type: "number", name: "numero", width: 10, title: "N°" },
+    			{ type: "number", name: "idMoodle" , width: 10, title: "id Moodle" },
+    			{ type: "number", name: "idSiNFO", width: 10, title: "id SiNFO"},
+    			{ type: "text", name: "apellidos_nombres" , width: 35, title: "Apellidos, Nombres" },
+    			{ type: "text", name: "Camp", width: 10, title: "Camp"},
+    			{ type: "text", name: "NRC", width: 10, title: "NRC"},
+    			{ type: "text", name: "periodo", width: 10, title: "Periodo"},
+    			{ type: "text", name: "bloque", width: 10, title: "Bloque"},
+    			{ type: "text", name: "carrera", width: 10, title: "Carrera"},
+    			{ type: "text", name: "Nota", width: 10, title: "Nota"},
+    			{ type: "text", name: "Estado", width: 10, title: "Estado"}
+
+
+			]
+        });
+
+
+
+	</script>
 
    
 
