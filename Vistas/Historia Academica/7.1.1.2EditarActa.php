@@ -104,9 +104,108 @@
 		   </tbody>
 		</table>
     </div>
+
+    <div id="jsGrid1"></div>
 	
 
+	<script>
+
+		var dataGrid = [
+			{ 
+				"numero": 1,
+				"idMoodle": 123123,
+				"PiDM": 9876544,
+				"apellidos_nombres": "ABAD MAGUiñA, AARON SANTiAGO",
+				"NRC": 15,
+				"ciudad": "Lima",
+				"Nota": 12,
+				"Estado": 2
+			},
+			{ 
+				"numero": 2,
+				"idMoodle": 7894566,
+				"PiDM": 1234565,
+				"apellidos_nombres": "ABAD, AARON SANTiAGO",
+				"NRC": 12,
+				"ciudad": "Lima",
+				"Nota": 15,
+				"Estado": 2
+			},
+						{ 
+				"numero": 3,
+				"idMoodle": 456456,
+				"PiDM": 1234565,
+				"apellidos_nombres": "ABAD MAGUiñA, SANTiAGO",
+				"NRC": 19,
+				"ciudad": "Lima",
+				"Nota": 13,
+				"Estado": 2
+			}
+		]
 		
+        $("#jsGrid1").jsGrid({
+                height: "auto",
+                width: "80%	",
+                autoload: true,
+                sorting: true,
+                paging: true,
+                pageSize: 4,
+                selecting: false,
+                //	controller: db,
+                controller: {
+			        loadData: function() {
+			            return dataGrid;
+			        }
+			    },
+                fields: [
+                    { type: "number", name: "numero", width: 5, title: "N°" },
+        			{ type: "number", name: "idMoodle" , width: 5, title: "id Moodle" },
+        			{ type: "number", name: "PiDM", width: 5, title: "PiDM SiNFO"},
+        			{ type: "text", name: "NRC", width: 5, title: "NRC"},
+        			{ type: "text", name: "ciudad", width: 5, title: "Cuidad"},
+        			{
+                    	headerTemplate: function(){
+                   			return $("<p>").text("Nnota");
+                   		},
+                  		itemTemplate: function(_, item){
+                    		return $("<input type='text'>").addClass('form-control');;
+                   		},
+                   		width:20
+                    },
+        			{ type: "number", name: "Nota", width: 5, title: "Nota"},
+                    {
+                      	headerTemplate: function(){
+                      		return $("<p>").text("Estado");
+                      	},
+                      	itemTemplate: function(_, item){
+
+							var myOptions = {
+								'0' : 'Aprobado',
+								'1' : 'Desaprobado',
+								'2' : 'Retirado',
+								'3' : 'No participó'
+							};
+
+							var _select = $('<select>');
+							$.each(myOptions, function(val, text) {
+								if(val == item.publico)
+									return $('<option>', {val: val, text: text}).appendTo(_select).attr('selected', 'selected');
+								else
+									return $('<option>', {val: val, text: text}).appendTo(_select);
+							});
+							
+							return $('<select>').append(_select.html());
+						},
+						width: 35
+                    }
+
+
+
+				]
+            });
+
+
+	</script>
 	
 
        <img src="../../img/image002.png" />     </body>	
