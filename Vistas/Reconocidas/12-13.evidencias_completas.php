@@ -44,7 +44,7 @@
                <a   type="button" class="btn btn-warning"><i class="fa fa-search"></i></a>
             </span>
         </div>
-		<table id="tables">
+		<!--table id="tables">
 			<thead class="lightblue">
 				<tr>
 					<th onclick="sortTable(0)">id Sinfo</th>
@@ -154,7 +154,7 @@
 					<td>No intento</td>
 				</tr>
 			</tbody>
-		</table>
+		</table-->
 		<div class="text-center">
 		  <ul class="pagination pagination-lg pager" id="myPager"></ul>
 		</div>
@@ -162,7 +162,7 @@
 	<div id="jsGrid2"></div>
 	<!-- TABLA: TAREA -->
 	<div id="jsGrid3"></div>
-	<div>
+	<!--div>
 		<table>
 			<thead class="lightblue">
 				<tr>
@@ -193,10 +193,10 @@
 				</tr>
 			</tbody>
 		</table>
-    </div>
+    </div-->
     <!-- TABLA: CUESTIONARIO -->
 
-	<div >
+	<!--div >
 		<table>
 			<thead class="lightblue">
 				<tr>
@@ -217,11 +217,11 @@
 				</tr>
 			</tbody>
 		</table>
-	</div>
+	</div-->
 	<div id="jsGrid4"></div>
 	<div id="jsGrid5"></div>
 	
-	<div>
+	<!--div>
 		<table>
 			<thead class="lightblue">
 				<tr>
@@ -244,12 +244,12 @@
 				</tr>
 			</tbody>
 		</table>
-	</div>
+	</div-->
 
 	<div id="jsGrid6"></div>
 
 	
-	<div id="notas">
+	<!--div id="notas">
 		<table>
 			<thead class="lightblue">
 				<tr>
@@ -284,7 +284,7 @@
 			
 			</tbody>
 		</table>
-	</div>
+	</div-->
 	
 	<div>
 		<p><span class="span_insertar"> insertar/Actualizar Notas de inducci&oacute;n</span> (Extrae Notas del Curso de inducci&oacute;n - el sistema lo busca)</p>
