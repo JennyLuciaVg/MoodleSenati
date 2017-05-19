@@ -163,7 +163,10 @@ header img
 	display:none;
 	
 }
-
+.admin-general{
+	background: #CC9933;
+}
+	$cola_indu="bgcolor=
 /*-------------colores para texto-------------*/
 .blue{
     color: #4566A1;

@@ -17,7 +17,7 @@ include '../BD/conexion.php';
             echo json_encode($data);
 	}
 	
-	function Ponderacion_Performing_Forum($id_cursox){               
+	function Ponderacion_Performing_Forum(id_cursox){               
 		$con = new Conexion();
 		$ca=$con->initConnection();
         $result = mysqli_query($ca, "call SP_PONDERACIONES_PERFORMING_FORUM('$id_cursox');") or die("Query fail: " . mysqli_error());
@@ -151,7 +151,7 @@ include '../BD/conexion.php';
 			$id_cursox = (strlen($_GET['id_cursox'])>0)?$_GET['id_cursox']:''; 
 			Ponderacion_Performing_Tarea($id_cursox);
         break;
-		case 'TotalIdToro':
+		case 'TotalForo':
 			$id_cursox = (strlen($_GET['id_cursox'])>0)?$_GET['id_cursox']:''; 
 			$valor_id_foro = (strlen($_GET['valor_id_foro'])>0)?$_GET['valor_id_foro']:''; 
 			Ponderacion_Total_ID_Foro($id_cursox,$valor_id_foro);
@@ -168,12 +168,12 @@ include '../BD/conexion.php';
 			$id_usuario = (strlen($_POST['id_usuario'])>0)?$_POST['id_usuario']:'';
 			TOTAL_INSERTAR_PESOS_RECURSOS($valor_id_assign,$valor_peso_assign,$id_cursox,$id_usuario);
         break;
-		case 'PesosRecursos':
+		case 'TotalRecursos':
 			$id_cursox = (strlen($_GET['id_cursox'])>0)?$_GET['id_cursox']:'';
 			$valor_id_quiz = (strlen($_GET['valor_id_quiz'])>0)?$_GET['valor_id_quiz']:'';
 			Total_Pesos_Recursos($id_cursox,$valor_id_quiz)
         break;
-		case '':
+		case 'UpdatePesosRecursos':
 			$valor_peso = (strlen($_GET['valor_peso'])>0)?$_GET['valor_peso']:'';
 			$id_usuario = (strlen($_GET['id_usuario'])>0)?$_GET['id_usuario']:'';
 			$id_cursox = (strlen($_GET['id_cursox'])>0)?$_GET['id_cursox']:'';
@@ -182,4 +182,4 @@ include '../BD/conexion.php';
 			Total_Pesos_Quiz($valor_peso,$id_usuario,$id_cursox,$tiporecurso,$valor_id_quiz)
 		break;
     }
-?>	
+?>
