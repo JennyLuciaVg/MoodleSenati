@@ -42,52 +42,7 @@
 	
 	<div id="notas">
 		<p class="bold">DE HiSTORiA ACADEMiCA</p>
-		<table class="table_reporte_alu_evidencias">
-			<thead class="lightblue">
-				<tr> 
-					<th colspan="3">Detalles</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<th>
-						Aprobados
-					</th>
-					<td>
-						10
-					</td>
-					<td>
-						71,4%
-					</td>
-					
-				</tr>
-				<tr>
-					<th>
-						Desaprobados
-					</th>
-					<td>
-						10
-					</td>
-					<td>
-						71,4%
-					</td>
-					
-				</tr>
-				
-				<tr>
-					<th>
-						Total
-					</th>
-					<td>
-						14
-					</td>
-					<td>
-						100%
-					</td>
-					
-				</tr>
-			</tbody>
-		</table>
+		<div id="jsGridDetallesHistoriaAcademica"></div>
 		<p class="bold">RETiRADOS DE SiNFO: 0</p>
 	</div>
 	
@@ -124,6 +79,42 @@
 					{ name: "iD_Alumno_Moodle", type: "number", width: 30, title: "id Alumno Moodle"},
 					{ name: "Grupo", type: "text", width: 30}
 					
+				]
+            });
+
+            var dataHistoriaAcademica = [
+			    { nameDetalle: "Aprobados", numDetalle: 10, porcentajeDetalle: "50%" },
+			    { nameDetalle: "Desaprobados", numDetalle: 10, porcentajeDetalle: "50%" },
+			    { nameDetalle: "Total", numDetalle: 20, porcentajeDetalle: "100%" },
+			];
+
+
+            $("#jsGridDetallesHistoriaAcademica").jsGrid({
+                height: "auto",
+                width: "25%",
+                autoload: true,
+                sorting: true,
+                paging: true,
+                pageSize: 3,
+                selecting: false,
+                //	controller: db,
+
+                controller: {
+			        loadData: function() {
+			            return dataHistoriaAcademica;
+			        }
+			    },
+
+                headerRowRenderer: function() {
+			        var $result = $("<tr>").height(0);
+			            
+			        return $result = $result.add($("<tr>")
+			            .append($("<th>").attr("colspan", 3).text("Detalles").addClass('lightblue')));
+			    },
+                fields: [
+                    { type: "text", name: "nameDetalle", width: 10 },
+        			{ type: "number", name: "numDetalle" , width: 10 },
+        			{ type: "text", name: "porcentajeDetalle" , width: 10 }
 				]
             });
         });
