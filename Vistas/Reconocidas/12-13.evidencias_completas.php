@@ -356,15 +356,6 @@
 				autoload: true,
                 controller: db,
                 pageSize: 3,
-                //
-       //          rowRenderer: function() {
-			    //     var $result = $("<tr>").height(0);
-			            
-			    //     return $result = $result.add($("<tr>")
-			    //         .append($("<th>").attr("colspan", 2).text("Actualizacion de Unidades (sections) y Recursos")
-			    //         	.addClass('lightblue').css('text-align', 'left')));
-			    // },
-			    //
                 headerRowRenderer: function() {
 			        var $result = $("<tr>").height(0);
 			            
