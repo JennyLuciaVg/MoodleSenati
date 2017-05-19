@@ -17,6 +17,7 @@
 	  <link rel="stylesheet" href="../css/froala_editor.css">
 	  <link rel="stylesheet" href="../css/froala_style.css">
 	  <link rel="stylesheet" href="../css/plugins/char_counter.css">
+	  
 </head>
 
 <body>	          
@@ -74,17 +75,68 @@
 			</tbody>
 		</table>
     </div>
+    <div id="jsGrid1"></div>
+ 
+    <script>
+	 	$(function() {
+
+			var dataEtapas = [
+				{ 
+					"nombre_etapa": "PRIMERA UNIDAD",
+					"fecha_inicio": "26 de Septiembre",
+					"fecha_fin": "09 de Octubre"
+				},
+				{
+					"nombre_etapa": "SEGUNDA UNIDAD",
+					"fecha_inicio": "10 de Octubre",
+					"fecha_fin": "23 de Octubre"
+				},
+				{
+					"nombre_etapa": "CALIFICACION DE EViDENCiAS",
+					"fecha_inicio": "24 de Octubre",
+					"fecha_fin": "25 de Octubre"
+				}
+			];
+            $("#jsGridEtapas").jsGrid({
+                height: "auto",
+                width: "35%",
+                autoload: true,
+                selecting: true,
+                sorting: true,
+                paging: true,
+                pageSize: 3,
+                //controller: db,
+                controller: {
+			        loadData: function() {
+			            return dataEtapas;
+			        }
+			    },
+
+                fields: [
+                	{ name: "nombre_etapa", type: "text", width: 30, title: "ETAPAS"},
+                	{ name: "fecha_inicio", type: "text", width: 20, title: "INICIO"},
+                	{ name: "fecha_fin", type: "text", width: 20, title: "FIN"}
+					
+				]
+            });
+
+	 	});
+
+ 
+	    $(function() {
+		    $('#edit').froalaEditor({
+		        Set maximum number of characters.
+		        charCounterMax: 140
+		    })
+	    });
+    </script>
 
 	
   <script type="text/javascript" src="../js/froala_editor.min.js"></script>
   <script type="text/javascript" src="../js/plugins/char_counter.min.js"></script>
     <script>
-    $(function() {
-      $('#edit').froalaEditor({
-        // Set maximum number of characters.
-        charCounterMax: 140
-      })
-    });
+
+
   </script>
    </body>	
 </html>
