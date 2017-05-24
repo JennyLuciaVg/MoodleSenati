@@ -76,20 +76,17 @@
 					{ name: "alumno", type: "number", width: 20, title: "Alumno"},	
 					{ name: "pdidm", type: "number", width: 20, title: "PDiDM"},
 					{ name: "bloque", type: "text", width: 20, title: "Bloque"},
-					{ name: "accion", type: "number", width: 20, title: "Acción"},
-					 <!-- {  -->
-						 <!-- headerTemplate: function() { -->
-						<!-- return $("<p>").text("elige");  -->
-						 <!-- },  -->
-						<!-- itemTemplate: function(_, item) {  -->
-						 <!-- return $("<a>").attr("href","sss").attr("target", "_blank").text("ver")  -->
-									<!-- .on("click", function () {	  -->
-										
-								 <!-- });  -->
-						 <!-- },  -->
-						 <!-- align: "center",  -->
-						<!-- width: 50  -->
-					<!-- }  -->
+					{ 
+						headerTemplate: function() {			
+						 return $("<p>").text("Acción");  
+						},  
+						itemTemplate: function(_, item) {  
+						 return $("<input>").attr("type","checkbox");
+						 },  
+						 align: "center", 
+						 width: 30 
+					} ,
+
                 ]
 
             });
