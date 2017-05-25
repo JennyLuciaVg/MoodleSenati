@@ -87,10 +87,51 @@
     <div id="etiquetas">
         <p class="bold">iNTENTOS CON CERO: 0</p>
     </div>
+     <div id="jsGrid"></div>
     
     <div id="botenes">
         <button   class="btn btn-primary" type="button"> <i class="fa fa-trash-o" aria-hidden="true"></i> Borrar los intentos seleccionados</button>
     </div>
-	       <img src="../../img/image002.png" />     </body>		
+	       <img src="../../img/image002.png" />  
+
+            <script>
+    
+            $("#jsGrid").jsGrid({
+                height: "50%",
+                width: "70%",
+                autoload: true,
+                sorting: true,
+                paging: true,
+                pageSize: 2,
+                selecting: true,
+                //controller: listarAlumnosCurso,
+                fields: [
+                    { 
+                        headerTemplate: function() {            
+                            return $("<p>").text("Borrar").append("<br><a style='color: white;'>Seleccionar Todos</a>");
+                        },  
+                        itemTemplate: function(_, item) {
+                            if (disabled) {
+                                return $("<p>").text("");
+                            } else {
+                                return $("<input>").attr("type","checkbox");
+                            }
+                        },  
+                        align: "center", 
+                        width: 30 
+                    } ,
+                    { name: "id", type: "number",width: 20, title: "id intento"},
+                    { name: "namequiz", type: "text", width: 20, title: "Nombre Quiz"},
+                    { name: "idquiz", type: "number",width: 20, title: "id Quiz"},  
+                    { name: "alumno", type: "text", width: 20, title: "Alumno"},
+                    { name: "timestart", type: "date", width: 20, title: "Timestart"},
+                    { name: "timefinish", type: "date", width: 20, title: "Timefinish"},
+                    { name: "timemodified", type: "date", width: 20, title: "Timemodified"},
+                ]
+            }); 
+
+
+    </script>   
+    </body>		
 
 </html>
