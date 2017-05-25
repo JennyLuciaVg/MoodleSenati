@@ -1,0 +1,19 @@
+// ALUMNOS EN TOTAL Y RETIRADOS
+	// TOTAL ALUMNOS VALIDOS
+	
+
+CREATE PROCEDURE SP_REPORTE_EVIDENCIAS_TOTAL_ALUMNOS_VALIDOS
+(
+@id_cursox
+)
+AS
+BEGIN
+		Select count(*) as total 
+		FROM mdl_user_Students
+		WHERE course=@id_cursox
+		and status_sinfo is null
+END
+	
+	
+	
+	

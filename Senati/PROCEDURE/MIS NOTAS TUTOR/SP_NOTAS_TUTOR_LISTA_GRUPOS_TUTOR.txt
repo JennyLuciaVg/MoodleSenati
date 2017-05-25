@@ -1,0 +1,17 @@
+/// esta es la lista de grupos del tutor especifico
+
+
+CREATE PROCEDURE SP_NOTAS_TUTOR_LISTA_GRUPOS_TUTOR
+(
+@id_cursox ,
+@id_usuario
+)
+AS
+BEGIN
+	SELECT A.id 
+	FROM mdl_groups A 
+	INNER JOIN mdl_groups_members B 
+	on B.groupid=A.id 
+	WHERE A.courseid=@id_cursox 
+		and B.userid=@id_usuario
+END

@@ -1,0 +1,17 @@
+/// ESTA ES SIMPLEMENTE LA LISTA DE FOROS CON SU UNIDAD
+
+
+CREATE PROCEDURE SP_REPORTE_EVIDENCIAS_FOROS_CON UNIDAD
+(
+@id_cursox
+)
+AS
+BEGIN
+		
+		SELECT A.id as id_foro, A.name as nombre_foro, D.section as unidad, peso_recurso 
+		FROM mdl_forum A 			
+		INNER JOIN mdl_course_modules C on C.instance=A.id and C.course=A.course 
+		INNER JOIN mdl_course_Sections D on D.id=C.section and D.course=A.course 				INNER JOIN senati_pesos_recursos E on E.id_recurso=A.id and tipo_recurso=3
+		WHERE C.module=5 and a.scale<>-1 and type='general' and	a.course=@id_cursox 
+		ORDER BY D.section, A.name 
+END

@@ -1,0 +1,13 @@
+
+CREATE PROCEDURE SP_NOTAS_PRESENCIALES_LISTA_TUTORES
+(
+@id_cursox
+)
+AS
+BEGIN
+	SELECT lastname||', '||firstname as nombre, email
+	FROM mdl_user_teachers A 
+	INNER JOIN mdl_user B
+	on A.userid=B.id
+	WHERE course=@id_cursox
+END

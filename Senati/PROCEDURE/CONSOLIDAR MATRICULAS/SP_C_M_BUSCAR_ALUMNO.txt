@@ -1,0 +1,18 @@
+  //// AHORA DEBO BUSCAR AL ALUMNO CREADO
+				   
+
+CREATE PROCEDURE SP_C_M_BUSCAR_ALUMNO
+(
+@pidm_sinfo,
+@camp,
+@pidm_sinf
+)
+AS
+BEGIN
+
+		SELECT id
+		FROM mdl_user
+		WHERE pidm_banner=@pidm_sinfo,
+		and campus=@camp,
+		and username=@pidm_sinfo
+END

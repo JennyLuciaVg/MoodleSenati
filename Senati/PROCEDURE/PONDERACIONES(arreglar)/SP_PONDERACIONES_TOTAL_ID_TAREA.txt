@@ -1,0 +1,16 @@
+
+CREATE PROCEDURE SP_PONDERACIONES_TOTAL_ID_TAREA
+(
+@id_cursox,
+@valor_id_assign
+)
+AS
+BEGIN
+ 			SELECT COUNT(*) as total 
+			FROM senati_pesos_recursos
+			WHERE id_curso=@id_cursox
+			and id_recurso=@valor_id_assign
+			and  tipo_recurso=1
+END
+		    
+		    

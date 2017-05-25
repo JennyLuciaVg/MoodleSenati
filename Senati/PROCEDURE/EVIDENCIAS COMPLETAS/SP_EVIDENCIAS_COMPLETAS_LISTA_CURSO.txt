@@ -1,0 +1,10 @@
+CREATE PROCEDURE SP_EVIDENCIAS_COMPLETAS_LISTA_CURSO
+(
+@id_cursox
+)
+AS
+BEGIN
+		SELECT fullname,subsanacion, presencial, induccion,id_publico, id_tarea_induccion 
+		FROM mdl_course 
+		WHERE id=@id_cursox
+END	

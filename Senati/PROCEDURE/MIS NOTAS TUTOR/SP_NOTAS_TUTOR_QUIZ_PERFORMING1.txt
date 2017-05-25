@@ -1,0 +1,16 @@
+// Performing SQL query
+
+
+CREATE PROCEDURE SP_NOTAS_TUTOR_QUIZ_PERFORMING1
+(
+@id_cursox 
+)
+AS
+BEGIN
+	SELECT distinct(A.id),assignmenttype, peso_recurso,name 
+	FROM mdl_assignment A 
+	LEFT JOIN senati_pesos_recursos
+	on id_recurso=id and tipo_recurso=1
+	WHERE peso_recurso<>0 and course=@id_cursox 
+	ORDER BY A.id
+END

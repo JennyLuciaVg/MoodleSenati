@@ -1,0 +1,14 @@
+﻿//Tengo que averiguar si este curso tiene un cuestionario de subsanación !!!!!!!!!!!!!!!!!!!!!!!
+
+
+CREATE PROCEDURE SP_ACTAC_NOTA_FINAL_BUSCA
+(
+@id_cursox
+)
+AS 
+BEGIN
+		SELECT COUNT(*) as total 
+		FROM mdl_quiz 
+		WHERE UPPER(name) like 'SUBSA%' and course=@id_cursox 
+
+END

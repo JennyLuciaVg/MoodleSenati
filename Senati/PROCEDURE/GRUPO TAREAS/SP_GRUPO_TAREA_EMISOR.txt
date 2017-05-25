@@ -1,0 +1,16 @@
+//////////////////// EMISOR ////////////////////////////
+
+
+CREATE PROCEDURE SP_GRUPO_TAREA_EMISOR
+(
+@id_curso_importar
+)
+AS
+BEGIN
+		SELECT DISTINCT(numero_grupo), unidad, contenido 
+		FROM senati_tareas A 
+		INNER JOIN mdl_assignment B on A.id_tarea=B.id 
+		WHERE B.course=@id_curso_importar 
+		ORDER BY unidad
+END
+			

@@ -1,0 +1,14 @@
+
+
+
+CREATE PROCEDURE SP_DATOS_GENERALES_CURSO_LISTA_CENTRO
+(
+@camp_pres
+)
+AS
+BEGIN
+			SELECT nombre_centro 
+			FROM senati_centros 
+			WHERE id_centro=@camp_pres
+END 
+	

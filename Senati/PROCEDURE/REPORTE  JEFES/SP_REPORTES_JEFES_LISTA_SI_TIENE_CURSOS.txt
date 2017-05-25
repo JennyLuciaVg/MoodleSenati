@@ -1,0 +1,16 @@
+CREATE PROCEDURE SP_REPORTES_JEFES_LISTA_SI_TIENE_CURSOS
+(
+@periodo_vc,
+@camp_vc
+)
+AS
+BEGIN	
+		
+	SELECT DISTINCT(B.id), fullname, count(*) as alumnos 
+	FROM mdl_user_students A 
+	INNER JOIN mdl_course B on A.course=B.id 
+	WHERE A.periodo=@periodo_vc and camp=@camp_vc
+	GROUP BY b.id, fullname
+	ORDER BY B.id desc 
+END
+	

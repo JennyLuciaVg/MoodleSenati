@@ -1,0 +1,10 @@
+CREATE PROCEDURE SP_FOROS_EXISTE
+(
+@id_curso_moodle 
+)
+AS
+BEGIN		
+		SELECT COALESCE((SELECT 1 
+		FROM mdl_forum 
+		WHERE course= @id_curso_moodle  LIMIT 1),0) as existe
+END	

@@ -1,0 +1,26 @@
+
+CREATE PROCEDURE SP_ACTAS_NOTA_OFICIAL
+(
+@Id_Curso_Modle
+)
+AS
+BEGIN
+		SELECT DISTINCT(A.camp||'-'||estado), A.camp, estado, nombre_centro, count(0) as total 
+			FROM mdl_user_students A 
+			LEFT JOIN mdl_user B 
+			on userid=B.id 
+			LEFT JOIN senati_actas_notas C
+			on C.id_curso=A.course and B.id=id_alumno 
+			LEFT JOIN senati_centros E
+			on E.id_centro=A.camp 
+		WHERE A.course=@Id_Curso_Modle
+		GROUP BY A.camp||'-'||estado, A.camp, estado, nombre_centro
+	  
+END
+//ANTERIOR QUERY
+  $queryz  = "Select DISTINCT(A.camp||'-'||estado), A.camp, estado, nombre_centro, count(*) as total From mdl_user_students A ";
+	  $queryz .= "left join mdl_user B on userid=B.id ";
+	  $queryz .= "left join senati_actas_notas C on C.id_curso=A.course and B.id=id_alumno ";
+	  $queryz .= "left join senati_centros E on E.id_centro=A.camp ";
+	  $queryz .= "Where A.course=" . $id_curso_moodle ; 
+	  $queryz .= "Group by A.camp||'-'||estado, A.camp, estado, nombre_centro";

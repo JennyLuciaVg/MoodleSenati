@@ -1,0 +1,22 @@
+
+CREATE PROCEDURE SP_GETBYID_DISTINCT_CAMP_DISTINC
+(
+@ID_CURSO 
+)
+AS
+BEGIN
+
+		SELECT DISTINCT(camp), nombre_centro, count(0) as Total
+			FROM mdl_user_students
+			LEFT JOIN senati_centros 
+			on id_centro=camp
+			WHERE course=@ID_CURSO 
+			GROUP BY camp,nombre_centro order by 1 
+		
+		SELECT DISTINCT(bloque), count(0) as Total 
+			FROM mdl_user_students
+			WHERE course=@ID_CURSO
+			GROUP BY bloque 
+			ORDER BY 1 
+END
+	

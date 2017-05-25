@@ -1,0 +1,16 @@
+//Grabar en tabla log log_borrado_ceros
+
+CREATE PROCEDURE SP_BORRA_CEROS_INSERTAR_TABLA_LOG
+(
+@id_user,
+@id_alux,
+@id_intento,
+@id_cursox,
+@$id_quix
+)
+AS
+BEGIN
+				INSERT INTO log_borrado_ceros(id_usuario, id_alumno, id_attempt,id_curso,id_quiz)
+						VALUES(@id_user,@id_alux,@id_intento,@id_cursox,@$id_quix)
+END
+			

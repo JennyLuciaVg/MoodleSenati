@@ -1,0 +1,11 @@
+
+CREATE PROCEDURE SP_PERIODO_CURSO
+(
+@Id_Curso
+)
+AS
+BEGIN
+		SELECT periodo
+		FROM mdl_course
+		WHERE id=@Id_Curso
+END

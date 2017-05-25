@@ -1,0 +1,11 @@
+CREATE PROCEDURE SP_GETALL_CAMPUS
+(
+
+)
+AS
+BEGIN
+		SELECT id_centro, nombre_centro
+		FROM senati_centros
+		WHERE id_centro not in ('00','SV','STI','50','60Q','65','60R','72A','73','69','60I','60Y')
+		ORDER BY nombre_centro 
+END

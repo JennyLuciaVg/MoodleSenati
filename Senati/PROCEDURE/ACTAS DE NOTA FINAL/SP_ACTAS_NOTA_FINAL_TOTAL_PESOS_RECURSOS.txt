@@ -1,0 +1,11 @@
+
+CREATE PROCEDURE SP_ACTAS_NOTA_FINAL_TOTAL_PESOS_RECURSOS
+(
+@id_cursox
+)
+AS
+BEGIN
+		SELECT COUNT(*) as total 
+		FROM senati_pesos_recursos 
+		WHERE id_curso=@id_cursox
+END

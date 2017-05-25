@@ -1,0 +1,31 @@
+
+
+CREATE PROCEDURE SP_UNIDADES_M_VERIFICA_TIPO_MODULO
+(
+@instancia,
+@name_module
+)
+AS
+BEGIN
+IF (@name_module=="label")
+			SELECT name, content 
+				from mdl_label 
+				where id= @instancia 
+	 else if (@name_module=="quiz")
+			SELECT name from mdl_quiz where id=@instancia
+	 else if (@name_module=="assignment")
+			SELECT name from mdl_assignment where id=@instancia
+	 else if (@name_module=="forum")
+			SELECT name from mdl_forum where id= @instancia 
+	 else if (@name_module=="resource")
+			SELECT name from mdl_resource where id=@instancia  
+	 else if (@name_module=="feedback")
+			SELECT name from mdl_feedback where id=@instancia 
+	 else if (@name_module=="chat")
+			SELECT name from mdl_chat where id= @instancia
+	 else if (@name_module=="certificate")
+			SELECT name from mdl_certificate where id=@instancia
+	 else if (@name_module=="glossary")
+			SELECT name from mdl_glossary where id=@instancia	  
+		
+END

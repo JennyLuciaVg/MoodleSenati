@@ -1,0 +1,12 @@
+
+CREATE PROCEDURE SP_C_M_LISTAR_DISTINTOS_PDIM_BANNER
+(
+@id_curso_moodle
+)
+AS
+BEGIN
+			SELECT distinct(pidm_banner), status_sinfo 
+			FROM mdl_user_students A 
+			LEFT JOIN mdl_user B on userid=B.id 
+			WHERE A.course=@id_curso_moodle
+END

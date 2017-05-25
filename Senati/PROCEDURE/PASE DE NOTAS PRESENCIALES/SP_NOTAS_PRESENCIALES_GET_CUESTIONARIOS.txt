@@ -1,0 +1,14 @@
+//QUIZ SOLO SON CUESTIONARIOS (DEBEN SER DOS)	
+
+		
+CREATE PROCEDURE SP_NOTAS_PRESENCIALES_GET_CUESTIONARION
+(
+@Id_cursox		
+)
+AS
+BEGIN
+			SELECT distinct(A.id), name 
+			FROM mdl_quiz A 
+			WHERE A.course=@Id_cursox 
+			order by A.id
+END

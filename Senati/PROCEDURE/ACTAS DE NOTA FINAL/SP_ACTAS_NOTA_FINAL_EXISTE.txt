@@ -1,0 +1,13 @@
+/Aca tengo que obtener la calificacion 
+
+CREATE PROCEDURE SP_ACTAS_NOTA_FINAL_EXISTE
+(
+@id_cursox,
+@id_userx
+)
+AS
+BEGIN
+		SELECT COALESCE((SELECT 1 
+		FROM senati_actas_notas 
+		WHERE id_curso=@id_cursox and id_alumno=@id_userx LIMIT 1),0) as existe
+END

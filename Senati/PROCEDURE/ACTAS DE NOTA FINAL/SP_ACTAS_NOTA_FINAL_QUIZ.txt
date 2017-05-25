@@ -1,0 +1,17 @@
+/// NOTA DE SUBSANACION
+//////////////////////////////////////////////   QUIZ /////////////////////////////////
+
+CREATE PROCEDURE SP_ACTAS_NOTA_FINAL_QUIZ
+(
+@id_userx,
+@id_cursox
+)
+AS
+BEGIN
+		SELECT B.Grade, A.GRADE as nota_maxima 
+				FROM mdl_quiz A
+				LEFT JOIN mdl_quiz_grades B 
+				on A.id=B.quiz and userid=@id_userx 
+				WHERE UPPER(A.name) like 'SUBSA%' and A.course=@id_cursox
+
+END

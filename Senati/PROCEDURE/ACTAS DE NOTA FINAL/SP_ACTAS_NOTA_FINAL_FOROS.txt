@@ -1,0 +1,22 @@
+//////////////////////////////////////////////   FOROS /////////////////////////////////
+CREATE PROCEDURE SP_ACTAS_NOTA_FINAL_FOROS
+(
+@idcursox,
+@id_userx,
+@id_foro
+)
+AS
+BEGIN	
+			SELECT a.id as id_foro, c.userid, d.post, d.rating 
+					FROM mdl_forum a 
+					LEFT JOIN mdl_forum_discussions b 
+					on a.id=b.forum 
+					LEFT JOIN mdl_forum_posts c
+					on c.discussion=b.id
+					LEFT JOIN mdl_forum_ratings d
+					on d.post=c.id  
+					WHERE a.course=@id_cursox
+						  and a.scale=20 
+						  and c.userid=@id_userx 
+						  and a.id=@id_foro
+END

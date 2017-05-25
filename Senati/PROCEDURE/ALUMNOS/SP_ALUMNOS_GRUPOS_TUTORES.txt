@@ -1,0 +1,20 @@
+
+CREATE PROCEDURE _SP_ALUMNOS_GRUPOS_TUTORES
+(
+@id_curso_moodle
+
+)
+AS
+BEGIN
+
+    SELECT A.id as id_grupo, A.name as nombre_grupo, A.num_grupo as grupo_numerico, B.userid, firstname, lastname, pidm_banner 
+            FROM mdl_groups A 
+	        INNER JOIN mdl_groups_members B on A.id=B.groupid
+	        INNER JOIN  mdl_user D on D.id=B.userid 
+	        WHERE B.userid in(SELECT C.userid 
+			FROM mdl_user_teachers C 
+			WHERE C.course=A.courseid) 
+                  and A.courseid=@id_curso_moodle
+	             ORDER BY B.userid, A.name 
+	
+END

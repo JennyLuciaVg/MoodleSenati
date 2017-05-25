@@ -1,0 +1,13 @@
+CREATE PROCEDURE SP_FOROS_BYIDCURSOMODDLE
+(
+@id_curso_moodle,
+@id_tutorg 
+)
+AS
+BEGIN
+	SELECT B.name as nombre_grupo, B.id as id_grupo from mdl_groups_members A 
+		INNER JOIN mdl_groups B on B.id=A.groupid
+		WHERE B.courseid=@id_curso_moodle
+		and A.userid=@id_tutorg 
+		ORDER BY 1
+END

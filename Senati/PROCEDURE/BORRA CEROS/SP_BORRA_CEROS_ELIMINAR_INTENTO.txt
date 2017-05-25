@@ -1,0 +1,15 @@
+///BORRAR EL INTENTO
+
+
+CREATE PROCEDURE SP_BORRA_CEROS_ELIMINAR_INTENTO
+(
+@id_intento
+)
+AS
+BEGIN
+				DELETE 
+				FROM mdl_quiz_attempts 
+				WHERE id=@id_intento
+END			
+				
+				

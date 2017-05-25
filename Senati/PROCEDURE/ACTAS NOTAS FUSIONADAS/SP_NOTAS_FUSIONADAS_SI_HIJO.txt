@@ -1,0 +1,23 @@
+/// AVERIGUO SI ES HIJO (1) o NO ES HIJO (0)  
+
+
+CREATE PROCEDURE SP_NOTAS_FUSIONADAS_SI_HIJO
+(
+@id_curso
+
+)		
+AS
+BEGIN
+	SELECT COUNT(1) es_hijo
+	FROM mdl_course
+	WHERE subsanacion_de is not null 
+	and id=@id_curso
+		
+	SELECT COALESCE((
+		SELECT 1 
+		FROM mdl_course 
+		WHERE subsanacion_de is not null and id=@id_curso  LIMIT 1),0) as es_hijo
+		
+		
+
+END		

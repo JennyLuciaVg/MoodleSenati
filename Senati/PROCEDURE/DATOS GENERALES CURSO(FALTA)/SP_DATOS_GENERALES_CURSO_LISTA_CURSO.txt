@@ -1,0 +1,14 @@
+
+
+CREATE PROCEDURE SP_DATOS_GENERALES_CURSO_LISTA_CURSO
+(
+@id_curso_moodle
+)
+AS
+BEGIN
+
+		SELECT fullname, shortname, visible, id_patron_semilla, periodo,induccion, subsanacion, presencial, id_publico,grupo, presencial_de, subsanacion_de, patron, camp_pres,materia_sinfo, curso_sinfo, id_tarea_induccion, font_titulo_certi,header_certi, titulo_certificado
+		FROM mdl_course 
+		WHERE id=@id_curso_moodle
+END
+	

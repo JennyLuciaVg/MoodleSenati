@@ -1,0 +1,15 @@
+//Verifico si tiene Ponderaciones
+
+CREATE PROCEDURE SP_EVIDENCIAS_COMPLETAS_CERIFICAR_PONDERACION
+(
+@id_cursox
+)
+AS
+BEGIN
+
+		SELECT COALESCE((
+			SELECT 1 
+			FROM senati_pesos_recursos 
+			WHERE id_curso=@id_cursox  LIMIT 1),0) as tiene_pond
+END
+	

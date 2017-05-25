@@ -1,0 +1,19 @@
+
+CREATE PROCEDURE SP_FOROS_BYID_GENERAL
+(
+@id_curso_moodle
+)
+AS
+BEGIN
+		Select a.id as id_foro, name, C.section as unidad from mdl_forum A 
+				INNER JOIN mdl_course_modules B
+				on B.instance=A.id 
+				INNER JOIN mdl_course_sections C
+				on C.id=B.section 
+				WHERE A.course=@id_curso_moodle 
+					  and B.module=5 
+					  and type='general' 
+					  and scale<>-1
+				ORDER BY C.section 
+END
+	

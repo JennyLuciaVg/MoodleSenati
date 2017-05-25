@@ -1,0 +1,19 @@
+///ACA CREO ALUMNOS AUTOMATICAMENTE//////////////////////
+CREATE PROCEDURE SP_C_M_INSERTAR_ESTUDIANTES_AUTOMATICAMENTE
+(
+@pidm_sinfo,
+@apes,
+@nombres,
+@pidm_sinfo ,
+@camp,
+@ciudad,
+@emilio
+)
+AS
+BEGIN
+		 Insert into mdl_user(username,lastname,firstname,pidm_banner,password,campus,city,email,confirmed,pidm_ok,tipo_user) 
+			values(@pidm_sinfo,@apes,@nombres,@pidm_sinfo , md5('123456'),@camp,@ciudad,@emilio,1,'s',3)
+END
+				   
+
+				 

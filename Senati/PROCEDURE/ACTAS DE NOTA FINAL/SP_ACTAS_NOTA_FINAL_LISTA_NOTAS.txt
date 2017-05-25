@@ -1,0 +1,18 @@
+//ESTO ES PARA TODOS
+
+CREATE PROCEDURE SP_ACTAS_NOTA_FINAL_LISTA_NOTAS
+(
+@id_cursox 
+)
+AS 
+BEGIN
+		SELECT A.userid, firstname, lastname, nota, estado, fecha_entrega, k.nota_final, ponderacion 
+			FROM mdl_user_students A
+			LEFT JOIN mdl_user B 
+			on A.userid=B.id 
+			LEFT JOIN senati_actas_notas
+			on id_alumno=A.userid and id_curso=A.course
+			LEFT JOIN senati_entrega_certif K on K.userid=B.id 
+			and courseid=A.course Where A.course=@id_cursox 
+			ORDER BY lastname
+END

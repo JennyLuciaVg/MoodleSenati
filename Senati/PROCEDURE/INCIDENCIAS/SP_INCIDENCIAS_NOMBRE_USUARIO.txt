@@ -1,0 +1,11 @@
+
+CREATE PROCEDURE SP_INCIDENCIAS_NOMBRE_USUARIO
+(
+@id_usuario
+)
+AS
+BEGIN	      
+		SELECT firstname, lastname 
+                FROM mdl_user 
+                WHERE id=@id_usuario
+END

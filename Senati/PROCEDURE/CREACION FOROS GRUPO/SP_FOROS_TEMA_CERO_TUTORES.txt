@@ -1,0 +1,20 @@
+// VER SI TIENEN TEMAS CERO LOS TUTORES
+
+CREATE PROCEDURE SP_FOROS_TEMA_CERO_TUTORES
+(
+@id_curso_moodle,
+@id_foro
+)
+AS
+BEGIN
+		SELECT A.id as id_discussion, A.name as name_discussion, A.userid as id_tutor, A.groupid as id_grupo, firstname, lastname,message, C.id as id_post
+		FROM mdl_forum_discussions A 
+		INNER JOIN mdl_forum_posts C 
+		on A.id=C.discussion and C.userid=A.userid and C.parent=0 and a.firstpost=C.id 
+		INNER JOIN mdl_user D 
+		on D.id=A.userid 
+		WHERE A.forum=@id_foro and A.userid in (SELECT B.userid 
+		FROM mdl_user_teachers B 
+		WHERE B.course=@id_curso_moodle)
+END
+		

@@ -1,0 +1,13 @@
+//Nombre del Curso
+
+CREATE PROCEDURE SP_REPORTE_EVIDENCIAS_NOMBRE_CURSO
+(
+@id_cursox
+)
+AS
+BEGIN
+	SELECT fullname
+	FROM mdl_course
+	WHERE id=@id_cursox
+END
+		

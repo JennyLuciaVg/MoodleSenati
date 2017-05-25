@@ -1,0 +1,15 @@
+/// VERIFICAR SI EXISTE EL CURSO PADRE SACARLO Y PONER EN EL RECUADRO
+	
+	//Campus distintos
+
+CREATE PROCEDURE SP_IMPORTAR_MATRICULAS_LISTA_CURSO_PRESENCIAL
+(
+@id_curso_moodle
+)
+AS
+BEGIN
+	SELECT presencial_de
+	FROM mdl_course
+	WHERE id=@id_curso_moodle
+END
+	

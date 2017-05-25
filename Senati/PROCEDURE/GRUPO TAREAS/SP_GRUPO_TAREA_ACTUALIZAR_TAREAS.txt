@@ -1,0 +1,18 @@
+				
+				
+CREATE PROCEDURE SP_GRUPO_TAREA_ACTUALIZAR_TAREAS
+(
+@datax,
+@id_tarea,
+@id_nume_grupo  
+)
+AS
+BEGIN	
+			UPDATE senati_tareas 
+			SET contenido=@datax
+			WHERE id_tarea=@id_tarea 
+			and numero_grupo=@id_nume_grupo 
+END
+	
+						
+					

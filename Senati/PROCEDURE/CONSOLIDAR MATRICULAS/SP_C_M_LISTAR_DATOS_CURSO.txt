@@ -1,0 +1,15 @@
+//// OBTENCION DE DATOS DEL CURSO
+
+
+CREATE PROCEDURE SP_C_M_LISTAR_DATOS_CURSO
+(
+@id_curso_moodle
+)
+AS
+BEGIN	
+				SELECT fullname,startdate, A.periodo, banner_subj_code, banner_crse_numb, C.materia_sinfo, C.curso_sinfo 
+						FROM mdl_course A 
+						LEFT JOIN senati_rela_cursos_Cursos B on id_course_moodle=A.id 
+						LEFT JOIN senati_cursos C on C.id_curso=id_curso_senati 
+						WHERE A.id=@id_curso_moodle
+END

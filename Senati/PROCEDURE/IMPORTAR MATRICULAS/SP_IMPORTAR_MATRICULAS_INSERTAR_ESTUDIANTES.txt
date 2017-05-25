@@ -1,0 +1,14 @@
+CREATE PROCEDURE SP_IMPORTAR_MATRICULAS_INSERTAR_ESTUDIANTES
+(
+@id_curso_moodle,
+@id_usuario,
+@nrc,
+@periodico,
+@bloque,
+@camp
+)
+AS
+BEGIN
+	Insert into mdl_user_students (course,userid,camp,nrc,periodo,bloque,enrol)
+		values (@id_curso_moodle,@id_usuario,@camp,@nrc,@periodico,@bloque,'manual')
+END						

@@ -1,0 +1,16 @@
+ ///HAGO UN UPDATE
+
+CREATE PROCEDURE SP_SUBSANACION_UPDATE_ESTUDIANTES
+(
+@camp,
+@nrc,
+@periodo,
+@bloque,
+@id_curso_sub,
+@id_user_sv
+)
+AS
+BEGIN
+	  UPDATE mdl_user_students set camp=@camp,nrc=@nrc,periodo=@periodo,bloque=@bloque
+	  WHERE course=@id_curso_sub and userid=@id_user_sv
+END

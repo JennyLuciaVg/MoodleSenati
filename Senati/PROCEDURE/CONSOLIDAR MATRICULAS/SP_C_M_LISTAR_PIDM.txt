@@ -1,0 +1,15 @@
+// Los busco en la base de datos como usuario o pidm_banner
+				// tengo el pidm de todos modos
+				
+
+CREATE PROCEDURE SP_C_M_LISTAR_PIDM
+(
+@pidm_sinfo,
+@pidm_sinfo
+)
+AS
+BEGIN
+		SELECT id
+		FROM mdl_user 
+		WHERE deleted=0 and (pidm_banner=@pidm_sinfo or username=@pidm_sinfo)
+END		

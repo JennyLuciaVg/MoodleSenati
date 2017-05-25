@@ -1,0 +1,11 @@
+//VERIFICO SI ES JEFE DE CENTRO
+CREATE PROCEDURE SP_REPORTES_JEFES_LISTAR
+(
+@usuario
+)
+AS
+BEGIN
+	SELECT jefe_centro, campus_repo 
+	FROM mdl_user 
+	WHERE id=@usuario
+END

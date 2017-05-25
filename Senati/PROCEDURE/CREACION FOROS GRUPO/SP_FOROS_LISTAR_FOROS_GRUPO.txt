@@ -1,0 +1,17 @@
+///	Listar las foros por Grupo existentes Ordeno por UNIDAD
+			
+
+CREATE PROCEDURE SP_FOROS_LISTAR_FOTOS_GRUPO
+(
+@id_patron
+)
+AS
+BEGIN
+	SELECT A.name as nombre_foro, A.id as id_foro, C.section as unidad 
+		FROM mdl_forum A 
+		INNER JOIN mdl_course_modules B on B.instance=A.id and A.course=B.course 
+		INNER JOIN mdl_course_sections C on C.id=B.section 
+		WHERE B.module=5 and A.scale<>-1 and A.type='general' and A.course=@id_patron
+		ORDER BY C.section
+END
+					

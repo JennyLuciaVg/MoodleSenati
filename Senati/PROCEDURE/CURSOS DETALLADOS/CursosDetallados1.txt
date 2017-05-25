@@ -1,0 +1,53 @@
+CREATE PROCEDURE SP_PRESENCIALES_O_SUBSANACIONES
+(
+@ID_CURSO_PADRE INT	
+)
+AS
+BEGIN
+SELECT A.id, fullname,startdate, A.periodo, subsanacion, subsanacion_de, presencial,Z.Inscritos,W.reti_sinfo,J.total_grupox, T.total_tutores ,
+		S.pondera, AC.hacademica, R.temas_foro<
+		FROM mdl_course A 
+		join(
+			select count(0) Inscritos, course
+				FROM mdl_user_students Z 
+				GROUP BY Z.course)
+		as Z on Z.course=A.id
+		join(
+			select count(0) reti_sinfo, course,status_sinfo
+				FROM mdl_user_students W
+				GROUP BY W.course, W.status_sinfo)
+			as W on W.course=A.id and W.status_sinfo='RET' 
+		join(
+			select count(0) total_grupox,courseid
+				FROM mdl_groups J
+				GROUP BY J.courseid)
+			as J on J.courseid=A.id
+		join(
+			select count(0) total_tutores, course
+				FROM mdl_user_teachers T
+				GROUP BY T.course)
+			as T on T.course=A.id
+		join(
+			select pondera , id_curso 
+				FROM senati_pesos_recursos S
+				GROUP BY S.id_curso)
+			as S on S.id_curso=A.id
+		
+		join(
+			select hacademica , id_curso 
+				FROM ssenati_actas_notas AC
+				GROUP BY AC.id_curso)
+			as AC on AC.id_curso=A.id
+		
+		join(
+			Select count(0) temas_foro,course,parent 	
+				FROM mdl_forum_discussions P 
+				INNER JOIN mdl_forum_posts Q on Q.discussion=P.id 
+				INNER JOIN mdl_forum R on R.id=P.forum and P.course=R.course 
+				GROUP BY R.course,Q.parent)
+			as	R on R.course=A.id and Q.parent=0 		
+	
+		WHERE   presencial_de= @ID_CURSO_PADRE
+				and subsanacion_de=@ID_CURSO_PADRE
+				ORDER BY subsanacion_de desc, A.id desc	
+END

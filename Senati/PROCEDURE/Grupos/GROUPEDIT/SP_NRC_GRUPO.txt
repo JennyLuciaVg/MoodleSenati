@@ -1,0 +1,24 @@
+	////////// PONGO LOS NRC DEL GRUPO
+	
+CREATE PROCEDURE SP_NRC_GRUPO
+(
+@id_grupo,
+@ID_CURSO
+)
+AS
+		SELECT  nrc, camp,count(0) as total, G.bloque
+		FROM mdl_user_students 
+		JOIN(
+			select G.userid,bloque
+			from mdl_groups_members G
+			group by G.groupid)
+			as G on groupid=@id_grupo
+			
+		WHERE 	course=@ID_CURSO
+			and userid= G.userid
+		GROUP BY nrc,camp , G.bloque
+		ORDER BY 1
+END
+		
+		
+	

@@ -1,0 +1,15 @@
+CREATE PROCEDURE SP_REPORTES_DESAPROBADOS_ESTUDIANTES
+(
+@id_cursox 
+)
+AS
+BEGIN
+
+	SELECT A.userid, firstname, lastname, A.camp,nombre_centro, A.bloque, nrc, B.pidm_banner 
+	FROM mdl_user_students A
+	LEFT JOIN mdl_user B on A.userid=B.id 
+	LEFT JOIN senati_centros on id_centro=camp 
+	WHERE (status_sinfo is null or status_sinfo='')
+		and A.course=@id_cursox 
+		order by bloque,camp 
+END

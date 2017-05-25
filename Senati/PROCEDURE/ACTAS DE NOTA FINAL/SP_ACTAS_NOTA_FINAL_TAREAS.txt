@@ -1,0 +1,20 @@
+/////////////////////////////////////////////   TAREAS O ASSIGNMENTS /////////////////////////////////
+			
+				
+CREATE PROCEDURE SP_ACTAS_NOTA_FINAL_TAREAS
+(
+@id_userx,
+@id_cursox
+)
+AS
+BEGIN
+				SELECT distinct(A.id), max(B.Grade) as Grade, A.GRADE as nota_maxima, peso_recurso 
+					FROM mdl_assignment A 
+					LEFT JOIN mdl_assignment_submissions B
+					on A.id=B.assignment and userid=@id_userx 
+					LEFT JOIN senati_pesos_recursos 
+					on id_recurso=A.id and tipo_recurso=1
+					WHERE peso_recurso<>0 and id_curso=@id_cursox
+					GROUP BY A.id, A.grade, peso_recurso 
+					ORDER BY A.id
+END

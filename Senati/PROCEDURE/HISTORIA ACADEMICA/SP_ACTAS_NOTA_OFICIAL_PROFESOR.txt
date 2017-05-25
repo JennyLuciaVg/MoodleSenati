@@ -1,0 +1,13 @@
+CREATE PROCEDURE SP_ACTAS_NOTA_OFICIAL_PROFESOR		
+(
+@id_curso_moodle
+)
+AS
+BEGIN
+		SELECT userid, firstname, lastname 
+		FROM mdl_user_teachers A 
+		LEFT JOIN mdl_user B 
+		on userid=B.id 
+		WHERE course=@id_curso_moodle
+END
+		

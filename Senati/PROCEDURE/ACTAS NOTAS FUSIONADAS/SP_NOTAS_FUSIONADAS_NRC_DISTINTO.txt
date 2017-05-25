@@ -1,0 +1,13 @@
+	//NRCS DISTINTOS
+	
+CREATE PROCEDURE SP_NOTAS_FUSIONADAS_NRC_DISTINTO
+(
+@lista_cursix
+)
+AS
+BEGIN
+		SELECT DISTINCT(A.nrc) as nrc 
+		FROM mdl_user_students A 
+		WHERE a.course IN (@lista_cursix)
+END	
+				

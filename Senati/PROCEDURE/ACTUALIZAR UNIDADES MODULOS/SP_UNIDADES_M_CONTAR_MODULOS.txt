@@ -1,0 +1,14 @@
+
+CREATE PROCEDURE SP_UNIDADES_M_CONTAR_MODULOS
+(
+@unidad,
+@idcmoodle
+)
+AS
+BEGIN
+		SELECT count(0) as total 
+		FROM mdl_course_modules A 
+		INNER JOIN mdl_course_sections C 
+		on C.id=A.section and C.course=A.course 
+		WHERE C.section=@unidad  and A.course=@idcmoodle
+ END

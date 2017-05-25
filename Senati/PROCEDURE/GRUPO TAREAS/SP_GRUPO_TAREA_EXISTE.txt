@@ -1,0 +1,13 @@
+
+CREATE PROCEDURE SP_GRUPO_TAREA_EXISTE
+(
+@id_tarea,
+@id_nume_grupo
+)
+AS
+BEGIN
+	SELECT COALESCE((
+		SELECT 1 
+		FROM senati_tareas 
+		WHERE id_tarea=@id_tarea and numero_grupo=@id_nume_grupo  LIMIT 1),0) as existe
+END		

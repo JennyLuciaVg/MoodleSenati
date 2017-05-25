@@ -1,0 +1,16 @@
+			
+
+CREATE PROCEDURE SP_MATRICULA_PRESENCIALES_INSERT_ESTUDIANTE
+(
+@id_curso_pres,
+@id_usuario,
+@camp,
+@nrc,
+@periodo_seleccionado,
+@bloque
+)
+AS
+BEGIN
+	INSERT INTO mdl_user_students (course,userid,camp,nrc,periodo,bloque,enrol) 
+		VALUES (@id_curso_pres,@id_usuario,@camp,@nrc,@periodo_seleccionado,@bloque,'manual')
+END

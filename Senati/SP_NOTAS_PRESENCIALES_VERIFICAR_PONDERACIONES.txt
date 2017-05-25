@@ -1,0 +1,1 @@
+			SELECT COALESCE((Select 1 from senati_pesos_recursos where id_curso='. $id_cursox . ' LIMIT 1),0) as tiene_pond

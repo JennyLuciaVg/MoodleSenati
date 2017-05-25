@@ -1,0 +1,12 @@
+		
+CREATE PROCEDURE SP_NOTAS_FUSIONADAS_NOMBRE_COMPLETO_CURSO
+(
+@id_curso
+)
+AS
+BEGIN
+	SELECT fullname 
+	FROM mdl_course 	
+	WHERE id=@id_curso
+END
+			

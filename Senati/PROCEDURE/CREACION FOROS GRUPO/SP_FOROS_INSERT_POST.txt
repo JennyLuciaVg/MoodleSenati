@@ -1,0 +1,16 @@
+		
+CREATE PROCEDURE SP_FOROS_INSERT_POST
+(
+@id_new_discussion,
+@name_forox,
+@$id_tutorx
+@datax,
+@fecha_actual,
+@fecha_actual
+)
+AS
+BEGIN
+	INSERT INTO mdl_forum_posts (discussion, subject,userid,message,created,modified,format,parent) 
+		VALUES (@id_new_discussion,@name_forox,@$id_tutorx
+		@datax,@fecha_actual,@fecha_actual,1,0)
+END

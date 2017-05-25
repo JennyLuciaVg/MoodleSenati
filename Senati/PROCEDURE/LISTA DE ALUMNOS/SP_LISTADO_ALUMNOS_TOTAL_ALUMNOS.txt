@@ -1,0 +1,18 @@
+// en el conteo de alumnos no debo contar los profesores
+
+CREATE PROCEDURE SP_LISTADO_ALUMNOS_TOTAL_ALUMNOS
+(
+@id_cursox
+)
+AS
+BEGIN
+	
+	SELECT DISTINCT(A.groupid), B.name, count(*) as alumnos from mdl_groups_members A 
+	INNER JOIN mdl_groups B on A.groupid=B.id
+	WHERE B.courseid=@id_cursox  and A.userid not in 	
+		(SELECT userid 
+		FROM mdl_user_teachers C 
+		WHERE C.course=B.courseid) 
+		GROUP BY A.groupid, B.name order by B.name 
+END
+	

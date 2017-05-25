@@ -1,0 +1,16 @@
+// LISTA DE TUTORES DEL COURSE id userid course mdl_user_teachers
+
+	
+CREATE PROCEDURE SP_ENLAZAR_CHAT_LISTA_TUTORES
+(
+@id_curso_moodle 
+)
+AS
+BEGIN
+	SELECT userid, firstname, lastname
+		FROM mdl_user_teachers A 
+		INNER JOIN mdl_user B 
+		on A.userid=B.id 
+		WHERE course=@id_curso_moodle 
+		ORDER BY lastname, firstname
+END

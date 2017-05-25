@@ -1,0 +1,11 @@
+//NRCS - CAMP DISTINTOS
+CREATE PROCEDURE SP_NOTAS_FUSIONADAS_CAMPUS_DISTINTO
+()
+AS
+BEGIN
+		SELECT distinct(A.nrc) as nrc, camp, nombre_centro as campus 
+		FROM mdl_user_students A 
+		LEFT JOIN senati_centros B on id_centro=A.camp
+		WHERE a.course in (@lista_cursix)
+END
+				

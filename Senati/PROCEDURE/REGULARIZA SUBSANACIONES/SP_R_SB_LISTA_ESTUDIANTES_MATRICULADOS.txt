@@ -1,0 +1,20 @@
+//LISTA DE ALUMNOS DEL CURSO QUE NO DEBEN ESTAR EN SUBSANACION
+
+
+CREATE PROCEDURE SP_R_SB-LISTA_ESTUDIANTES_MATRICULADOS
+(
+@id_curso_moodle 
+)
+AS
+BEGIN
+		SELECT A.*,B.*, C.*, A.id as id_matricula 
+		FROM mdl_user_students A 
+		INNER JOIN mdl_course B on A.course=B.id 
+		INNER JOIN mdl_user C on A.userid=C.id 
+		WHERE A.course=@id_curso_moodle 
+		and A.userid in(SELECT id_alumno
+			FROM senati_actas_notas 
+			WHERE id_curso=B.subsanacion_de 
+			and estado='AP') 
+
+END

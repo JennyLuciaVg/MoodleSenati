@@ -1,0 +1,11 @@
+
+CREATE PROCEDURE SP_FOROS_ID_PATRON_SEMILLA
+(
+@id_curso_moodle
+)
+AS
+BEGIN
+		Select id_patron_semilla 
+		FROM mdl_course
+		WHERE id=@id_curso_moodle
+END

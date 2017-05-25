@@ -1,0 +1,22 @@
+﻿// VERIFICAR CUAL ES EL ID que se GENERÓ
+
+
+CREATE PROCEDURE SP_FOROS_ID_GENERO
+(
+@id_forox ,
+@name_forox,
+@id_tutorx,
+@id_grupox,
+@fecha_actual 
+)
+AS
+BEGIN
+		SELECT id 
+			FROM mdl_forum_discussions 
+			WHERE forum=@id_forox 
+			and name=@name_forox 
+			and userid=@id_tutorx
+			and groupid=@id_grupox
+			and timemodified=@fecha_actual 
+END
+	

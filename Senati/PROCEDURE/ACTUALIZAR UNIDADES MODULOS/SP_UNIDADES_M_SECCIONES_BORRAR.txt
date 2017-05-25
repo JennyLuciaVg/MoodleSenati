@@ -1,0 +1,11 @@
+
+CREATE PROCEDURE SP_UNIDADES_M_SECCIONES_BORRAR
+(
+@id_section_borrar
+)
+AS
+BEGIN
+		DELETE 
+		FROM mdl_course_sections
+		WHERE id=@id_section_borrar 
+END

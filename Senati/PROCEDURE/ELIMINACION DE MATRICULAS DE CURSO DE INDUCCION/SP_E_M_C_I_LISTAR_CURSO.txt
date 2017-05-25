@@ -1,0 +1,13 @@
+/CHEQUEO PRIMERO QUE SE TRATA DE UN CURSO DE INDUCCION
+		
+CREATE PROCEDURE SP_E_M_C_I_LISTAR_CURSO
+(
+@id_curso_moodle
+)
+AS
+BEGIN
+
+		SELECT fullname, induccion, presencial_de, subsanacion_de 
+		FROM mdl_course 
+		WHERE id=@id_curso_moodle
+END

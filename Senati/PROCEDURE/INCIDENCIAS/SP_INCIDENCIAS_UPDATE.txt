@@ -1,0 +1,14 @@
+CREATE PROCEDURE SP_INCIDENCIAS_UPDATE
+(
+@d_tutorx,
+@id_alumnox,
+@id_cursox,
+@incidencia 
+)
+AS
+BEGIN
+        UPDATE senati_reg_incidencias 
+        SET id_tutor=@d_tutorx,id_alu=@id_alumnox,id_curso=@id_cursox,incidencia=@incidencia 
+        WHERE id_inc=@id_incidencia
+END
+			

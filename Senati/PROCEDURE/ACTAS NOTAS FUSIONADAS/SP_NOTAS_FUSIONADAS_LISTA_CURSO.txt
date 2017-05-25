@@ -1,0 +1,11 @@
+			
+CREATE PROCEDURE SP_NOTAS_FUSIONADAS_LISTA_CURSO
+(
+@lista_cursix
+)
+AS
+BEGIN
+	SELECT fullname,id 
+	FROM mdl_course 
+	WHERE id IN (@lista_cursix)
+END

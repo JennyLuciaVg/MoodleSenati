@@ -1,0 +1,31 @@
+  
+	
+		/// tengo el dato $grupos_del_tutor
+
+CREATE PROCEDURE SP_REPORTE_EVIDENCIAS_ALUMNOS_POSTEARON
+(
+@id_cursox,
+@grupos_del_tutor
+)
+AS
+BEGIN
+	SELECT count(DISTINCT(c.id)) as postearon 
+	FROM mdl_forum a 
+	left join mdl_forum_discussions b 
+	on a.id=b.forum 
+	LEFT JOIN mdl_forum_posts c 
+	on c.discussion=b.id 
+	WHERE a.course=@id_cursox 
+	and a.id=@foro_id 
+	and c.parent<>0
+	and c.userid in (select e.userid 
+		FROM mdl_user_students e
+		INNER JOIN mdl_user f 
+		on f.id=e.userid and f.deleted=0 
+		WHERE e.course=a.course
+        	and status_sinfo is null) 
+		and c.userid in (Select userid
+			FROM mdl_groups_members 
+			WHERE groupid in (@grupos_del_tutor))
+END
+		

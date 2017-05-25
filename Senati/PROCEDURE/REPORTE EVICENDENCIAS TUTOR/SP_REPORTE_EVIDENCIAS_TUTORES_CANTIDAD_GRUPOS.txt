@@ -1,0 +1,18 @@
+//////////////////////////////// TUTORES Y LA CANTIDAD DE GRUPOS  //////////////////////////////////	
+			
+CREATE PROCEDURE SP_REPORTE_EVIDENCIAS_TUTORES_CANTIDAD_GRUPOS
+(
+@id_cursox
+)
+AS
+BEGIN
+	SELECT A.userid, lastname||', '||firstname as nombre_tutor,
+	(Select count(0)
+	FROM mdl_groups C 
+	INNER JOIN mdl_groups_members D
+	on D.groupid=C.id
+	WHERE C.courseid=A.course and D.userid=A.userid) as total_grupos 
+		FROM mdl_user_teachers A
+		LEFT JOIN mdl_user B on A.userid=B.id 
+		WHERE A.course=@id_cursox
+END

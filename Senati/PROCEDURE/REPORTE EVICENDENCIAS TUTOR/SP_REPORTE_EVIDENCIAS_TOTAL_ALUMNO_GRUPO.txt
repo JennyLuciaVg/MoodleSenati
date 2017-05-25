@@ -1,0 +1,18 @@
+
+		//// AVERIGUAR EL TOTAL DE ALUMNOS DE ESE TUTOR
+		//// Total de Alumnos del Tutor
+CREATE PROCEDURE SP_REPORTE_EVIDENCIAS_TOTAL_ALUMNO_GRUPO
+(
+@id_cursox,
+@grupos_del_tutor
+)
+AS
+BEGIN				
+	SELECT COUNT(*) as total_alumnos_tutor 
+	FROM mdl_user_students B 
+	INNER JOIN mdl_user D on D.id=B.userid and D.deleted=0
+	WHERE B.course=@id_cursox and status_sinfo is null 
+	and B.userid in (SELECT E.userid 
+		FROM mdl_groups_members E 
+		WHERE groupid in (@grupos_del_tutor ))
+END

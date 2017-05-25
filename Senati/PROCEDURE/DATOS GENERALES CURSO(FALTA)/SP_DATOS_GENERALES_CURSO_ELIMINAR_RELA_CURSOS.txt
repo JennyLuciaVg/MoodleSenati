@@ -1,0 +1,13 @@
+		
+
+CREATE PROCEDURE SP_DATOS_GENERALES_CURSO_ELIMINAR_RELA_CURSOS
+(
+@id_curso_moodle
+)
+AS
+BEGIN
+	DELETE 
+	FROM senati_rela_cursos_cursos 
+	WHERE id_course_moodle=@id_curso_moodle
+END
+					  

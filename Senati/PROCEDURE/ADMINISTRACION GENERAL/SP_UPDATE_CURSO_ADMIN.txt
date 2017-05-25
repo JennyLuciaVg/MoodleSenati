@@ -1,0 +1,19 @@
+CREATE PROCEDURE SP_ACTUALIZAR_CURSO_ADMIN
+(
+@periodo,
+@sel_open,
+@sel_visible,
+@sel_patron,
+@sel_subsa,
+@sel_induccion,
+@sel_presencial,
+@sel_publico
+@id_curso
+)		
+AS
+BEGIN
+		UPDATE mdl_course 
+		SET periodo=@periodo, enrollable=@sel_open,visible=@sel_visible,patronz=@sel_patron,subsanacion=@sel_subsa,induccion=@sel_induccion,
+		presencial=@sel_presencial,id_publico=@sel_publico 
+		WHERE id=@id_curso
+END

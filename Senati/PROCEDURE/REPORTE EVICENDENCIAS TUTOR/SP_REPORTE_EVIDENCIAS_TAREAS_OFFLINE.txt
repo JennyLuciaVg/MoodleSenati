@@ -1,0 +1,21 @@
+/// LISTADO DE TAREAS que no sean OFFLINE y QUE TENGAN PESO DIFERENTE A CERO
+
+
+
+CREATE PROCEDURE SP_REPORTE_EVIDENCIAS_TAREAS_OFFLINE
+(
+@id_cursox
+)
+AS
+BEGIN
+		SELECT A.id as id_tarea, A.name, D.section as unidad, A.assignmenttype as tipo_tarea, peso_recurso
+		FROM mdl_assignment A 
+		LEFT JOIN senati_pesos_recursos B
+		on id_recurso=A.id and tipo_recurso=1 
+		LEFT JOIN mdl_course_modules C 
+		on C.course=id_curso and C.module=1 and C.instance=A.id 
+		LEFT JOIN mdl_course_sections D
+		on D.id=C.section 
+		WHERE id_curso=@id_cursox and peso_recurso<>0 and A.assignmenttype<>'offline' 
+		ORDER BY D.id, A.id 
+END

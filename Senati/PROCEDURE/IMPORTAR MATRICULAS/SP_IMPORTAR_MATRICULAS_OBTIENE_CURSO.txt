@@ -1,0 +1,19 @@
+//// OBTENCION DE DATOS DEL CURSO
+	
+CREATE PROCEDURE SP_IMPORTAR_MATRICULAS_OBTIENE_CURSO
+(
+@id_curso_moodle
+)
+AS
+BEGIN	
+	SELECT fullname,periodo,camp_pres, E.matriculas
+	FROM mdl_course A
+	INNER JOIN(
+		SELECT COUNT(0) matriculas,E.course
+		FROM mdl_user_students E
+		GROUP BY E.course)
+		as E on E.course=A.id)
+		WHERE A.id=@id_curso_moodle
+END
+	    
+		

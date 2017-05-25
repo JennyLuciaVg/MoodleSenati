@@ -1,0 +1,18 @@
+CREATE PROCEDURE SP_IMPORTAR_MATRICULAS_IDCAMPUS_DIFERENTE
+(
+@id_campus,
+@id_curso_fuente,
+@id_curso_fuente
+)
+AS			
+BEGIN
+	IF(@id_campus!="")
+			SELECT userid,nrc,bloque,camp 
+			FROM mdl_user_students 
+			WHERE course=@id_curso_fuente and camp=@id_campus
+		ELSE
+			SELECT userid,nrc,bloque,camp 
+			FROM mdl_user_students 
+			WHERE course=@id_curso_fuente
+				
+END			

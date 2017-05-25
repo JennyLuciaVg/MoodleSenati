@@ -1,0 +1,17 @@
+	//Verifico si tiene Ponderaciones
+
+CREATE PROCEDURE SP_REPORTE_EVIDENCIAS_VERIFICO_TIENE_PONDERACIONES
+(
+@id_cursox
+)
+AS
+BEGIN
+		SELECT count(1) as existe,A.id_curso
+		FROM senati_pesos_recursos A
+		WHERE id_curso=@id_cursox
+			
+			
+		SELECT COALESCE((SELECT 1 
+		FROM senati_pesos_recursos 
+		WHERE id_curso=@id_cursox  LIMIT 1),0) as tiene_pond
+END

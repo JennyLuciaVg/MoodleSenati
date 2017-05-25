@@ -1,0 +1,12 @@
+// debo saber si tiene un patron semilla y mostrarlo
+
+CREATE PROCEDURE SP_PONDERACIONES_PATRON_SEMILLA
+(
+@id_cursox
+)
+AS
+BEGIN
+			SELECT id_patron_semilla 
+			FROM mdl_course 
+			WHERE id=@id_cursox
+END

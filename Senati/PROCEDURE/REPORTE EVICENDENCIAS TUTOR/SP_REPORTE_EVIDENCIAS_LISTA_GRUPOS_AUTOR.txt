@@ -1,0 +1,24 @@
+
+	
+CREATE PROCEDURE SP_REPORTE_EVIDENCIAS_LISTA_GRUPOS_AUTOR
+(
+@tarea_id,
+@grupos_del_tutor
+)
+AS
+BEGIN
+		SELECT count(1) as tte 
+		FROM mdl_assignment_submissions A
+		WHERE assignment=@tarea_id
+		and A.userid in (SELECT B.userid 
+			FROM mdl_user_students B 
+			INNER JOIN mdl_user D 
+			on D.id=B.userid and D.deleted=0 
+			WHERE B.course=@id_cursox  and status_sinfo is null 
+			and B.userid in (SELECT userid 
+				FROM mdl_groups_members 
+				WHERE groupid in ("@grupos_del_tutor"))
+END
+	
+
+	 

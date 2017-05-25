@@ -1,0 +1,15 @@
+	/// VERIFICAR QUE EL ALUMNO NO ESTA MATRICULADO POR OTRA VIA
+
+CREATE PROCEDURE SP_C_M_LISTAR_EXISTE
+(
+@id_curso_moodle,
+@id_user_sv
+
+)
+AS
+BEGIN
+			SELECT COALESCE((SELECT 1 
+				FROM mdl_user_students 
+				WHERE course=@id_curso_moodle and userid=@id_user_sv LIMIT 1),0) as existe
+END
+					

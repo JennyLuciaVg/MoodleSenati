@@ -1,0 +1,26 @@
+//// ESTE QUERY ME DA EL ID DEL CURSO EN EL CUAL OBTUVO LA NOTA 
+
+CREATE PROCEDURE SP_NOTAS_FUSIONADAS_ID_CURSO_OBTUVO_NOTA
+(
+@lista_cursix,
+
+)
+AS
+BEGIN
+
+		SELECT firstname, lastname, email , max(cast(Nota as Float)) as Notax, B.pidm_banner,
+		max(A.nrc) as nrc, max(A.bloque) as bloque, A.periodo, A.camp, A.userid,
+		status_sinfo, M.nombre_centro,(SELECT id 
+			FROM mdl_course J
+			WHERE J.id in (@lista_cursix) and subsanacion_de is null) as id_cursox 
+			FROM mdl_user_students A 
+			INNER JOIN mdl_user B on userid=B.id 
+			LEFT JOIN senati_usuarios K on K.id_usuario=B.id 
+			LEFT JOIN senati_centros M on M.id_centro=A.camp 
+			LEFT JOIN senati_actas_notas C on C.id_curso=A.course and B.id=id_alumno 
+			WHERE A.course IN (@lista_cursix)
+			GROUP BY firstname, lastname, email,A.nrc,A.bloque,B.pidm_banner, A.periodo, A.camp, 
+			A.userid,status_sinfo, nombre_centro 
+			ORDER BY status_sinfo ASC, A.nrc, camp, lastname
+END
+				

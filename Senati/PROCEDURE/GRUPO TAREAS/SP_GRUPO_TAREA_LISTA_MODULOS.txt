@@ -1,0 +1,17 @@
+
+CREATE PROCEDURE SP_GRUPO_TAREA_LISTA_MODULOS
+(
+@id_curso_moodle 
+)
+AS
+BEGIN
+
+		SELECT B.name, B.id as id_tarea, A.id as id_module, C.section as unidad 
+		FROM mdl_course_modules A 
+		INNER JOIN mdl_assignment B on A.instance=B.id and A.course=B.course 
+		INNER JOIN mdl_course_sections C on C.id=A.section 
+		WHERE A.course=@id_curso_moodle 
+		and module=1 
+		and assignmenttype='uploadsingle' 
+		ORDER BY C.section
+END

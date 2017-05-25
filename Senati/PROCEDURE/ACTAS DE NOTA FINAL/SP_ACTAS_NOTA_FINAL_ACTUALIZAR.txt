@@ -1,0 +1,21 @@
+CREATE PROCEDURE SP_ACTAS_NOTAS_FINAL_ACTUALIZAR
+(
+@nrcx INT ,
+@bloquex varchar(25),
+@camp varchar(25),
+@valor_nota,
+@valor_estado,
+@pondera_a_usar,
+@id_usuario, 
+@valor_id_alu,
+@id_cursox 
+)
+AS
+BEGIN
+	   UPDATE senati_actas_notas set nrc=@nrcx,bloque=@bloquex,camp=@campx,nota=@valor_nota,estado=@valor_estado,fecha_actividad=now(),
+						  ponderacion=@pondera_a_usar,id_usuario=@id_usuario 
+						  WHERE id_alumno=@valor_id_alu and id_curso=@id_cursox 
+
+END
+						
+				

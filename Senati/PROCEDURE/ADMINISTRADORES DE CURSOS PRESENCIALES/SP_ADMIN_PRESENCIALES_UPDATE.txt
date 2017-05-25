@@ -1,0 +1,13 @@
+
+
+CREATE PROCEDURE SP_ADMIN_PRESENCIALES
+(
+@isiblex,
+@id_cursox
+)
+AS
+BEGIN
+		UPDATE mdl_course 
+		SET visible=@isiblex
+		WHERE id=@id_cursox
+END

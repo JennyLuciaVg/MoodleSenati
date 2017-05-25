@@ -1,0 +1,18 @@
+
+
+CREATE PROCEDURE SP_NOTAS_PRESENCIALES_LISTA_ASSIGNMENT
+(
+@id_userx,
+@id_cursox 
+)
+AS
+BEGIN
+	SELECT distinct(A.id), B.Grade, A.GRADE as "nota_maxima", peso_recurso, B.numfiles, D.id as id_link, assignmenttype
+	FROM mdl_assignment A 
+	LEFT JOIN mdl_assignment_submissions B on A.id=B.assignment and userid=@id_userx 
+	LEFT JOIN senati_pesos_recursos on id_recurso=A.id and tipo_recurso=1 
+	LEFT JOIN mdl_course_modules D on D.course=id_curso and D.module=1 and D.instance=A.id 
+	WHERE peso_recurso<>0 
+		and id_curso=@id_cursox 
+		ORDER BY A.id
+END

@@ -1,0 +1,26 @@
+VARIABLES QUE NECESITA: 
+	banner_subj_code
+	banner_crse_numb
+	nombre_curso
+	name
+	TOTAL_DICTADOS
+	id_curso
+	
+	
+CREATE PROCEDURE SP_LISTA_CURSOS
+(
+)
+AS 
+BEGIN
+	SELECT A.*, b.*, F.TOTAL_DICTADOS
+	FROM senati_cursos A
+	JOIN(
+		SELECT COUNT(0) TOTAL_DICTADOS,F.id_curso_senati
+		FROM senati_rela_cursos_cursos F 
+		GROUP BY F.id_curso_senati,F.nombre_curso)
+		as F on F.id_curso_senati=A.id_curso  
+		JOIN mdl_course_categories B
+			on B.id=id_categoria 
+	ORDER BY A.nombre_curso
+END
+	

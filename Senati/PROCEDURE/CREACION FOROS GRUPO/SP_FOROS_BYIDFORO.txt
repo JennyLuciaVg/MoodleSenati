@@ -1,0 +1,19 @@
+
+CREATE PROCEDURE SP_FOROS_BYIDFORO
+(
+@id_patron,
+@id_forox
+)
+AS
+BEGIN
+		Select C.id as id_post, A.name 
+			FROM mdl_forum_discussions A
+			INNER JOIN mdl_forum_posts C 
+			on A.id=C.discussion and C.userid=A.userid and C.parent=0 and a.firstpost=C.id
+			WHERE 	A.forum=@id_forox
+			and A.userid in (
+			SELECT B.userid 
+			FROM mdl_user_teachers B 
+			WHERE B.course=@id_patron)
+			ORDER BY C.id
+END

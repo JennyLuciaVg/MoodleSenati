@@ -1,0 +1,19 @@
+CREATE PROCEDURE SP_ACTAS_FINAL_INSERTAR
+(
+@valor_id_alu,
+@id_cursox,
+@valor_nota,
+@valor_estado,
+@pondera_a_usar,
+@id_usuario,
+@nrcx,
+@bloquex,
+@campx,
+@periodox
+)
+AS
+BEGIN
+
+	INSERT INTO senati_actas_notas (id_alumno, id_curso, nota, fecha_actividad, estado, ponderacion, id_usuario,nrc,bloque,camp,periodo)
+			VALUES (@valor_id_alu,@id_cursox,@valor_nota,now(),@valor_estado,@pondera_a_usar,@id_usuario,@nrcx,@bloquex,@campx,@periodox
+END	

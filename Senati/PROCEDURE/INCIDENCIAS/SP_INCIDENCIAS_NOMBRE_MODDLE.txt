@@ -1,0 +1,17 @@
+
+
+CREATE PROCEDURE SP_INCIDENCIAS_NOMBRE_MODDLE
+(
+@id_curso
+)
+AS
+BEGIN
+
+	SELECT fullname 
+	FROM mdl_course 
+        WHERE id=@id_curso
+
+END
+		   
+		   
+		

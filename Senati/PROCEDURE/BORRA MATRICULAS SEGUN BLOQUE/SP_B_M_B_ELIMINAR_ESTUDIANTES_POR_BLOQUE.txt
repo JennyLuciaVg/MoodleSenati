@@ -1,0 +1,17 @@
+		
+
+
+CREATE PROCEDURE SP_B_M_B_ELIMINAR_ESTUDIANTES_POR_BLOQUE
+(
+@id_curso_moodle,
+@bloque
+)
+AS
+BEGIN
+
+	DELETE 
+	FROM mdl_user_students 
+	WHERE course=@id_curso_moodle and bloque=@bloque
+END
+
+			

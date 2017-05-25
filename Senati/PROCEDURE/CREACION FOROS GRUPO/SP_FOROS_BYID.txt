@@ -1,0 +1,14 @@
+
+
+CREATE PROCEDURE SP_FOROS_BYID
+(
+@Id_curso_moodle
+)
+AS
+BEGIN
+	SELECT A.userid as id_tutor, firstname, lastname from mdl_user_teachers A 
+	INNER JOIN mdl_user B on A.userid=B.id 
+	WHERE A.course=@Id_curso_moodle
+	ORDER BY B.lastname
+END
+	

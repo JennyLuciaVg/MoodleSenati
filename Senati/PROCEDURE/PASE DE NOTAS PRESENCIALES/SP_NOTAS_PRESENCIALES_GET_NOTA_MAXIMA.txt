@@ -1,0 +1,16 @@
+
+CREATE PROCEDURE SP_NOTAS_PRESENCIALES_GET_NOTA_MAXIMA
+(
+@id_userx,
+@id:cursox
+)
+AS
+BEGIN
+	SELECT distinct(A.id),(select max(B.grade) 
+	FROM mdl_quiz_grades B 
+	WHERE A.id=B.quiz and userid=@id_userx) as nota_grade,
+	A.GRADE as nota_maxima 
+	FROM mdl_quiz A 
+	WHERE A.course=". @id_cursox;
+	ORDER BY A.id
+END 

@@ -1,0 +1,14 @@
+//// BLOQUES DISTINTOS
+
+CREATE PROCEDURE SP_C_M_LISTAR_DISTINTOS_BLOQUE
+(
+@id_curso_moodle
+)
+AS
+BEGIN
+			SELECT distinct(bloque) 
+			FROM mdl_user_students A 
+			WHERE bloque<>'' and bloque is not null and A.course=@id_curso_moodle
+END
+
+							

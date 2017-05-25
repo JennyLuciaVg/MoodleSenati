@@ -1,0 +1,11 @@
+CREATE PROCEDURE SP_SUBSANACION_VALIDAR_EXISTE
+(
+@id_curso_sub,
+@id_user_sv
+)
+AS
+BEGIIN 
+	SELECT COALESCE((SELECT 1 
+	FROM mdl_user_students 
+	WHERE course=@id_curso_sub and userid=@id_user_sv LIMIT 1),0) as existe
+END  

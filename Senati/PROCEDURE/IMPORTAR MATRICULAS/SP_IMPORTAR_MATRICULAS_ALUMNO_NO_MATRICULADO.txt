@@ -1,0 +1,13 @@
+ /// VERIFICAR QUE EL ALUMNO NO ESTA MATRICULADO
+
+CREATE PROCEDURE SP_IMPORTAR_MATRICULAS_ALUMNO_NO_MATRICULADO
+(
+@id_curso_moodle,
+@id_usuario
+)
+AS
+BEGIN
+	 SELECT COALESCE((SELECT 1 
+		FROM mdl_user_students 
+		WHERE course=@id_curso_moodle and userid=@id_usuario LIMIT 1),0) as existe
+END				

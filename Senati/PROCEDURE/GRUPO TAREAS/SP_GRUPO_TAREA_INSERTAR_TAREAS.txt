@@ -1,0 +1,13 @@
+CREATE PROCEDURE SP_GRUPO_TAREA_INSERTAR_TAREAS
+(
+@id_tarea,
+@id_nume_grupo,
+@id_module,
+@unidadx
+
+)
+AS
+BEGIN
+	INSERT INTO senati_tareas (id_tarea,numero_grupo,id_module, unidad) 
+		VALUES(@id_tarea,@id_nume_grupo,@id_module,@unidadx )
+END					

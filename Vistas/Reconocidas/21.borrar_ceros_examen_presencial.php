@@ -18,7 +18,11 @@
     <script src="../../js/jsgrid/jsgrid.sort-strategies.js"></script>
     <script src="../../js/jsgrid/jsgrid.field.js"></script>
     <link rel="stylesheet" type="text/css" href="../../css/font-awesome.css">
-
+    <style type="text/css">
+        .hide{
+           display:none;
+        }
+    </style>
 
 </head>
 
@@ -31,7 +35,7 @@
 
     <div id="etiquetas">
         <caption><strong> LiSTA DE QUiZES Y CRONOGRAMA </strong></caption>
-        <table>
+        <!--table>
             <thead class="lightblue">
                 <tr >
                     <th>id Quiz</th>
@@ -50,13 +54,14 @@
                     <td>15</td>
                 </tr>
             </tbody>
-        </table>
+        </table-->
+        <div id="jsGridListaCeros"></div>
     </div>
 
     
     <div id="notas">
         <caption> <strong> LiSTA DE iNTENTOS con CERO </strong></caption>
-        <table>
+        <!--table>
             <thead class="lightblue">
                 <tr>
                    <th>Borrar<br><a href="sss" class="btn_todo">Seleccionar Todos</a></th>
@@ -81,22 +86,85 @@
                     <td>&nbsp</td>
                 </tr>
             </tbody>
-        </table>
+        </table-->
+        <div id="jsGridBorrarIntentos"></div>
     </div>
     
     <div id="etiquetas">
         <p class="bold">iNTENTOS CON CERO: 0</p>
     </div>
-     <div id="jsGrid"></div>
+     
     
     <div id="botenes">
-        <button   class="btn btn-primary" type="button"> <i class="fa fa-trash-o" aria-hidden="true"></i> Borrar los intentos seleccionados</button>
+        <button id="save" class="btn btn-primary" type="button"> <i class="fa fa-trash-o" aria-hidden="true"></i> Borrar los intentos seleccionados</button>
     </div>
 	       <img src="../../img/image002.png" />  
 
-            <script>
-    
-            $("#jsGrid").jsGrid({
+        <script>
+        var id_curso = 7799;
+        var id_user = 142;
+        var nombre_curso;
+        function isAdmin(){
+            return true;
+        }
+        $("#save").click(function() {
+            var table = $("#jsGridBorrarIntentos .jsgrid-grid-body");
+            table.find('tr').each(function (i) {
+                var $tds = $(this).find('td'),
+                    id_intento = $tds.eq(1).text(),// N°
+                    id_alux = $tds.eq(7).text(),
+                    id_quix = $tds.eq(8).text(),
+                    chk = $tds.eq(0).find('input').is(":checked");// accion
+                if (chk) {
+                    $.ajax({
+                        url: "http://localhost/Api/Api/DAO/BORRA_CEROS?action=EliminarIntento&id_intento="+ id_matricula,
+                        type: "GET",
+                        async: false,
+                        contentType: "application/json;charset=utf-8",
+                        dataType: "json",
+                        success: function(result){
+                            console.log("intento eliminado");
+                        },
+                        error : function(xhr,errmsg,err) {
+                            console.log(xhr.status + ": " + xhr.responseText);
+                        }
+                    });
+                     $.ajax({
+                        url: "http://localhost/Api/Api/DAO/BORRA_CEROS?action=InsertarLog&id_user="+ id_user+"&id_alux="+ id_alux+"&id_intento="+ id_intento+"&id_cursox="+ id_cursox+"&id_quix="+id_quix,
+                        type: "GET",
+                        async: false,
+                        contentType: "application/json;charset=utf-8",
+                        dataType: "json",
+                        success: function(result){
+                            console.log("intento guardado en log");
+                        },
+                        error : function(xhr,errmsg,err) {
+                            console.log(xhr.status + ": " + xhr.responseText);
+                        }
+                    });
+                }
+            });
+        });
+        $("#selecAllCheckbox").click(function(){
+            $("input:checkbox").prop('checked', true);
+        });
+
+        if (isAdmin() || isteacher(id_curso)) {
+            $.ajax({
+                url: "http://localhost:8080/Api/DAO/BORRA_CEROS?action=NombreCurso&id_cursox="+ id_curso,
+                type: "GET",
+                async: false,
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function(result){
+                    nombre_curso = result.fullname;
+                },
+                error : function(xhr,errmsg,err) {
+                     console.log(xhr.status + ": " + xhr.responseText);
+                }
+            });
+        $(function() {
+            $("#jsGridBorrarIntentos").jsGrid({
                 height: "50%",
                 width: "70%",
                 autoload: true,
@@ -104,11 +172,11 @@
                 paging: true,
                 pageSize: 2,
                 selecting: true,
-                //controller: listarAlumnosCurso,
+                controller: listarIntentos,
                 fields: [
                     { 
                         headerTemplate: function() {            
-                            return $("<p>").text("Borrar").append("<br><a style='color: white;'>Seleccionar Todos</a>");
+                            return $("<p>").text("Borrar").append("<br><a id='selecAllCheckbox' style='color: white;'>Seleccionar Todos</a>");
                         },  
                         itemTemplate: function(_, item) {
                             if (disabled) {
@@ -120,15 +188,66 @@
                         align: "center", 
                         width: 30 
                     } ,
-                    { name: "id", type: "number",width: 20, title: "id intento"},
-                    { name: "namequiz", type: "text", width: 20, title: "Nombre Quiz"},
-                    { name: "idquiz", type: "number",width: 20, title: "id Quiz"},  
+                    { name: "id", type: "text",width: 20, title: "id intento"},
+                    { name: "nombre_quiz", type: "text", width: 20, title: "Nombre Quiz"},
+                    { name: "quiz", type: "text",width: 20, title: "id Quiz"},  
                     { name: "alumno", type: "text", width: 20, title: "Alumno"},
-                    { name: "timestart", type: "date", width: 20, title: "Timestart"},
-                    { name: "timefinish", type: "date", width: 20, title: "Timefinish"},
-                    { name: "timemodified", type: "date", width: 20, title: "Timemodified"},
+                    { name: "timestart", type: "text", width: 20, title: "Timestart"},
+                    { name: "timefinish", type: "text", width: 20, title: "Timefinish"},
+                    { name: "timemodified", type: "text", width: 20, title: "Timemodified"},
+                    { name: "id_alumno",  type: "text", css: "hide", width: 0}
+                    { name: "quiz", type: "text", css: "hide", width: 0}
                 ]
             }); 
+        });
+
+        $(function() {
+            $("#jsGridListaCeros").jsGrid({
+                height: "50%",
+                width: "70%",
+                autoload: true,
+                sorting: true,
+                paging: true,
+                pageSize: 2,
+                selecting: true,
+                controller: listarCeros,
+                fields: [
+                    { name: "id", type: "number",width: 20, title: "Id Quiz"},
+                    { name: "name", type: "text", width: 20, title: "Nombre Quiz"},
+                    { name: "timeopen", type: "text",width: 20, title: "Fecha de Apertura"},  
+                    { name: "timeclose", type: "text", width: 20, title: "Fecha de Cierre"},
+                    { name: "timelimit", type: "date", width: 20, title: "Tiempo Límite"},
+                ]
+            }); 
+        });
+
+        var listarIntentos =  function () {
+            var data = $.Deferred();
+                $.ajax({
+                     type: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    url: "http://localhost:8080/Api/DAO/BORRA_CEROS?action=BorraCeroLista&id_cursox="+ id_curso,
+                    dataType: "json"
+                    }).done(function(response){
+                        data.resolve(response);
+                    });
+                    return data.promise();
+        };
+
+        var listarCeros =  function () {
+            var data = $.Deferred();
+                $.ajax({
+                     type: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    url: "http://localhost:8080/Api/DAO/BORRA_CEROS?action=CeroListaQuizes&id_cursox="+ id_curso,
+                    dataType: "json"
+                    }).done(function(response){
+                        data.resolve(response);
+                    });
+                    return data.promise();
+        };
+    }
+            
 
 
     </script>   

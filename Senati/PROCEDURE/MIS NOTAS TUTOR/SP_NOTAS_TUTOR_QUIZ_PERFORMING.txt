@@ -1,0 +1,19 @@
+//QUIZ
+// Performing SQL query
+
+CREATE PROCEDURE SP_NOTAS_TUTOR_QUIZ_PERFORMING
+(
+@id_cursox 
+)
+AS
+BEGIN
+	SELECT distinct(A.id), peso_recurso, name 
+	FROM mdl_quiz A
+	LEFT JOIN senati_pesos_recursos
+	on id_recurso=id and tipo_recurso=2 
+	WHERE UPPER(A.name) not like 'SUBSA%' 
+		and (peso_recurso<>0 or peso_recurso is not null) 
+		and A.course=@id_cursox 
+		order by A.id
+END
+

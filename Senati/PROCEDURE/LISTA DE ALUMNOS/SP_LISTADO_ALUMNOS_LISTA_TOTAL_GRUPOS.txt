@@ -1,0 +1,13 @@
+
+CREATE PROCEDURE SP_LISTADO_ALUMNOS_LISTA_TOTAL_GRUPOS
+(
+@id_cursox
+)
+AS
+BEGIN
+	SELECT COUNT(DISTINCT(A.groupid)) as total
+	FROM mdl_groups_members A 
+	INNER JOIN mdl_groups B on A.groupid=B.id
+	WHERE B.courseid=@id_cursox 
+END
+	

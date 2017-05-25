@@ -1,0 +1,17 @@
+//ProfesOR
+
+CREATE PROCEDURE SP_LISTADO_ALUMNOS_LISTA_GRUPOS
+(
+@groupid
+)
+AS
+BEGIN
+  	SELECT C.userid, lastname, firstname 
+	FROM mdl_groups_members A 
+	INNER JOIN mdl_groups B on A.groupid=B.id 
+	INNER JOIN mdl_user_teachers C on C.userid=A.userid and C.course=B.courseid 
+	INNER JOIN mdl_user D on D.id=C.userid 
+	WHERE B.id=@groupid
+	ORDER BY B.name
+END
+			

@@ -1,0 +1,19 @@
+///	Listar las foros por Grupo existentes
+		
+
+CREATE PROCEDURE SP_FOROS_LISTAR_GRUPO_EXIST
+(
+@id_curso_moodle
+)
+AS
+BEGIN
+	SELECT A.name as nombre_foro, A.id as id_foro, C.section as unidad
+		FROM mdl_forum A ";
+		INNER JOIN mdl_course_modules B 
+		on B.instance=A.id and A.course=B.course 
+		INNER JOIN mdl_course_sections C
+		on C.id=B.section 
+		WHERE B.module=5 and A.scale<>-1 and A.type='general' and A.course=@id_curso_moodle
+		ORDER BY C.section
+END
+		

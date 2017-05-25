@@ -1,0 +1,16 @@
+
+
+
+CREATE PROCEDURE SP_MATRICULA_PRESENCIALES_LISTAR_ESTUDIANTES
+(
+@id_curso_padre,
+@camp_importar 
+)
+AS
+BEGIN
+		SELECT userid,camp,nrc,bloque 
+		FROM mdl_user_students 
+		WHERE course=@id_curso_padre
+		and camp=@camp_importar 
+END
+				

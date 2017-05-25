@@ -1,0 +1,14 @@
+        //NOMBRE DEL CURSO   
+
+CREATE PROCEDURE SP_ALUMNOS_NOMBRE_CURSO
+(
+@id_curso_moodle
+)
+AS
+BEGIN
+        SELECT fullname 
+                FROM mdl_course
+                WHERE id=@id_curso_moodle
+END
+     
+	   

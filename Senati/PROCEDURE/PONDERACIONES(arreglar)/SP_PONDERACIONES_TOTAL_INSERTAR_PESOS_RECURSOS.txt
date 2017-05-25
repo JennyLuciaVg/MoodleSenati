@@ -1,0 +1,15 @@
+
+
+CREATE PROCEDURE SP_PONDERACIONES_TOTAL_INSERTAR_PESOS_RECURSOS
+(
+@valor_id_assign,
+@valor_peso_assign,
+@id_cursox,
+@id_usuario
+)
+AS
+BEGIN
+	INSERT INTO senati_pesos_recursos (id_recurso,peso_recurso,id_curso,tipo_recurso, id_usuario)
+		VALUES (@valor_id_assign,@valor_peso_assign,@id_cursox,1,@id_usuario)
+					
+EN				

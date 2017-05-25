@@ -1,0 +1,16 @@
+
+
+CREATE PROCEDURE SP_LISTA_ENCUESTAS
+(
+@id_curso_moodle 
+)
+AS
+BEGIN
+		SELECT A.*, B.firstname, B.lastname
+		FROM mdl_feedback A 
+		LEFT JOIN mdl_user B 
+		on B.id=A.id_tutor 
+		WHERE course=@id_curso_moodle 
+		ORDER BY A.id ASC
+END
+	

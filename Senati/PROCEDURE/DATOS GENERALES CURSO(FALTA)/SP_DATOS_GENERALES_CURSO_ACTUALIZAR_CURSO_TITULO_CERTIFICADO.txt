@@ -1,0 +1,26 @@
+
+CREATE PROCEDURE SP_DATOS_GENERALES_CURSO_TITULO_CERTIFICADO
+(
+@titulo_certi,
+@tx_materia_sinfo,
+@nome_curso,
+@visiblex,
+@periocolo,
+@camp_presencial,
+@patron_semilla,
+@tx_id_tarea_induccion,
+@fuente,
+@header,
+@nombre_corto,
+@id_curso_moodle 
+)
+AS
+BEGIN
+		UPDATE mdl_course 
+		SET titulo_certificado=@titulo_certi,curso_sinfo=@tx_curso_sinfo,
+		materia_sinfo=@tx_materia_sinfo,fullname =@nome_curso,visible=@visiblex,periodo=@periocolo,camp_pres=@camp_presencial,
+		id_patron_semilla=@patron_semilla,id_tarea_induccion=@tx_id_tarea_induccion,font_titulo_certi=@fuente,
+		header_certi=@header,shortname=@nombre_corto 
+		WHERE id=@id_curso_moodle
+END
+		 

@@ -1,0 +1,15 @@
+CREATE PROCEDURE SP_UNIDADES_M_ACTUALIZAR_SECCIONES
+(
+@seccion_visible,
+@seccion
+)
+AS
+BEGIN
+		UPDATE mdl_course_sections
+		SET visible=@seccion_visible
+		WHERE id=@seccion 
+END
+		
+		
+       
+	

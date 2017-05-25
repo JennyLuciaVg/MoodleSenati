@@ -1,0 +1,15 @@
+//Verifico si el curso tiene grupos ($tiene_grupos=="1" -> "Este curso tiene grupos")
+
+
+CREATE PROCEDURE SP_NOTAS_TUTOR_CURSO_TIENE_GRUPO
+(
+@id_cursox
+)
+AS
+BEGIN
+			SELECT COUNT(1) as existe
+			FROM mdl_groups A
+			INNER JOIN mdl_groups_members
+			on groupid=A.id
+			WHERE courseid=@id_cursox 
+END

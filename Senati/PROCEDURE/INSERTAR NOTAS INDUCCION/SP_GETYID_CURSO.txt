@@ -1,0 +1,12 @@
+
+CREATE PROCEDURE SP_GETBYID_CURSO
+(
+@ID_CURSO
+)
+AS
+BEGIN
+		SELECT fullname,subsanacion, presencial, induccion,id_publico, id_tarea_induccion
+		FROM mdl_course
+		WHERE id=@ID_CURSO
+END
+	

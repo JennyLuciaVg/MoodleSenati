@@ -1,0 +1,17 @@
+
+CREATE PROCEDURE SP_EVIDENCIAS_COMPLETAS_LISTA_GRUPOS
+(
+@id_cursox,
+@proxe_id 
+)
+AS
+BEGIN
+		SELECT A.id, A.name 
+		FROM mdl_groups A 
+		INNER JOIN mdl_groups_members B
+		on B.groupid=A.id
+		WHERE A.courseid=@id_cursox 
+		and B.userid=@proxe_id
+		ORDER BY A.name
+EN
+		

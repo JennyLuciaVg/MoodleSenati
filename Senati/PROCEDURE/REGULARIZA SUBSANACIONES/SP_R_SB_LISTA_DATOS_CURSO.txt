@@ -1,0 +1,15 @@
+	//CHEQUEO PRIMERO QUE SE TRATA DE UN CURSO DE INDUCCION
+
+
+CREATE PROCEDURE SP_R_SB_LISTA_DDATOS_CURSO
+(
+@id_curso_moodle
+)
+AS
+BEGIN
+	
+		SELECT fullname, subsanacion_de 
+		FROM mdl_course 
+		WHERE id=@id_curso_moodle
+					
+END		

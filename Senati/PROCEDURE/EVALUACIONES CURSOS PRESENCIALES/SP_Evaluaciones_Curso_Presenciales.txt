@@ -1,0 +1,29 @@
+//es un select a la cabezera
+
+CREATE PROCEDURE SP_EVALUACIONES_CURSO_PRESENCIALES
+(
+@periodo, 
+@campus,
+)
+AS
+BEGIN
+
+		SELECT id, fullname, visible , B.existe
+			FROM mdl_course A 
+				join(
+					select count(1) existe,B.course,B.camp
+					from mdl_user_students B
+					group by B.course,B.camp)
+					as B on B.course=A.id and B.camp= @campus 
+				)
+			WHERE A.periodo=@periodo and A.presencial_de is not null 
+			ORDER BY id desc
+END
+			
+			
+			
+// Listar los cursos presenciales que tengan matriculas en ese campus y periodo
+		$query_cursos_camp  = "Select id, fullname, visible from mdl_course A where periodo='". $periodo_listar ."' and presencial_de is not null ";
+		$query_cursos_camp .= "and (SELECT COALESCE((SELECT 1 FROM mdl_user_students B WHERE B.course=A.id and B.camp='". $camp_listar ."' LIMIT 1),0) as existe)=1 ";
+		$query_cursos_camp .= " order by id desc";
+		

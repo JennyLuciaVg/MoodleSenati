@@ -1,0 +1,22 @@
+///	Listar las Tareas por Grupo existentes
+			
+
+
+CREATE PROCEDURE SP_GRUPO_TAREA_LISTA_TAREAS_GRUPO
+(
+@id_curso_moodle
+)
+AS
+BEGIN
+		SELECT id_tarea, B.name, numero_grupo, D.section as unidad, contenido 
+		FROM senati_tareas A 
+		INNER JOIN mdl_assignment B on B.id=A.id_tarea 
+		INNER JOIN mdl_course_modules C on C.instance=A.id_tarea and module=1 
+		INNER JOIN mdl_course_sections D on D.id=C.section 
+		WHERE A.id_tarea in (
+			SELECT id 
+			FROM mdl_assignment E 
+			WHERE E.course=@id_curso_moodle) 
+			ORDER BY 4,1,3
+END
+				

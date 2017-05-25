@@ -1,0 +1,12 @@
+
+CREATE PROCEDURE SP_UNIDADES_M_GET_TABLE1
+(
+@idcmoodle
+)
+AS
+BEGIN
+			SELECT id, section, visible, summary 
+			FROM mdl_course_sections
+			WHERE course=@idcmoodle
+			ORDER BY section"
+END

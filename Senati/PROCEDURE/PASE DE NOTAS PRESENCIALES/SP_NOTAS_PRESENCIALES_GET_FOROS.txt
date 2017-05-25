@@ -1,0 +1,22 @@
+//////////////////////////////////// FOROS ////////////////////////////////////////
+
+
+CREATE PROCEDURE SP_NOTAS_PRESENCIALES_GET_FOROS
+(
+@id_cursox 
+)
+AS
+BEGIN
+		SELECT distinct(a.id), scale, peso_recurso
+		FROM mdl_forum a 
+		LEFT JOIN senati_pesos_recursos
+		on id_recurso=a.id and tipo_recurso=3 
+		WHERE peso_recurso<>0 
+			and course=@id_cursox 
+			and a.scale=20 
+			ORDER BY a.id
+END
+
+
+			
+			

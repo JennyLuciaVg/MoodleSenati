@@ -1,0 +1,19 @@
+
+CREATE PROCEDURE SP_GETALL_CABECERA
+(
+@ID_CURSO 
+)
+AS
+BEGIN
+		SELECT A.userid, firstname, lastname, 
+		(SELECT COUNT(1) 
+			FROM mdl_groups C 
+			INNER JOIN mdl_groups_members D
+			on D.groupid=C.id 
+			WHERE C.courseid=A.course
+			and D.userid=A.userid) as tot_grupos 
+			FROM mdl_user_teachers A 
+			LEFT JOIN mdl_user B on A.userid=B.id 
+			WHERE A.course=@ID_CURSO 
+			ORDER BY 4 desc, 2
+END 

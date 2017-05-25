@@ -1,0 +1,13 @@
+
+	//Verifico si tiene Ponderaciones
+
+CREATE PROCEDURE SP_REPORTES_DESAPROBADOS_TIENE_PONDERACIONES
+(
+@id_cursox
+)
+AS
+BEGIN
+		SELECT COALESCE((SELECT 1 
+		FROM senati_pesos_recursos 
+		WHERE id_curso=@id_cursox  LIMIT 1),0) as tiene_pond
+ED

@@ -1,0 +1,13 @@
+//Campus distintos
+CREATE PROCEDURE SP_C_M_LISTAR_NOMBRE_CENTRO
+(
+@id_curso_moodle
+)
+AS
+BEGIN
+	
+			SELECT DISTINCT(camp), nombre_centro, COUNT(*) as alumnos FROM mdl_user_students 
+					LEFT JOIN senati_centros on camp=id_centro
+					WHERE camp is not null and course=@id_curso_moodle
+					GROUP BY camp,nombre_centro 
+END

@@ -1,0 +1,836 @@
+<script type="text/javascript">
+<!-- Begin
+<?php
+//require_once("../config.php");
+
+// DEBO SACAR EL PERIODO DEL CURSO
+
+$query_periodo  = "Select periodo from mdl_course where id=".  $course->id; 
+$result_periodo = pg_query($query_periodo) or die('Query failed 9: ' . pg_last_error());
+$roxp=pg_fetch_array($result_periodo);
+$periodo_curso=$roxp["periodo"];
+
+
+
+ 
+    foreach ($listmembers as $groupid => $listmember) {
+        echo "group$groupid = new Object();\n";
+        $useridstring = "group$groupid.userid = new Array(";
+        $usernamestring = "group$groupid.username = new Array(";
+        $max = count($listmember);
+        $count = 0;
+        foreach ($listmember as $userid => $username) {
+            $count++;
+            $useridstring .= "\"$userid\"";
+            $usernamestring .= '"'.addslashes($username).'"';
+            if ($count < $max) {
+                $useridstring .= ', ';
+                $usernamestring .= ', ';
+            }
+        }
+        $useridstring .= ");\n";
+        $usernamestring .= ");\n";
+
+        echo $useridstring;
+        echo $usernamestring;
+    }
+?>
+
+function updateGroup() {
+    document.form1.groupid.value = document.form2.groups.value;
+    document.form3.groupid.value = document.form2.groups.value;
+}
+
+
+function updateMembers(selectgroup) {
+    eval('group=group'+selectgroup.value); 
+
+    username = group.username;
+    userid = group.userid;
+
+    document.form3['members[]'].length = username.length;
+
+    for (i=0;i<username.length;i++) {
+        document.form3['members[]'].options[i].value = userid[i];
+        document.form3['members[]'].options[i].text  = username[i];
+    }
+
+    updateGroup();
+}
+
+function userWindow(selectuser) {
+    num = 0;
+    for (var i=0; i<selectuser.options.length; i++) {
+        if (selectuser.options[i].selected) {
+            num++;
+            user = selectuser.options[i].value;
+            openpopup('/user/view.php?id='+user+'&course=<?php echo $courseid ?>','userinfo'+num,'','');
+        }
+    }
+    return false;
+}
+
+function groupWindow(selectgroup) {
+    num = 0;
+    for (var i=0; i<selectgroup.options.length; i++) {
+        if (selectgroup.options[i].selected) {
+            num++;
+            group = selectgroup.options[i].value;
+            openpopup('/course/group.php?id=<?php echo $courseid ?>&group='+group,'groupinfo'+num,'menubar=0,directory=0,location=0,scrollbars,resizable,width=600,height=480','');
+        }
+    }
+    return false;
+}
+
+
+// end hiding script -->
+</script>
+
+  
+  <table cellspacing="0" cellpadding="10" align="center" class="generaltable generalbox">
+    <tr>
+      <th width="33%" align="center" class="header"><?php p($strmemberincourse) ?></td>
+      <th width="33%" align="center" class="header"><?php p($strgroups) ?></td>
+      <th width="33%" align="center" class="header"><?php p($strgroupmembersselected) ?></td>
+    </tr>
+    <tr align="center" valign="top">
+      <td class="generalboxcontent"><p>
+        <form name="form1" id="form1" method="post" action="groups.php">
+          <input type="hidden" name="id" value="<?php p($course->id) ?>" />
+          <input type="hidden" name="groupid" value="<?php p($selectedgroup) ?>" />
+          <input type="hidden" name="sesskey" value="<?php p($sesskey) ?>">
+          
+          <select name="nonmembers[]" id="sele_nonmembers" size="15" multiple="multiple" onClick="total_item_seleccionados();">
+            <?php 
+			    $total_sin_grupo=0;
+				$alus_sin_grupo="";
+                if (!empty($nonmembers)) {
+                    foreach ($nonmembers as $id => $nonmembername) {
+						$estilo="";
+						$zx=0;
+                        if (!is_array($ugroups = user_group($course->id, $id))) {
+                            $numgroups = 0;
+							//JUSCE
+							$estilo="style='color:blue'";
+							$zx=1;
+							$total_sin_grupo++;
+                        }
+                        else {
+                            $numgroups = count($ugroups);
+                        }
+						// JUSCE debo leer el campus y el bloque del alumno con $id
+						$query0  = "SELECT camp, bloque,nrc from mdl_user_students where course=".  $course->id . " and userid=" . $id;
+						$result0 = pg_query($query0) or die('Query failed: ' . pg_last_error());
+
+						$roxy=pg_fetch_array($result0); 
+						$campx=$roxy["camp"];
+						$bloquex=$roxy["bloque"];
+						$nrcx=$roxy["nrc"];
+
+						$datox="";	
+						if ($campx !="")
+						    {$datox="CAMP-". $campx;}
+							
+						if ($bloquex!="" || $nrcx!="")
+						    {$datox="BLOQUE-". $bloquex . ", NRC-".$nrcx;}
+					    
+						
+						if ($datox !="")
+							{
+								echo "<option ". $estilo . " value=\"$id\" title=\"$nonmembername is in $numgroups groups\">$nonmembername ($numgroups)". " - " . $datox ."</option>\n";
+							}
+						else
+						{				
+							echo "<option ". $estilo . " value=\"$id\" title=\"$nonmembername is in $numgroups groups\">$nonmembername ($numgroups)</option>\n";
+						}
+						
+						if ($zx==1)
+							{
+							//JUSCE, quite esto para que no demore tanto la pagina
+							//$alus_sin_grupo=$alus_sin_grupo ."<BR>". $nonmembername . " - " . $datox;
+							}
+						
+                    }
+                }
+            ?>
+          </select>
+          </p>
+          <p>
+            <input type="submit" name="nonmembersadd" value="<?php p($strgroupaddusers) ?> -&gt;" 
+                   onclick="updateGroup()" />
+          </p>
+          <!--<p>
+            <input type="submit" name="nonmembersrandom" value="<?php p($strgrouprandomassign) ?> -&gt;" />
+          </p> -->
+          <p>
+            <input type="submit" name="nonmembersinfo" value="<?php p($strgroupinfopeople) ?>" 
+                   onclick="return userWindow(document.form1['nonmembers[]']);" />
+			
+			<p align=left>			
+			<?PHP echo '<a href="groups.php?id='. $course->id . '"><u>Grupos del Curso : '. $course->id . '</u></a>' ?>
+		    &nbsp;&nbsp;Items Seleccionados : <font id="fonselex" name="fonselex">0</font><BR>
+			<a href="groups_definir.php?id=<?PHP echo $course->id ?>"><u>Definir Grupos</u></a><BR>
+			<a href="groups_crear.php?id=<?PHP echo $course->id ?>"><u>Crear Grupos</u></a>
+			<p>
+				   
+				   
+          </p>
+        </form>
+      </td>
+      <td class="generalboxcontent"><p>
+        <form name="form2" id="form2" method="post" action="groups.php">
+          <input type="hidden" name="id" value="<?php p($course->id) ?>" />
+          <input type="hidden" name="sesskey" value="<?php p($sesskey) ?>">
+          <select name="groups" size="15" onChange="updateMembers(this)">
+            <?php 
+                if (!empty($listgroups)) {
+                    foreach ($listgroups as $id => $listgroup) {
+                        $selected = '';
+                        if ($id == $selectedgroup) {
+                            $selected = 'selected="selected"';
+                        }
+                        echo "<option $selected value=\"$id\">$listgroup</option>";
+                    }
+                }
+            ?>
+          </select>
+		  
+        </p>
+		
+		
+		
+        <p>
+          <input type="submit" name="groupsinfo" value="<?php p($strgroupinfoedit) ?>" 
+                 onclick="return groupWindow(document.form2.groups);"/>
+		
+				 
+			 
+        </p>
+        <p>
+          <input type="submit" name="groupsremove" value="<?php p($strgroupremove) ?>" />
+        </p>
+		
+		<p>
+		<strong><font id=fon_total_grupos color=blue></font></strong>
+		</p>  
+		
+        <p>
+          <input name="newgroupname" type="text" size="25" />
+          <input type="submit" name="groupsadd" value="<?php p($strgroupadd) ?>" />
+        </p>
+        </form>
+      </td>
+
+
+      <td class="generalboxcontent"><p>
+        <form name="form3" id="form3" method="post" action="groups.php">
+          <input type="hidden" name="id" value="<?php p($course->id) ?>" />
+          <input type="hidden" name="groupid" value="<?php p($selectedgroup) ?>" />
+          <input type="hidden" name="sesskey" value="<?php p($sesskey) ?>">
+          <select name="members[]" size="15" multiple="multiple">
+            <?php 
+                if (!empty($members)) {
+                    foreach ($members as $id => $membername) {
+                        echo "<option value=\"$id\">$membername</option>";
+                    }
+                }
+            ?>
+          </select>
+        </p>
+        <p>
+          <input type="submit" name="membersinfo" value="<?php p($strgroupinfomembers) ?>"
+                 onclick="return userWindow(document.form3['members[]']);" />
+        </p>
+        <p>
+          <input type="submit" name="membersremove" value="<?php p($strgroupremovemembers) ?>" 
+                 onclick="updateGroup()" />
+        </p>
+        </form>
+	    </td>
+	</tr>
+	
+	<!--tr>
+	<td colspan=3>
+		
+		
+	</TD>
+	</tr-->
+	
+	
+  </table>
+ 
+<script type="text/javascript">
+
+function obje(ide){
+	var obex=document.getElementById(ide);
+	return obex;
+}
+
+function crea_xmlhttpPost(url) {
+    var xmlHttpReq = false;
+    var self = this;
+    if (window.XMLHttpRequest) {
+        self.xmlHttpReq = new XMLHttpRequest();
+    }
+    else if (window.ActiveXObject) {
+        self.xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    self.xmlHttpReq.open("POST", url, true);
+	self.xmlHttpReq.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+	return self.xmlHttpReq;
+}
+
+function sel_nrcx(nrcx){
+	// Sombreo el nrcx con ese valor en la tabla tabla_nrcs2
+	var oTable2 = document.getElementById("tabla_nrcs2");
+	var lex2 = oTable2.rows.length;
+	// Itero tabla2
+	for (i=1;i<lex2;i++)	
+		{
+		var cole2 = oTable2.rows.item(i).cells;
+		var objcelda_nrc2=cole2[0];
+		var nrc2=objcelda_nrc2.innerText;
+			if (nrcx==nrc2)
+				{
+				// colorea celda objcelda_nrc2
+				if(objcelda_nrc2.style.backgroundColor == "silver")
+				  {
+				  objcelda_nrc2.style.backgroundColor = "";
+				  }
+				 else
+			      {				 
+				  objcelda_nrc2.style.backgroundColor = "silver";
+				  }
+				}  
+		}
+	/// Solo si existe el bloque y hay alumnos sin bloque	
+	obje("nrc_sele").value=nrcx;	
+	seleccionar_nrc();
+}
+
+
+
+function seleccionar_sin_grupo(){
+	deseleccionar_todos();
+	
+	var cole=obje("sele_nonmembers");
+	var bloque=obje("bloque_sele").value;
+	for (i=0;i<cole.length;i++)
+		{
+		var texto=cole.options[i].text;
+		//usar indexOf
+		var posix08 = texto.indexOf("(0)");
+		if (posix08!=-1)
+			 {
+			 cole.options[i].selected=true;
+			 }
+		}	
+	total_item_seleccionados();
+}
+
+function deseleccionar_todos(){
+	var cole=obje("sele_nonmembers");
+	var bloque=trim(obje("bloque_sele").value);
+	for (i=0;i<cole.length;i++)
+		{
+		cole.options[i].selected=false;
+		}
+	obje("fonselex").innerText="0";	
+}
+
+function seleccionar_bloque(){
+	var cole=obje("sele_nonmembers");
+	var bloque=trim(obje("bloque_sele").value);
+	for (i=0;i<cole.length;i++)
+		{
+		var texto=cole.options[i].text;
+		//usar indexOf
+		var posix03 = texto.indexOf("(0)");
+		/// SIRVE !! JUSCE 29 Agosto 2012 FUNCIONA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		/// Si he puesto varios bloques en el input bloque_sele tambien deberia ubicarlos
+		var p2=texto.indexOf("BLOQUE-");
+		var coma=texto.indexOf(", NRC-");
+		var largo=coma-p2-7;
+		if (p2 !=-1 && largo >0)
+		   {
+		   var bloque_option=texto.substr(p2+7,largo);
+			
+		   var p3=bloque.indexOf(bloque_option);
+		   if (p3 !=-1 && posix03!=-1)
+			  {
+			  cole.options[i].selected=true;
+			  }
+		   } 
+		}	
+	total_item_seleccionados();
+}
+
+function total_item_seleccionados(){
+	var cole=obje("sele_nonmembers");
+	var selex=0;
+	for (i=0;i<cole.length;i++)
+		{
+		if (cole.options[i].selected==true)
+			{
+			selex++;
+			}
+		}
+	obje("fonselex").innerText=selex;
+}
+
+
+
+function seleccionar_nrc(){
+	var cole=obje("sele_nonmembers");
+	var nrc=trim(obje("nrc_sele").value);
+	for (i=0;i<cole.length;i++)
+		{
+		var texto=cole.options[i].text;
+		//usar indexOf
+		var posix03 = texto.indexOf("(0)");
+		
+			/// Si he puesto varios NRCS en el input bloque_sele tambien deberia ubicarlos
+			var p2=texto.indexOf("NRC-");
+			if (p2 !=-1)
+			   {
+			   var nrc_option=texto.substr(p2+4);
+			   var p3=nrc.indexOf(nrc_option);
+			   if (p3 !=-1 && posix03!=-1)
+				  {
+				  cole.options[i].selected=true;
+				  }
+			   } 
+		}
+	total_item_seleccionados();		
+}
+
+
+function trim(str)
+	{
+	if(!str || typeof str != "string")
+	return "";
+	return str.replace(/^[\s]+/,'').replace(/[\s]+$/,'').replace(/[\s]{2,}/,' ');
+	}
+
+
+/// A PEDIDO SE LEE LA LISTA USANDO AJAX	
+function leer_alus_sin_grupo(){
+   obje("alus_sin_grupo").innerHTML ="";
+   obje("font_lee_alus").innerText = "Procesando alumnos, espere ...";
+
+	url="groups_lee_alus_sin_grupo_proxy.php";
+	var xmlo=crea_xmlhttpPost(url);
+		 xmlo.onreadystatechange = function()
+		  {
+		   if (xmlo.readyState == 4)
+			   {
+			   update_alus_sin_grupo(xmlo.responseText);
+			   }
+		  }
+	qstr="curso="+escape(<?PHP echo $course->id ?>);
+	xmlo.send(qstr);
+}
+
+function update_alus_sin_grupo(str){
+	obje("alus_sin_grupo").innerHTML = str;
+    obje("font_lee_alus").innerText = "Listo.";
+	
+
+	var oTable1 = obje("tabla_alus_sin_grupo");
+	var lex1 = oTable1.rows.length;
+	
+	
+	var oTable2 = obje("tabla_nrcs2");
+	var lex2 = oTable2.rows.length;
+
+	
+	
+	/// Leo la tabla de nrcs2 id_grupox[]
+	var cole_grupox=document.getElementsByName("id_grupox[]");
+	var cole_nombre_grupox=document.getElementsByName("nombre_grupox[]");
+	var cole_grupo_debe=document.getElementsByName("id_grupo_debe[]");
+	var cole_font_nombre_grupo=document.getElementsByName("font_nombre_grupo[]");
+	
+	
+	
+
+
+	// Itero tabla1 para leer nrcs
+	for (i=1;i<lex1;i++)
+		{
+		var cole1 = oTable1.rows.item(i).cells;
+		var objcelda_nrc=cole1[1];
+		var nrc1=objcelda_nrc.innerText;
+		
+		// ahora debo compararlo con los nrcs de la tabla_nrcs2
+		for (j=1;j<lex2;j++)	
+			{
+			var cole2 = oTable2.rows.item(j).cells;
+			var objcelda_nrc2=cole2[0];
+			var nrc2=objcelda_nrc2.innerText;
+			if (nrc1==nrc2)
+				{
+				
+				/// Leo el INPUT del GRUPO id_grupox[]
+				id_grupo=cole_grupox[j-1].value;
+				nombre_grupo=cole_nombre_grupox[j-1].value;
+				cole_grupo_debe[i-1].value=id_grupo;
+				cole_font_nombre_grupo[i-1].innerText=nombre_grupo;
+				/// la 5 celda de la linea
+				//cole1[4].innerHTML=cole1[4].innerHTML + "&nbsp;" + nombre_grupo;
+				break;
+				}
+			}
+		}	
+}
+
+function agrupar_alumnos(){
+	obje("thisform_sin_grupo").submit();
+}
+
+
+</script>
+  
+<?PHP
+///// ANTES DEBO PONER EL SCRIPT PARA SELECCION MULTIPLE
+/////  El SELECT ES nonmembers[]
+//// SELECCIONAR LOS QUE TENGAN (0) y el BLOQUE SELECCIONADO y no tengan #
+
+
+
+if (trim($total_sin_grupo) != "0")
+	{
+?>
+<P>  
+<strong>Seleccionar Alumnos SIN GRUPO y con el BLOQUE:&nbsp;</STRONG><INPUT type=text name="bloque_sele" id="bloque_sele" maxlength=200 size=20>
+&nbsp;&nbsp;<INPUT type=button onclick="seleccionar_bloque();" value="Seleccionar">
+&nbsp;&nbsp;<INPUT type=button onclick="deseleccionar_todos();" value="Deseleccionar Todos">
+&nbsp;&nbsp;<INPUT type=button onclick="seleccionar_sin_grupo();" value="Seleccionar sin Grupo">
+<BR><BR>
+<em><font color=red>NOTA 1: PRIMERO DESELECCIONE TODOS, luego agregue uno o varios BLOQUES (separados por espacios o cualquier caracter) - Pulse Seleccionar y luego pulse el boton "Agregar Seleccionados Al Grupo"</font></em>
+<BR>
+<em><font color=red>NOTA 2: No se podr&aacute; seleccionar alumnos que ya est&eacute;n en un bloque.</font></em>
+</p>
+<p>
+<strong>Seleccionar Alumnos SIN GRUPO y con el NRC:&nbsp;</STRONG><INPUT type=text name="nrc_sele" id="nrc_sele" maxlength=200 size=20>
+&nbsp;&nbsp;<INPUT type=button onclick="seleccionar_nrc();" value="Seleccionar">
+&nbsp;&nbsp;<INPUT type=button onclick="deseleccionar_todos();" value="Deseleccionar Todos">
+&nbsp;&nbsp;<INPUT type=button onclick="seleccionar_sin_grupo();" value="Seleccionar sin Grupo">
+<BR><BR>
+<em><font color=red>NOTA : Similar a Bloques solo que con NRCs</font></em>
+</p>
+
+<?PHP
+	}
+
+echo "<strong style='color:blue'>Alumnos SIN GRUPO : " .$total_sin_grupo . "</strong><BR>";	
+//echo $alus_sin_grupo;
+
+echo "<p align=center>";
+echo "<div align=center>";
+echo "<TABLE cellspacing=0 cellpadding=10 border=1 bordercrolor=#efefef>";
+echo "<TR><TD valign=top>";
+
+
+$query1  = "SELECT distinct(camp), nombre_centro, count(*) as Total from mdl_user_students left join senati_centros on id_centro=camp where course=".  $course->id . " Group by camp,nombre_centro order by 1"; 
+$result1 = pg_query($query1) or die('Query failed: ' . pg_last_error());
+// PRIMERO CAMPUS
+echo "<TABLE cellspacing=0 cellpadding=2 border=1>";
+echo "<TR bgcolor=yellow><TD bgcolor=yellow><strong>&nbsp;CAMP&nbsp;</strong></TD><TD bgcolor=yellow><strong>&nbsp;CAMPUS&nbsp;</strong></TD><TD bgcolor=yellow><strong>&nbsp;Alumnos&nbsp;</strong></TD></TR>";
+$tocamp=0;
+while($roxa=pg_fetch_array($result1)) 
+	{
+	$tocamp=$tocamp+1*$roxa["total"];
+	echo "<TR><TD align=center>". $roxa["camp"]. "</TD><TD>". $roxa["nombre_centro"]."</TD><TD align=center>". $roxa["total"]."</TD></TR>";
+	}
+echo "<TR><TD colspan=2 align=right><strong>TOTAL</strong></TD><TD align=center>". $tocamp."</TD></TR>";	
+echo "</table>";	
+
+echo "</TD><TD valign=top>";
+
+
+$query2  = "SELECT distinct(bloque), count(*) as Total from mdl_user_students where course=".  $course->id . " Group by bloque order by 1"; 
+$result2 = pg_query($query2) or die('Query failed: ' . pg_last_error());
+// LUEGO BLOQUES
+echo "<TABLE cellspacing=0 cellpadding=2 border=1 >";
+echo "<TR bgcolor=yellow><TD bgcolor=yellow><strong>&nbsp;BLOQUE&nbsp;</strong></TD><TD bgcolor=yellow><strong>&nbsp;Alumnos&nbsp;</strong></TD></TR>";
+
+while($roxb=pg_fetch_array($result2)) 
+	{
+	echo "<TR><TD align=center>". $roxb["bloque"]. "</TD><TD align=center>". $roxb["total"]."</TD></TR>";
+	}
+echo "</table>";
+echo "</TD><TD valign=top>";
+
+// LUEGO NRCS 
+// ACA DEBO PONER A QUE TUTOR LE PERTENECE EL NRC
+// LOS NRCS CON SU TUTOR
+
+/*
+$query_nrcs  ="SELECT distinct(A.nrc), camp, nombre_tutor, count(*) as Total ";
+$query_nrcs .="from mdl_user_students A ";
+$query_nrcs .="left join nrc_tutores B on A.nrc=B.nrc and B.periodo='". $periodo_curso ."' ";
+$query_nrcs .="where course=". $course->id . " ";
+$query_nrcs .="Group by A.nrc,camp,nombre_tutor order by 2";
+*/
+
+/// ESTO SE CAMBIO PARA QUE JAE TODO DE UN SOLO QUERY
+//$query_nrcs  = "SELECT distinct(nrc), camp, count(*) as Total from mdl_user_students where course=".  $course->id . " Group by nrc,camp order by 1"; 
+//$result_nrcs = pg_query($query_nrcs) or die('Query failed 577: ' . pg_last_error());
+
+$query_nrcs  = "SELECT distinct(A.nrc), nombre_tutor, camp, count(*) as Total from mdl_user_students A ";
+$query_nrcs  .= "left join nrc_tutores B on B.nrc=A.nrc and B.periodo='". $periodo_curso. "' ";
+$query_nrcs  .= "where course=". $course->id . " Group by A.nrc,nombre_tutor, camp order by 2 ";
+
+$result_nrcs = pg_query($query_nrcs) or die('Query failed 577: ' . pg_last_error());
+
+//echo $query_nrcs ;
+////////////// ACA DEBO HACER QUE LEA DESPUES DE LA BD DIRECTAMENTE
+
+echo "<TABLE cellspacing=0 cellpadding=2 border=1 id=tabla_nrcs1>";
+echo "<TR bgcolor=yellow><TD bgcolor=yellow><strong>&nbsp;NRC&nbsp;</strong></TD><td><strong>Tutor(es) SINFO</strong></td><TD bgcolor=yellow><strong>&nbsp;Alumnos&nbsp;</strong></TD><TD bgcolor=yellow><strong>&nbsp;CAMP&nbsp;</strong></TD></TR>";
+
+while($roxb=pg_fetch_array($result_nrcs)) 
+	{
+	// Aca puedo poner un enlace para que seleccione directamente el NRC !!!!
+	$nrcx='"'. $roxb["nrc"].'"';
+	$nrcy= $roxb["nrc"];
+	$tutorex= $roxb["nombre_tutor"];
+	$campo=$roxb["camp"];
+	
+	echo "<TR><TD align=center><a href='javascript:sel_nrcx(".$nrcx .");' target=_blank><u>". $nrcy. "</u></a></TD><TD>". $tutorex."</TD><TD align=center>". $roxb["total"]."</TD><TD align=center>". $roxb["camp"]."</TD></TR>";
+	}
+echo "</table>";
+
+/// ACA PONGO LOS BOTONES 
+
+echo "<BR><INPUT type=button value='Leer Tutores desde SINFO (Tiempo Real)' onClick='procesar()'>&nbsp;";
+echo "<font style='font-size:14px' id=fones color=red></font>&nbsp;";
+echo "<INPUT type=hidden name='tx_conteo_nrcs' id='tx_conteo_nrcs' value='0'>";
+
+echo "</TD>";
+echo "<TD valign=top id=nrc_grupos>";
+
+// aca coloco la tabla con los nrc que tienen grupo
+
+echo "</TD>";
+echo "</TR>";
+echo "</table>";
+
+
+echo "</div>";	
+echo "</p>";
+
+
+/// VOY A PONER LAS ESTADISTICAS DE CADA GRUPO
+$id_cursox=$course->id;
+$query_grupos="Select * from mdl_groups Where courseid=". $id_cursox . " order by 3";
+$result_grupos = pg_query($query_grupos) or die('Query failed 253: ' . pg_last_error());
+$total_grupos=0;
+$tabla_nrcs  ="<TABLE cellspacing=0 cellpadding=2 border=1 id=tabla_nrcs2>";
+$tabla_nrcs .="<TR><TD bgcolor=yellow><strong>&nbsp;NRC&nbsp;</strong></TD><TD bgcolor=yellow><strong>&nbsp;Alumnos&nbsp;</strong><TD bgcolor=yellow><strong>&nbsp;Camp&nbsp;</strong></TD><TD bgcolor=yellow><strong>&nbsp;Grupo&nbsp;</strong></TD></TR>";
+
+
+
+while($roxc=pg_fetch_array($result_grupos)) 
+	{
+	$total_grupos++;
+	$id_grupo=$roxc["id"];
+	/// ACA PONGO CUANTOS MIEMBROS TIENE EL GRUPO
+	$query_miembros='Select count(*) as total from mdl_groups_members Where groupid='. $id_grupo;
+	$result_miembros = pg_query($query_miembros) or die('Query failed 261: ' . pg_last_error());
+	
+	$roxd=pg_fetch_array($result_miembros);
+	$nombre_del_grupo=$roxc["name"];
+	$miembros_del_grupo=$roxd["total"];
+	echo "<strong>". $roxc["name"] .' (ID: ' . $roxc["id"]. ')</strong><BR>Miembros : '.	$roxd["total"];
+	echo '<BR>';
+	
+	$query_miembros='Select count(*) as total from mdl_groups_members Where groupid='. $id_grupo;
+	$result_miembros = pg_query($query_miembros) or die('Query failed 261: ' . pg_last_error());
+	
+
+	$query_bloque  ="Select bloque, count(*) as total from mdl_user_students ";
+	$query_bloque .="where course=". $id_cursox. " and userid in( ";
+	$query_bloque .="select userid from mdl_groups_members Where groupid=". $id_grupo . ") " ;
+	$query_bloque .="Group by bloque ";
+	$query_bloque .="order by 1 ";
+	
+	$result_bloques = pg_query($query_bloque) or die('Query failed 469: ' . pg_last_error());
+	echo "<TABLE cellpadding=1 cellspacing=1 border=1>";
+	echo "<TR><TD bgcolor=silver>BLOQUE</TD><TD bgcolor=silver>ALUMNOS</TD></TR>";
+	while($roxe=pg_fetch_array($result_bloques)) 
+		{
+		echo "<TR><TD>". $roxe["bloque"] ."</TD><TD align=right>". $roxe["total"] . "</TD></TR>";
+	    }
+	
+	//echo '</TABLE>';
+	////////// PONGO LOS NRC DEL GRUPO
+	
+	$query_nrc  ="Select nrc, camp,count(*) as total from mdl_user_students ";
+	$query_nrc .="where course=". $id_cursox. " and userid in( ";
+	$query_nrc .="select userid from mdl_groups_members Where groupid=". $id_grupo . ") " ;
+	$query_nrc .="Group by nrc,camp ";
+	$query_nrc .="order by 1 ";
+	
+	$result_nrcs = pg_query($query_nrc) or die('Query failed 486: ' . pg_last_error());
+	
+	echo "<TR><TD bgcolor=silver>NRC</TD><TD bgcolor=silver>ALUMNOS</TD></TR>";
+	while($roxd=pg_fetch_array($result_nrcs)) 
+		{
+		echo "<TR><TD>". $roxd["nrc"] ."</TD><TD align=right>". $roxd["total"] . "</TD></TR>";
+		
+		$tabla_nrcs .="<TR><TD>". $roxd["nrc"] ."</TD><TD align=center>". $roxd["total"] . "</TD><TD align=center>". $roxd["camp"] . "</TD><TD>". $nombre_del_grupo ." (". $miembros_del_grupo .") ( Id Grupo : ". $id_grupo .") <INPUT type=hidden name=id_grupox[] value='". $id_grupo."'><INPUT type=hidden name=nombre_grupox[] value='". $nombre_del_grupo." ( Id Grupo : " . $id_grupo . ")'></TD></TR>";
+	    }
+	
+	echo '</TABLE>';
+	////// FIN DE NRCS
+
+	echo '<BR>';
+   }
+// nrc_grupos DEBO CREAR UNA TABLA QUE ME PONGA LOS NRCs y los alumnos que estan agrupados
+
+$tabla_nrcs .="</TABLE>";
+
+echo '<BR>';   
+echo "<STRONG style='font-size:17px'>TOTAL GRUPOS: ". $total_grupos . "</strong>";
+
+/// Aca pongo la lista de Alumnos que no tienen grupo Solo si lo deseo con AJAX
+
+if($total_sin_grupo!=0)
+{
+?>
+
+<HR>
+<p>
+<form name="thisform_sin_grupo" method="post" id="thisform_sin_grupo" action="groups_agrupa_alumnos.php" target="_blank"> 
+<INPUT type=button value="Leer alumnos sin grupo" onClick="leer_alus_sin_grupo();">&nbsp; <font id="font_lee_alus" color="red"></font> <BR>
+</p>
+<div id="alus_sin_grupo">
+
+<div> 
+</form>
+<?PHP
+}
+?>
+
+
+<script language="javascript">
+
+
+var obet=document.getElementById("fon_total_grupos");
+obet.innerHTML="TOTAL : <?PHP echo $total_grupos ?> Grupo(s)";
+
+var obet=document.getElementById("nrc_grupos");
+obet.innerHTML="<?PHP echo $tabla_nrcs ?>";
+
+// Buscar en tabla_nrcs2 si estan en tabla_nrcs1 y sombrearlos
+// leo los elementos de la tabla tabla_nrcs2
+var oTable2 = document.getElementById("tabla_nrcs2");
+var oTable1 = document.getElementById("tabla_nrcs1");
+var lex1 = oTable1.rows.length;
+var lex2 = oTable2.rows.length;
+
+// Itero tabla2
+for (i=1;i<lex2;i++)	
+	{
+	var cole2 = oTable2.rows.item(i).cells;
+	var nrc2=cole2[0].innerText;
+	var total2=cole2[1].innerText;
+	
+	/// Ahora debos saber si alguno de esto es igual al de la tabla1
+	for (j=1;j<lex1;j++)	
+		{
+		var cole1 = oTable1.rows.item(j).cells;
+		var objcelda_nrc1=cole1[0];
+		var objcelda_total1=cole1[1];
+		var total1=objcelda_total1.innerText;
+		var nrc1=objcelda_nrc1.innerText;
+		if (nrc1==nrc2)
+			{
+			// colorea celda objcelda_nrc1
+			objcelda_nrc1.style.backgroundColor = "silver";
+			if (total1==total2)
+				{
+				objcelda_total1.style.backgroundColor = "silver";
+				}
+			//break;
+			}
+		}
+	}	
+
+	
+///////////// Para leer con AJAX los TUTORES de cada NRC
+function procesar(){
+	
+	obje("tx_conteo_nrcs").value="0";
+	obje("fones").innerText="Espere ...";
+	window.status="Leyendo Tutores ....";
+	var oTable = obje('tabla_nrcs1');
+	var lex = oTable.rows.length;
+	
+	
+    //limpiar celdas
+	for (i=1;i<lex;i++)	
+		{
+			var zx=i+1;
+			var cole = oTable.rows.item(i).cells;	
+			var objth_tutor=cole[1];
+			objth_tutor.innerText="";
+		}
+
+    /// Leer Tutor
+	for (i=1;i<lex;i++)	
+		{
+			var zx=i+1;
+			var cole = oTable.rows.item(i).cells;
+
+			var objth_nrc=cole[0];
+			var nrc=objth_nrc.innerText;
+			leer_tutor(nrc,i,zx,lex);
+		}
+}
+
+function leer_tutor(nrcx,indice_objeto,nume,total){
+	url="groups-edit_tutores_proxy_ajax.php";
+	var xmlo=crea_xmlhttpPost(url);
+		 xmlo.onreadystatechange = function()
+		  {
+		   if (xmlo.readyState == 4)
+			   {
+			   update_data(xmlo.responseText,indice_objeto, nume,total);
+			   }
+		  }
+	var nrc=nrcx;
+	var periodo="<?PHP echo $periodo_curso ?>";
+
+	qstr="periodo="+escape(periodo)+ "&nrc="+escape(nrc);
+	xmlo.send(qstr);
+}
+
+function update_data(str,indice,numex,totalx){
+    var valor_conteo_notas=obje("tx_conteo_nrcs").value;
+	valor_conteo_notas++;
+	obje("tx_conteo_nrcs").value=valor_conteo_notas;
+	obje("fones").innerText="Procesando " + valor_conteo_notas + " de " + (totalx-1) ;
+	window.status="Procesando " + valor_conteo_notas + " de " + (totalx-1);
+	
+	
+	//obje("talo").innerHTML=obje("talo").innerHTML +"<BR>" + str + "<BR>" + valor_conteo_notas + "<BR>" + totalx-1;
+	
+	var oTable = obje('tabla_nrcs1');
+	var cole = oTable.rows.item(indice).cells;
+	
+	var objth_tutor=cole[1];
+	objth_tutor.innerHTML=str;
+
+	if (valor_conteo_notas==totalx-1)
+	   {
+	   obje("fones").innerText="Listo Tutores";
+	   window.status="Listo Tutores";
+	   }
+}
+	
+	
+	
+</script>

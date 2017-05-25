@@ -1,0 +1,12 @@
+		
+CREATE PROCEDURE SP_UNIDADES_M_ACTUALIZAR_MODULO
+(
+@modulo_visible,
+@modulo
+)
+AS
+BEGIN
+		UPDATE mdl_course_modules
+		SET visible=@modulo_visible
+		WHERE id=@modulo
+END

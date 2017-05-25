@@ -1,0 +1,23 @@
+/// CON ESTO TENGO EL NOMBRE DEL TUTOR
+
+CREATE PROCEDURE SP_NOTAS_FUSIONADAS_NOMBRE_TUTOR
+(
+@id_curso_rex
+)
+AS
+BEGIN
+	SELECT lastname||', '||firstname as tutor, pidm_banner 
+	FROM mdl_user_teachers A 
+	INNER JOIN mdl_user C on A.userid=C.id 
+	WHERE A.course=@id_curso_rex and A.userid in (
+		SELECT B.userid 
+		FROM mdl_groups_members B 
+		WHERE groupid=(
+			SELECT groupid 
+			FROM mdl_groups_members P))
+END
+																					Where groupid in (Select id
+																										from mdl_groups Q 
+																										where courseid=A.course) 
+																										and userid=@id_alu_moodle))
+				

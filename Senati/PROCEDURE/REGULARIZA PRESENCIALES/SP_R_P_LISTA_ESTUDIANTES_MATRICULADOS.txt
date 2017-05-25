@@ -1,0 +1,17 @@
+
+CREATE PROCEDURE SP_R_P_LISTA_ESTUDIANTES_MATRICULADOS
+(
+@id_curso_moodle
+)
+AS
+BEGIN
+	SELECT A.*,B.*, C.*, A.id as id_matricula
+	FROM mdl_user_students A 
+	INNER JOIN mdl_course B on A.course=B.id 
+	INNER JOIN mdl_user C on A.userid=C.id 
+	WHERE A.course=@id_curso_moodle 
+		and A.userid not in(
+		SELECT userid 
+		FROM mdl_user_students D 
+		WHERE D.course=B.presencial_de) 
+END

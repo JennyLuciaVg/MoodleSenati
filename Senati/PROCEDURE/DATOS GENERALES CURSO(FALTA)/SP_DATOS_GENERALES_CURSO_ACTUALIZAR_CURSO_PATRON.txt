@@ -1,0 +1,21 @@
+
+CREATE PROCEDURE SP_DATOS_GENERALES_CURSO_ACTUALIZAR_CURSO_PATRON
+(
+@patronx,
+@publicox,
+@presex,
+@subsax,
+@indux,
+@grupox,
+@subsanacion_de_post,
+@presencial_de_post,
+@id_curso_moodle
+)
+AS
+BEGIN
+  
+		UPDATE mdl_course 
+		SET patron=@patronx,id_publico=@publicox,presencial=@presex,subsanacion=@subsax,
+		induccion=@indux,grupo=@grupox,subsanacion_de=@subsanacion_de_post,presencial_de=@presencial_de_post
+		WHERE id=@id_curso_moodle
+END

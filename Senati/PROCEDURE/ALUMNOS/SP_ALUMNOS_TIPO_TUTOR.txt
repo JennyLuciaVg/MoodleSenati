@@ -1,0 +1,41 @@
+//// LISTA DE ALUMNOS SOLO DEL TUTOR
+
+CREATE PROCEDURE SP_ALUMNOS_TIPO_TUTOR
+(
+@id_usuario,
+@id_curso_moodle
+)
+AS
+BEGIN
+
+		  SELECT * FROM
+				  (SELECT A.userid as alu_id_sv,A.status_sinfo,B.pidm_banner as alu_pidm,B.lastname as apellidos_alumno,B.firstname as nombres_alumno, B.email as email_alumno,A.bloque, 
+				  (Select C.name 
+						FROM mdl_groups C
+						INNER JOIN mdl_groups_members D
+						on D.groupid=C.id and D.userid=A.userid 
+						WHERE C.courseid=A.course LIMIT 1) as nombre_grupo, 
+				  (Select X.id 
+						FROM mdl_groups X
+						INNER JOIN mdl_groups_members J
+						on J.groupid=X.id and J.userid=A.userid 
+						WHERE X.courseid=A.course LIMIT 1) as id_grupo, 
+				  (Select E.userid 
+						FROM mdl_groups_members E
+						INNER JOIN mdl_user_teachers F 
+						on F.userid=E.userid and E.groupid=(Select M.id 
+							FROM mdl_groups M inner join mdl_groups_members P on P.groupid=M.id and P.userid=A.userid 
+							WHERE M.courseid=A.course LIMIT 1) 
+						WHERE F.course=A.course LIMIT 1) as id_tutor,
+						(Select G.num_grupo
+						FROM mdl_groups G 
+						INNER JOIN mdl_groups_members H 
+						on H.groupid=G.id and H.userid=A.userid 
+						WHERE G.courseid=A.course LIMIT 1) as grupo_numerico 
+                 		 FROM 	mdl_user_students A 
+				 LEFT JOIN mdl_user B on A.userid=B.id 
+                 		 WHERE A.course=@id_curso_moodle) as consultax,
+				 WHERE id_tutor=@id_usuario 
+				       ORDER BY status_sinfo, nombre_grupo, bloque, apellidos_alumno
+
+END

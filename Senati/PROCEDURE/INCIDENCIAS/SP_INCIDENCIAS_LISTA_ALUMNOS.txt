@@ -1,0 +1,17 @@
+/// Lista de Alumnos
+
+
+CREATE PROCEDURE SP_INCIDENCIAS_LISTA_ALUMNOS
+(
+@id_curso 
+)
+AS
+BEGIN
+    Select userid, firstname, lastname, email, pidm_banner 
+    FROM mdl_user_students A
+    INNER JOIN mdl_user B 
+    on B.id=A.userid 
+    WHERE   A.course=@id_curso 
+    and deleted=0 
+    ORDER BY lastname
+END

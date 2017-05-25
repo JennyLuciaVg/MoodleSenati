@@ -1,0 +1,13 @@
+
+CREATE PROCEDURE SP_ESTADISTICAS_GRUPO
+(
+@ID_CURSO
+)
+AS
+BEGIN
+		SELECT id, name from mdl_groups
+		WHERE courseid=@ID_CURSO
+		ORDER BY 3
+END
+			
+			

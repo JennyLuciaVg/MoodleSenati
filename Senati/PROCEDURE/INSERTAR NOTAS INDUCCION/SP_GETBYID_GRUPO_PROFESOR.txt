@@ -1,0 +1,18 @@
+		
+CREATE PROCEDURE SP_GETBYID_GRUPO_PROFESOR
+(
+@ID_CURSO
+)
+AS
+BEGIN
+		SELECT A.userid, firstname, lastname, A.camp,nombre_centro, A.bloque, status_sinfo, email, B.pidm_banner,
+		(SELECT name 
+			FROM mdl_groups C 
+			INNER JOIN mdl_groups_members D on D.groupid=C.id and D.userid=A.userid 
+			WHERE C.courseid=A.course LIMIT 1) as grupo 
+			FROM mdl_user_students A  
+			LEFT JOIN mdl_user B on A.userid=B.id 
+			LEFT JOIN senati_centros on id_centro=camp 
+			WHERE A.course=@ID_CURSO
+			ORDER BY 7,10,lastname, bloque 
+END

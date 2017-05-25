@@ -1,0 +1,14 @@
+//EXTRAIGO LOS DATOS DEL POST A IMPORTAR
+
+
+CREATE PROCEDURE SP_FOROS_EXTRAER_DATOS_A_IMPORTAR
+(
+@id_postix
+)
+AS
+BEGIN
+		Select subject, message 
+		FROM mdl_forum_posts 
+		WHERE id=@id_postix
+END
+		

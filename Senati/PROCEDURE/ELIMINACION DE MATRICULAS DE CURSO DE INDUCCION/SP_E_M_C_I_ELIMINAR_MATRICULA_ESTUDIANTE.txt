@@ -1,0 +1,13 @@
+ //SE DEBE BORRAR
+
+
+CREATE PROCEDURE SP_E_M_C_I_ELIMINAR_MATRICULA_ESTUDIANTE
+(
+@id_matrix
+)
+AS
+BEGIN
+		DELETE 
+		FROM mdl_user_students 
+		WHERE id=@id_matrix
+END

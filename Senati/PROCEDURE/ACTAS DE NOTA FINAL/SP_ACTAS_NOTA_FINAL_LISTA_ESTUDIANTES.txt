@@ -1,0 +1,14 @@
+//ACA DEBO LEER EL NRC PERIODO Y CAMP DE mdl_user_students
+
+CREATE PROCEDURE SP_ACTAS_NOTA_FINAL_LISTA_ESTUDIANTES
+(
+@valor_id_alu
+)
+AS
+BEGIN
+			  SELECT nrc, bloque, periodo, camp
+				FROM mdl_user_students 
+				WHERE userid=@valor_id_alu
+END
+										and course=@id_cursox
+						  

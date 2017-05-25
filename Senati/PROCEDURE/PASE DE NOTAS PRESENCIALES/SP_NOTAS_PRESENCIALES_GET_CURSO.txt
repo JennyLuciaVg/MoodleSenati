@@ -1,0 +1,14 @@
+
+
+CREATE PROCEDURE SP_NOTAS_PRESENCIALES_GET_CURSO
+(
+@Id_Curso
+)
+AS
+BEGIN
+
+		SELECT fullname,subsanacion, induccion, presencial,id_tarea1_pres,id_tarea2_pres, presencial_de 
+		FROM mdl_course
+		WHERE id=@Id_Curso
+END
+	

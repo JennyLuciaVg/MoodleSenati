@@ -1,0 +1,17 @@
+//QUERY DE LOS CURSOS
+CREATE PROCEDURE SP_REPORTES_JEFES_LISTA_CURSOS
+(
+@periodo_vc,
+@camp_vc
+)
+AS
+BEGIN
+	SELECT distinct(B.id), fullname
+	FROM mdl_user_students  A 
+	INNER JOIN mdl_course B on A.course=B.id 
+	WHERE A.periodo=@periodo_vc and camp=@camp_vc 
+	ORDER BY B.id desc 
+END
+				
+				
+				

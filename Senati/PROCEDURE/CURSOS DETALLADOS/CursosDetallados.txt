@@ -1,0 +1,56 @@
+CREATE PROCEDURE SP_LISTAR_Detallados(
+@YEAR DATETIME,
+@ID_CURSO_PADRE INT,
+@ID_CURSO_SUBSA INT
+)
+AS
+BEGIN
+
+	SELECT A.id, fullname,startdate, A.periodo, z.Inscritos, W.reti_sinfo, J.total_grupox, T.total_tutores, S.pondera, R.temas_foro
+		FROM mdl_course A 
+		join (
+			select count(0)  Inscritos, course
+				from mdl_user_students Z 
+				group by z.course) 
+			as z on  z.course=A.id 
+		join (
+			select count(0) reti_sinfo, course , status_sinfo
+				from mdl_user_students W
+				group by W.course,W.status_sinfo)
+			as W on  W.course=A.id and W.status_sinfo='RET'	  
+		join (
+			select count(0) total_grupox, courseid
+				from mdl_groups J
+				group by J.courseid) 
+			as J on J.courseid=A.id
+		join (
+			select count(0) total_tutores, course
+				from mdl_user_teachers T 
+				group by T.course) 
+			as T on T.course=A.id 
+		join(
+			select pondera , id_curso 
+				from senati_pesos_recursos S
+				group by S.id_curso)
+			as S on S.id_curso=A.id
+
+		join(
+			Select count(0) temas_foro,course,parent 
+				from mdl_forum_discussions P 
+				inner join mdl_forum_posts Q on Q.discussion=P.id 
+				inner join mdl_forum R on R.id=P.forum and P.course=R.course
+				group by R.course,Q.parent) 
+			as R on R.course=A.id and Q.parent=0 
+
+		where  ((A.category<>39 
+				and A.category<>43) 
+				and A.id<>1 
+				and A.presencial_de is null 
+				and A.subsanacion_de is null 
+				and to_char(A.startdate::abstime, 'YYYY')=@YEAR) or (presencial_de= @ID_CURSO_PADRE	and subsanacion_de=@ID_CURSO_PADRE) 
+				or (presencial_de=@ID_CURSO_SUBSA)
+			 	order by A.id desc,subsanacion_de desc, A.id desc, A.id desc	
+
+END
+
+

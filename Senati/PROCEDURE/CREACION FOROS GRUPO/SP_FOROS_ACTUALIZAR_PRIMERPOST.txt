@@ -1,0 +1,14 @@
+/// UPDATE DEL firstpost en mdl_form_discussions
+
+CREATE PROCEDURE SP_FOROS_ACTUALIZAR_PRIMERPOST
+(
+@id_new_post,
+@id_new_discussion
+)
+AS
+BEGIN
+		Update mdl_forum_discussions 
+		SET firstpost=@id_new_post
+		WHERE id=@id_new_discussion
+END
+		

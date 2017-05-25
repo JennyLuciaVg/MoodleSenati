@@ -1,0 +1,24 @@
+// REVISAR ACA PUES HE PUESTO UN PARCHE CON LIMIT 1
+
+CREATE PROCEDURE SP_NOTAS_FUSIONADAS
+(
+@id_alu_moodle
+)		
+AS
+BEGIN
+
+	SELECT lastname||', '||firstname as tutor, pidm_banner 
+	FROM mdl_user_teachers A 
+	INNER JOIN mdl_user C on A.userid=C.id 
+	WHERE A.course=@id_curso_reg
+	and A.userid in (select B.userid 
+	FROM mdl_groups_members B 
+	WHERE groupid=(SELECT groupid 
+	FROM mdl_groups_members P
+	WHERE groupid in (SELECT id 
+	FROM mdl_groups Q 
+	WHERE courseid=A.course) and userid=@id_alu_moodle LIMIT 1))
+
+END
+			
+			

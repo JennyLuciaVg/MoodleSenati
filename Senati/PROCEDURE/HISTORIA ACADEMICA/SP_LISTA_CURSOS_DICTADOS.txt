@@ -1,0 +1,46 @@
+Variables = startdate ,
+			date("d-m-Y",$fecha_curso),
+			numsections
+			mktime(0, 0, 0, date("m",$fecha_curso), date("d",$fecha_curso)+$add_dias, date("y",$fecha_curso))
+			date("d-m-Y",$mana)
+			id_curso_moodle
+			Tiene_Certificado
+			fullname
+			inscritos
+
+
+CREATE PROCEDURE SP_LISTA_CURSOS_DICTADOS
+(
+@Id_Curso
+)
+AS
+BEGIN
+
+	SELECT fullname, E.id as id_curso_moodle , startdate, numsections, K.Tiene_Certificado
+	FROM senati_Cursos A
+	INNER JOIN(
+			SELECT Tiene_Certificado,Id_Curso
+			FROM mdl_course_modules K
+			GROUP BY K.module,K.course)
+			as K on K.module=21 and K.course=E.id	
+			
+		INNER JOIN mdl_course E
+			on id_course_moodle=E.id
+			
+		LEFT JOIN senati_rela_cursos_cursos C
+			on id_Curso_senati=A.id_Curso
+
+	WHERE id_curso_senati=@Id_Curso
+	ORDER BY startdate desc
+
+END
+	
+	
+	
+//QUERY ANTERIOR
+$query1 ='SELECT fullname, E.id as id_curso_moodle , startdate, numsections, (Select count(*) from mdl_user_students Z where Z.course=E.id) as Inscritos,  '; 
+$query1=$query1. '(SELECT COALESCE((SELECT 1 FROM mdl_course_modules K WHERE K.module=21 and K.course=E.id LIMIT 1),0)) as "Tiene_Certificado" From senati_Cursos A ';
+$query1=$query1. 'left Join senati_rela_cursos_cursos  C on id_Curso_senati=A.id_Curso '; 
+$query1=$query1. 'Inner Join mdl_course E on id_course_moodle=E.id ';
+$query1=$query1. 'Where id_curso_senati=' . $id_csen ;
+$query1=$query1. ' Order by startdate desc';	

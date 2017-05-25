@@ -1,0 +1,15 @@
+// Mostrar las incidencias del CURSO
+
+CREATE PROCEDURE SP_INCIDENCIAS_DEL CURSO
+(
+@id_curso
+)
+AS
+BEGIN
+        SELECT to_char(A.fecha, 'DD Mon YYYY HH12:MI:SS') as fechax, A.*, B.lastname||', '||B.firstname as alumno, C.lastname||', '||C.firstname as tutor 
+        FROM senati_reg_incidencias A 
+        INNER JOIN mdl_user B on B.id=A.id_alu 
+        INNER JOIN mdl_user C on C.id=A.id_tutor
+        WHERE   id_curso=@id_curso
+        ORDER BY id_inc desc
+END

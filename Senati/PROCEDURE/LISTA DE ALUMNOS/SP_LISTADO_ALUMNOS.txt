@@ -1,0 +1,20 @@
+// ACA SON TODOS
+
+CREATE PROCEDURE SP_LISTADO_ALUMNOS
+(
+@id_cursox
+)
+AS
+BEGIN
+		SELECT A.userid, firstname, lastname, nombre_centro, A.bloque, A.nrc, email, estado, nota, pidm_banner, A.camp, A.carr, B.city, A.semestre, username,
+			(SELECT COUNT(*) FROM mdl_log Z WHERE (action not in ('login','logout','error')) and Z.course=A.course and A.userid=Z.userid) as accesos,
+			(SELECT COUNT(*) FROM mdl_log Z WHERE Z.course=A.course and A.userid=Z.userid) as accesos,
+			(SELECT C.name FROM mdl_groups C INNER JOIN mdl_groups_members D on D.groupid=C.id and D.userid=A.userid WHERE C.courseid=A.course LIMIT 1) as nombre_grupo,
+			(SELECT C.id FROM mdl_groups C INNER JOIN mdl_groups_members D on D.groupid=C.id and D.userid=A.userid WHERE C.courseid=A.course LIMIT 1) as id_grupo,
+			FROM mdl_user_students A 
+			LEFT JOIN mdl_user B on A.userid=B.id ";
+			LEFT JOIN senati_centros G on G.id_centro=A.camp
+			LEFT JOIN senati_actas_notas on id_alumno=A.userid and id_curso=A.course 
+			WHERE A.course=@id_cursox
+			ORDER BY @ordenar 
+END

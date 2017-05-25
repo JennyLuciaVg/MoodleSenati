@@ -1,0 +1,34 @@
+CREATE PROCEDURE SP_LISTA_CON_ANIO
+(
+@ano_listar 
+)
+AS
+BEGIN
+		SELECT A.id, fullname,startdate, periodo, subsanacion, induccion, presencial, id_publico, Z.Inscritos, K.aprobados, J.desaprobados, M.retinp
+		FROM mdl_course A
+		join(
+			SELECT COUNT(0) Inscritos,numsections,enrollable,visible,patron
+				FROM mdl_user_students Z
+				GROUP BY Z.course)
+			as Z on	where Z.course=A.id 
+		join(
+			SELECT COUNT(0) aprobados,K.id_curso,K.estado
+				FROM senati_actas_notas K
+				GROUP BY K.id_curso,K.estado)
+			as K.id_curso=A.id and K.estado='AP'
+		
+		join(
+			SELECT COUNT(0) desaprobados,J.id_curso,J.estado
+				FROM senati_actas_notas J
+				GROUP BY J.id_curso,J.estado)
+			as J on J.id_curso=A.id and J.estado='DE'
+		join(
+			SELECT COUNT(0) retinp,M.estado
+				FROM senati_actas_notas M
+				GROUP BY M.id_curso,M.estado)
+			as M on M.id_curso=A.id and (M.estado<>'AP' and M.estado<>'DE') 
+		WHERE 	A.id<>1 and to_char(startdate::abstime, 'YYYY')= @ano_listar 
+			order by '1' DESC
+			order by A.id DESC
+
+END

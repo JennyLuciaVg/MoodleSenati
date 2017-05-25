@@ -1,0 +1,31 @@
+
+CREATE PROCEDURE SP_ACTAS_NOTA_OFICIAL_ESTADISTICAS_CARRERA
+(
+@Id_Curso_Modle
+)
+AS
+BEGIN
+	SELECT DISTINCT(A.camp||'-'||A.carr||'-'||estado), A.camp, A.carr, estado, materia_desc, nombre_centro, count(0) as total
+	FROM mdl_user_students A
+		LEFT JOIN mdl_user B
+		on userid=B.id 
+		LEFT JOIN senati_actas_notas C
+		on C.id_curso=A.course and B.id=id_alumno 
+		LEFT JOIN senati_materias D
+		on D.materia_code=A.carr 
+		LEFT JOIN senati_centros E 
+		on E.id_centro=A.camp 
+	WHERE A.course=@Id_Curso_Modle 
+	GROUP BY A.camp||'-'||A.carr||'-'||estado, A.camp, A.carr, estado, materia_desc,nombre_centro
+END
+
+
+//ANTERIOR QUERY
+  $queryx  = "Select DISTINCT(A.camp||'-'||A.carr||'-'||estado), A.camp, A.carr, estado, materia_desc, nombre_centro, count(*) as total From mdl_user_students A ";
+	  $queryx .= "left join mdl_user B on userid=B.id ";
+	  $queryx .= "left join senati_actas_notas C on C.id_curso=A.course and B.id=id_alumno ";
+	  $queryx .= "left join senati_materias D on D.materia_code=A.carr ";
+	  $queryx .= "left join senati_centros E on E.id_centro=A.camp ";
+	  $queryx .= "Where A.course=" . $id_curso_moodle ; 
+	  $queryx .= "Group by A.camp||'-'||A.carr||'-'||estado, A.camp, A.carr, estado, materia_desc,nombre_centro ";
+	  $resultx = pg_query($queryx) or die('Query failed: ' . pg_last_error());

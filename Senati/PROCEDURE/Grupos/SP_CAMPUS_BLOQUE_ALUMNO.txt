@@ -1,0 +1,12 @@
+
+CREATE PROCEDURE SP_CAMPUS_BLOQUE_ALUMNO
+(
+@ID_CURSO,
+@ID_USUARIO
+)
+AS
+BEGIN
+		SELECT camp, bloque,nrc
+		FROM mdl_user_students 
+		WHERE course=@ID_CURSO and userid=@ID_USUARIO
+END

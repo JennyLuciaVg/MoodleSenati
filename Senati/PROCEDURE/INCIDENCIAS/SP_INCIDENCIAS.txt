@@ -1,0 +1,18 @@
+///// COMO HE SALVADO LA INCIDENCIA DEBO LEERLA PARA EDITARLA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		//QUEDA EL AUTOR Y EL CURSO SOLO CAMBIA EL ALUMNO Y EL COTENIDO	
+        
+CREATE PROCEDURE SP_INCIDENCIAS
+(
+@Id_incidencia
+)
+AS
+BEGIN 
+	SELECT id_alumno,incidencia,fecha_leida 
+        FROM senati_reg_incidencias 
+        WHERE id_inc=@Id_incidencia
+END
+
+		
+
+	
+		

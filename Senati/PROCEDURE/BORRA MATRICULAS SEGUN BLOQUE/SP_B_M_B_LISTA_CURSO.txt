@@ -1,0 +1,13 @@
+//CHEQUEO PRIMERO EL NOMBRE DEL CURSO
+
+
+CREATE PROCEDURE SP_B_M_LISTA_CURSO
+(
+@id_curso_moodle
+)
+AS
+BEGIN
+		SELECT fullname 
+		FROM mdl_course 
+		WHERE id=@id_curso_moodle
+END

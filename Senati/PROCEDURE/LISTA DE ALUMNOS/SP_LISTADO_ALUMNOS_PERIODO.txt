@@ -1,0 +1,12 @@
+
+CREATE PROCEDURE SP_LISTADO_ALUMNOS_PERIODO
+(
+@id_cursox
+)
+AS
+BEGIN
+	SELECT fullname, periodo 
+	FROM mdl_course 
+	WHERE id=@id_cursox
+END
+	

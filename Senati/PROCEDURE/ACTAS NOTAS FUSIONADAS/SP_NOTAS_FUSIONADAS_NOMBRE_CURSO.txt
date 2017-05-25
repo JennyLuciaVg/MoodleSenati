@@ -1,0 +1,16 @@
+// NOMBRE DEL CURSO SINFO
+
+CREATE PROCEDURE SP_NOTAS_FUSIONADAS_NOMBRE_CURSO
+(
+@lista_cursix
+)
+AS
+BEGIN
+		SELECT DISTINCT(banner_subj_code), banner_crse_numb, nombre_curso 
+		FROM senati_rela_cursos_cursos a 
+		INNER JOIN mdl_course b 
+		on b.id=a.id_course_moodle
+		INNER JOIN senati_cursos c 
+		on a.id_curso_senati=c.id_curso
+		WHERE b.id IN (@lista_cursix)
+END

@@ -1,0 +1,13 @@
+///	CREO LA LISTA DE CURSOS RELACIONADOS
+
+CREATE PROCEDURE SP_NOTAS_FUSIONADAS_LISTA_CURSOS_RELACIONADOS
+(
+@id_padre
+)
+AS
+BEGIN
+
+			SELECT id, fullname,periodo 
+			FROM mdl_course 
+			WHERE subsanacion_de=@id_padre or id=@id_padre 
+END

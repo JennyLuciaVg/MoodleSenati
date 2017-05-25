@@ -1,0 +1,15 @@
+//LISTA DE QUIZES
+
+CREATE PROCEDURE SP_BORRA_CEROS_LISTA_QUIZES
+(
+@id_cursox
+)
+AS
+BEGIN
+			SELECT A.id,name, timeopen,timeclose,timelimit, C.section, instance, B.visible, C.visible as unidad_visible, B.id as id_module 
+				FROM mdl_quiz A
+				INNER JOIN mdl_course_modules B on A.course=B.Course and module=12 and instance=A.id 
+				INNER JOIN mdl_course_sections C on B.section=C.id 
+				WHERE A.course=@id_cursox 
+				ORDER BY  C.section asc,B.id
+END

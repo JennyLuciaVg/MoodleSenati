@@ -1,0 +1,19 @@
+
+
+CREATE PROCEDURE SP_BORRA_CEROS_LISTA
+(
+@id_cursox
+)
+AS
+BEGIN
+			SELECT A.*,B.lastname||', '||B.firstname as alumno, A.userid as id_alumno, C.name as nombre_quiz 
+				FROM mdl_quiz_attempts A 
+				INNER JOIN mdl_user B on B.id=A.userid 
+				INNER JOIN mdl_quiz C on C.id=A.Quiz 
+				WHERE quiz in (SELECT id 
+					FROM mdl_quiz J 
+					WHERE J.course=@id_cursox) 
+						and A.sumgrades=0
+						ORDER BY quiz, B.lastname, B.firstname
+END
+	

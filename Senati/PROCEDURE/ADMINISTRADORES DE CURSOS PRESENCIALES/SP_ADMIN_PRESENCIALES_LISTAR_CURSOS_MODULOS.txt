@@ -1,0 +1,18 @@
+
+
+CREATE PROCEDURE SP_ADMIN_PRESENCIALES_LISTAR_CURSOS
+(
+@id_curso
+)
+AS
+BEGIN
+
+	SELECT A.id as id_course_modules,C.id as id_quiz,C.name as nombre_quiz,A.instance, A.section as module_section, A.visible as module_visible,
+	B.visible as seccion_visible,C.password as password_quiz,subnet
+	FROM mdl_course_modules A 
+	INNER JOIN mdl_course_sections B on B.id=A.section 
+	INNER JOIN mdl_quiz C on A.instance=C.id and C.course=A.course 
+	WHERE module=12 
+	and A.course=@id_curso
+	ORDER BY C.id 
+END

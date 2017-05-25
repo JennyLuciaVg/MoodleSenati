@@ -1,0 +1,11 @@
+CREATE PROCEDURE SP_ENLAZAR_CHAT_UPDATE
+(
+@id_tutor,
+@id_chat 
+)
+AS
+BEGIN
+	UPDATE mdl_chat
+	SET id_tutor=@id_tutor 
+	WHERE id=@id_chat
+END

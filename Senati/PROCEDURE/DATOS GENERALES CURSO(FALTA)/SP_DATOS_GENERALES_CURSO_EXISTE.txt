@@ -1,0 +1,14 @@
+ //////// AVERIGUO SI EXISTE LA RELACION		
+ 
+
+
+CREATE PROCEDURE SP_DATOS_GENERALES_CURSO_EXISTE
+(
+@id_curso_moodle
+)
+AS
+BEGIN
+		  SELECT COUNT(*) as total 
+		  FROM senati_rela_cursos_cursos  
+		  WHERE id_course_moodle=@id_curso_moodle
+END		 

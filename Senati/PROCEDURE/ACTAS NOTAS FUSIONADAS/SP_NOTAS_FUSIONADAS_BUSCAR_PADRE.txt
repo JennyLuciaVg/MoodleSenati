@@ -1,0 +1,12 @@
+/// DEBO BUSCAR AL PADRE
+
+CREATE PROCEDURE SP_NOTAS_FUSIONADAS_BUSCAR_PADRE
+(
+@id_curso
+)
+AS
+BEGIN
+	SELECT subsanacion_de 
+	FROM mdl_course 
+	WHERE id=@id_curso
+END

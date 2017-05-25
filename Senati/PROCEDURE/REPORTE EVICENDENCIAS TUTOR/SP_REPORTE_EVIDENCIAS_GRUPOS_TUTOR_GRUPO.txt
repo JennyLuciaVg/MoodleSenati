@@ -1,0 +1,23 @@
+/// ACA DEBO LISTAR TODOS LOS GRUPOS TUTOR DEL CURSO	
+
+CREATE PROCEDURE SP_REPORTE_EVIDENCIAS_GRUPOS_TUTOR_GRUPO
+(
+@id_cursox
+)
+AS
+BEGIN
+	
+	SELECT A.id as id_grupo, A.name as nombre_grupo,
+		(SELECT max(D.id) from mdl_groups_members B
+		LEFT JOIN mdl_user_teachers C on C.course=A.courseid and C.userid=B.userid 
+		LEFT JOIN mdl_user D on D.id=C.userid 
+		WHERE B.groupid=A.id) as id_tutor, E.id, E.lastname||', '||E.firstname as nombre_tutor 			
+			FROM mdl_groups A 
+			LEFT JOIN mdl_user E on E.id=(Select max(G.id) 
+				FROM mdl_groups_members H
+				LEFT JOIN mdl_user_teachers J on J.course=A.courseid and J.userid=H.userid 
+				LEFT JOIN mdl_user G on G.id=J.userid 
+				WHERE H.groupid=A.id)
+				WHERE A.courseid=@id_cursox 
+				ORDER BY A.name
+END

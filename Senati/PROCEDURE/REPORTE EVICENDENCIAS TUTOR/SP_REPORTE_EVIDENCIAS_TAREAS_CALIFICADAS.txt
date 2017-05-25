@@ -1,0 +1,34 @@
+
+		// Tareas Calificadas
+
+
+CREATE PROCEDURE SP_REPORTE_EVIDENCIAS_TAREAS_CALIFICADAS
+(
+@tarea_id ,
+@grupo_idx,
+@id_cursox,
+@id_cursox 
+
+)
+AS
+BEGIN
+		SELECT count(1) as tareas_calificadas 
+		FROM mdl_assignment_submissions A 
+		WHERE assignment=@tarea_id and grade<>-1 
+		and A.userid in (Select B.userid 
+			FROM mdl_groups_members B
+			INNER JOIN mdl_user D 
+			on D.id=B.userid 
+			INNER JOIN mdl_user_students E
+			on E.userid=B.userid 
+			WHERE B.groupid=@grupo_idx[$k]
+			and E.course=@id_cursox 
+			and  D.deleted=0)
+			and A.userid not in (Select C.userid
+				FROM mdl_user_Students C 
+				WHERE course=@id_cursox 
+				and status_sinfo is not null)
+END
+			
+			
+		

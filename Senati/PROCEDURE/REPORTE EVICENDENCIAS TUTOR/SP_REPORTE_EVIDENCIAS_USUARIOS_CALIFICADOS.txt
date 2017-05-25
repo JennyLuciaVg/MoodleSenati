@@ -1,0 +1,27 @@
+// USUARIOS CON FOROS CALIFICADOS
+CREATE PROCEDURE SP_REPORTE_EVIDENCIAS_USUARIOS_CALIFICADOS
+(
+@id_cursox
+
+)
+AS
+BEGIN
+		SELECT count(DISTINCT(c.id)) as usuarios_calificados 
+		FROM mdl_forum a 
+		INNER JOIN mdl_forum_discussions b on a.id=b.forum
+		INNER JOIN mdl_forum_posts c on c.discussion=b.id 
+		INNER JOIN mdl_forum_ratings d on d.post=c.id 
+		WHERE a.course=@id_cursox 
+		and a.id=@foro_id 
+		and c.parent<>0 
+		and b.group in (grupo_idx)
+		and rating is not null 
+		and c.userid in (select e.userid
+END
+													from mdl_user_students e
+													inner join mdl_user f 
+													on f.id=e.userid and f.deleted=0 
+													where	e.course=a.course 
+															and status_sinfo is null)
+				
+				

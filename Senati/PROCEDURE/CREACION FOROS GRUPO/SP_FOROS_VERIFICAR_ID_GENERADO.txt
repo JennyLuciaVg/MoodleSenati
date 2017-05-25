@@ -1,0 +1,19 @@
+﻿		// VERIFICAR CUAL ES EL ID que se GENERÓ
+
+CREATE PROCEDURE SP_FOROS_VERIFICAR_ID_GENERADO
+(
+@id_new_discussion,
+@name_forox,
+@id_tutorx, 
+@fecha_actual
+)
+AS
+BEGIN
+		SELECT id 
+		FROM mdl_forum_posts 
+		WHERE discussion=@id_new_discussion
+		and subject=@name_forox 
+		and userid=@id_tutorx 
+		and modified=@fecha_actual
+END
+		

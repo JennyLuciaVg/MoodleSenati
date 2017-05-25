@@ -1,0 +1,19 @@
+//TE TRAE LAS PRIMERAS 9 COLUMNAS
+
+CREATE PROCEDURE SP_PROMEDIOS_PRESENCIALES_LISTAR
+(
+@id_cursox
+)
+AS
+BEGIN
+
+		SELECT A.userid, firstname, lastname, A.camp,nombre_centro, A.bloque, nrc, B.pidm_banner,status_sinfo 
+		FROM mdl_user_students A 
+		LEFT JOIN mdl_user B
+		on A.userid=B.id 
+		LEFT JOIN senati_centros
+		on id_centro=camp 
+		WHERE A.course=@id_cursox 
+		ORDER BY status_sinfo, bloque,camp 
+
+END

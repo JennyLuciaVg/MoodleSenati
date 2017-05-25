@@ -1,0 +1,15 @@
+		
+
+CREATE PROCEDURE SP_GET_PERIODOCURSO
+(
+@periodo_curso,
+@ID_CURSO
+)
+AS
+BEGIN	
+		SELECT distinct(A.nrc), nombre_tutor, camp, count(*) as Total from mdl_user_students A 
+		LEFT JOIN nrc_tutores B 
+		on B.nrc=A.nrc and B.periodo=@periodo_curso
+		WHERE course=@ID_CURSO
+		Group by A.nrc,nombre_tutor, camp order by 2 
+END

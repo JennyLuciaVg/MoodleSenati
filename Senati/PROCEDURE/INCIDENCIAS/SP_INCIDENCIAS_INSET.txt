@@ -1,0 +1,18 @@
+///INSERTO
+	
+
+CREATE PROCEDURE SP_INCIDENCIAS_INSET
+(
+@id_tutorx,
+@id_alumnox,
+@id_cursox,
+@incidencia
+)
+AS
+BEGIN
+	INSERT INTO senati_reg_incidencias (id_tutor,id_alu,id_curso,incidencia) 
+		VALUES(@id_tutorx,@id_alumnox,@id_cursox,@incidencia)
+
+END	
+			
+			

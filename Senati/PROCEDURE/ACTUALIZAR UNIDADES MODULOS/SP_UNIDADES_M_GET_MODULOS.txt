@@ -1,0 +1,18 @@
+
+CREATE PROCEDURE SP_UNIDADES_M_GET_MODULOS
+(
+@unidad,
+@idcmoodle
+
+)
+AS
+BEGIN
+		SELECT A.id, B.name, A.visible, A.module, A.instance,  B.caso 
+			FROM mdl_course_modules A   
+			INNER JOIN mdl_modules B 
+			on B.id=A.module 
+			mdl_course_sections C 
+			on C.id=A.section and C.course=A.course 
+			WHERE C section= @unidad and A.course= @idcmoodle order by 6;
+
+END

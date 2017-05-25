@@ -1,0 +1,19 @@
+///////// DEBO IDENTIFICAR EL ID FORO PARA SELECCIONARLO EN LA SGTE PAGINA
+		//$id_foro_seleccionado=$id_forox;
+		
+
+CREATE PROCEDURE SP_FOROS_IDENTIFICAR_ID_FORO
+(
+@Id_forox,
+@name_forox,
+@id_tutorx ,
+@id_grupox,
+@fecha_actual,
+@id_cursox
+)
+AS
+BEGIN
+	INSERT INTO mdl_forum_discussions (forum, name, userid, groupid, timemodified,course) 
+		VALUES (@Id_forox,@name_forox,@id_tutorx ,
+			@id_grupox,@fecha_actual,@id_cursox )
+END	

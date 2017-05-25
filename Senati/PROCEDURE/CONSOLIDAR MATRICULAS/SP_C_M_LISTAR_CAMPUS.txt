@@ -1,0 +1,12 @@
+				   // EL CAMPUS DEBO SACARLO DE LA BASE DE DATOS
+CREATE PROCEDURE SP_C_M_LISTAR_CAMPUS
+(
+@camp
+)
+AS
+BEGIN
+		  
+		SELECT nombre_centro 
+		FROM senati_centros 
+		WHERE id_centro=@camp
+END			   

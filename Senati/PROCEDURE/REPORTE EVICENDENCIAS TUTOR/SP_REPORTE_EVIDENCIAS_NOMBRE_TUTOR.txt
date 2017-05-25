@@ -1,0 +1,19 @@
+/////////////////$tutor_sel me indica el ID SV del TUTOR
+
+CREATE PROCEDURE SP_REPORTE_EVIDENCIAS_NOMBRE_TUTOR
+(
+@tutor_sel
+)
+AS
+BEGIN
+	
+			SELECT lastname||', '||firstname as nombre_tutor 
+			FROM mdl_user 
+			WHERE id= @tutor_sel
+END
+			
+
+	
+	
+			
+	

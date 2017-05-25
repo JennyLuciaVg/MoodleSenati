@@ -1,0 +1,17 @@
+
+
+CREATE PROCEDURE SP_SUBSANACION_INSERTAR_ESTUDIANTES
+(
+@id_curso_sub,
+@id_user_sv,
+@camp,
+@nrc,
+@periodo,
+@bloque,
+@manual
+)
+AS
+BEGIN			
+	INSERT INTO mdl_user_students (course,userid,camp,nrc,periodo,bloque,enrol) 
+		VALUES (@id_curso_sub,@id_user_sv,@camp,@nrc,@periodo,@bloque,@manual)
+END

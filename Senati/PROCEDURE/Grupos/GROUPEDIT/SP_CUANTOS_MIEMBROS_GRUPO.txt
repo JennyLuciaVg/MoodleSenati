@@ -1,0 +1,11 @@
+CREATE PROCEDURE SP_CUANTOS_MIEMBROS_GRUPO
+(
+@ID_GRUPO
+)
+AS
+BEGIN
+		SELECT count(1) as total
+		FROM mdl_groups_members
+		WHERE groupid=@ID_GRUPO
+END
+	

@@ -1,0 +1,17 @@
+//Campus distintos
+
+
+CREATE PROCEDURE SP_IMPORTAR_MATRICULAS_LISTA_CAMPUS_DISTINTO
+(
+@id_curso_moodle
+)
+AS
+BEGIN
+		SELECT distinct(camp), nombre_centro 
+		FROM mdl_user_students 
+		LEFT JOIN senati_centros 
+		on camp=id_centro 
+		WHERE camp is not null
+		and course=@id_curso_moodle
+END
+				

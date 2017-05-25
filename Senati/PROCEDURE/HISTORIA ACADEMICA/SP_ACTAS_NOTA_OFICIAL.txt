@@ -1,0 +1,23 @@
+
+
+CREATE PROCEDURE SP_ACTAS_NOTA_OFICIAL
+(
+@id_curso_moodle, 
+)
+AS
+BEGIN
+	SELECT userid, firstname, B.pidm_banner, lastname, email , city, nota, estado, A.camp, A.carr, A.periodo, A.nrc, A.bloque
+		FROM mdl_user_students A 
+		LEFT JOIN mdl_user B
+		on userid=B.id 
+		LEFT JOIN senati_actas_notas C 
+		on C.id_curso=A.course and B.id=id_alumno
+	WHERE A.course=@id_curso_moodle 
+	ORDER BY camp, nrc, periodo, carr, lastname
+END
+
+		
+//QUERY ANTERIOR
+$query  = 'SELECT userid, firstname, B.pidm_banner, lastname, email , city, nota, estado, A.camp, A.carr, A.periodo, A.nrc, A.bloque From mdl_user_students A left join mdl_user B on userid=B.id ';
+$query .=' left join senati_actas_notas C on C.id_curso=A.course and B.id=id_alumno Where A.course=' . $id_curso_moodle . ' order by camp, nrc, periodo, carr, lastname';
+		

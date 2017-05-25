@@ -1,0 +1,18 @@
+
+CREATE PROCEDURE SP_REPORTES_DESAPROBADOS_LISTA_QUIZ
+(
+@id_userx,
+@id_cursox
+)
+AS
+BEGIN
+	SELECT distinct(A.id),(select max(B.grade) 
+	FROM mdl_quiz_grades B 
+	WHERE A.id=B.quiz and userid=@id_userx) as nota_grade, 
+	A.GRADE as nota_maxima, peso_recurso  
+	FROM mdl_quiz A  
+	LEFT JOIN senati_pesos_recursos on id_recurso=A.id and tipo_recurso=2  
+	WHERE UPPER(A.name) not like 'SUBSA%' and (peso_recurso<>0 or peso_recurso is not null) 
+	and A.course=@id_cursox
+	ORDER BY A.id  
+END

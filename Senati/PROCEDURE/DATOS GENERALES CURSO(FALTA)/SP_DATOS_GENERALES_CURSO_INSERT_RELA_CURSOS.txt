@@ -1,0 +1,12 @@
+
+
+CREATE PROCEDURE SP_DATOS_GENERALES_CURSO_INSERT_RELA_CURSOS
+(
+@valor_id_cs,
+@id_curso_moodle
+)
+AS
+BEGIN
+		INSERT INTO senati_rela_cursos_cursos (id_curso_senati,id_course_moodle) 
+			VALUES (@valor_id_cs,@id_curso_moodle) 
+END	

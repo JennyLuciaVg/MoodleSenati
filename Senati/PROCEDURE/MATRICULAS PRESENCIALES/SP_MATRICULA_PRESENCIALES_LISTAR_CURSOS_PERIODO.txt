@@ -1,0 +1,20 @@
+/// Listar los cursos de ese periodo
+
+
+CREATE PROCEDURE SP_MATRICULA_PRESENCIALES_LISTAR_CURSOS_PERIODO
+(
+@periodo_seleccionado 
+)
+AS
+
+BEGIN
+
+		SELECT A.id as id_curso_pres,fullname,presencial_de,camp_pres,nombre_centro,
+			(SELECT COUNT(*) 
+			FROM mdl_user_students C where C.course=A.id) as matriculas
+				FROM mdl_course A
+				LEFT JOIN senati_centros B on B.id_centro=A.camp_pres 
+				WHERE presencial_de is not null and periodo=@periodo_seleccionado 
+				ORDER BY presencial_de
+END
+			

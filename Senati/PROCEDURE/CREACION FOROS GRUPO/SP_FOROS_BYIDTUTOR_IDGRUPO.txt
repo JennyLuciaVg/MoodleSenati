@@ -1,0 +1,28 @@
+
+
+
+CREATE PROCEDURE SP_FOROS_BYIDTUTOR_IDGRUPO
+(
+@id_curso_moodle,
+@id_grupo 
+)
+AS
+BEGIN 
+		Select count(1) as total_foros, E.section as unidad, C.id as id_foro 
+			FROM mdl_forum_posts A 
+				INNER JOIN mdl_forum_discussions B
+				on B.id=A.discussion 
+				INNER JOIN mdl_forum C
+				on B.forum=C.id 
+  				INNER JOIN mdl_course_modules D
+				on D.instance=C.id and C.course=D.course 
+  				INNER JOIN mdl_course_sections E
+				on D.section=E.id 
+				WHERE B.userid=@id_tutorg 
+					  and B.groupid=@id_grupo 
+					  and C.course=@id_curso_moodle
+ 					  and A.parent=0 and D.module=5 
+					  GROUP BY E.section, C.id 
+					  ORDER BY E.section
+END
+				  

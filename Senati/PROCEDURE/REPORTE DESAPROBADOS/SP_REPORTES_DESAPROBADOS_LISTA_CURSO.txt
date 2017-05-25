@@ -1,0 +1,12 @@
+
+
+CREATE PROCEDURE SP_REPORTES_DESAPROBADOS_LISTA_CURSO
+(
+@id_cursox
+)
+AS
+BEGIN
+	SELECT fullname,subsanacion, induccion 
+	FROM mdl_course 
+	WHERE id=@id_cursox
+END

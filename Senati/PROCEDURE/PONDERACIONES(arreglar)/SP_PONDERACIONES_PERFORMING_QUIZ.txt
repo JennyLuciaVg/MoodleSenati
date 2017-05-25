@@ -1,0 +1,16 @@
+/ Performing SQL query
+
+CREATE PROCEDURE SP_PONDERACIONES_PERFORMING_QUIZ
+(
+@id_cursox,
+)
+AS
+BEGIN
+		SELECT DISTINCT(A.id), A.name, peso_recurso, C.section 
+		FROM mdl_quiz A 
+		LEFT JOIN senati_pesos_recursos on id_recurso=id and tipo_recurso=2 and id_curso=@id_cursox
+		INNER JOIN mdl_course_modules B on A.course=B.Course and module=12 and instance=A.id 
+		INNER JOIN mdl_course_sections C on B.section=C.id 
+		WHERE A.course=@id_cursox 
+		ORDER BY C.section asc, A.id asc
+END

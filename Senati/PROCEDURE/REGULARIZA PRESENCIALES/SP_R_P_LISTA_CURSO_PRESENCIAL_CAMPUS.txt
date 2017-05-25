@@ -1,0 +1,14 @@
+//CHEQUEO PRIMERO QUE SE TRATA DE UN CURSO PRESENCIAL Y EL CAMPUS
+
+
+CREATE PROCEDURE SP_R_P_LISTA_CURSO_PRESENCIAL_CAMPUS
+(
+@id_curso_moodle
+)
+AS
+BEGIN
+	SELECT fullname, presencial_de 
+	FROM mdl_course
+	WHERE id=@id_curso_moodle
+END
+	

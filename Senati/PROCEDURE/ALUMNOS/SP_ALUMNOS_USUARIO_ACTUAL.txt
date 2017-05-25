@@ -1,0 +1,13 @@
+
+CREATE PROCEDURE SP_ALUMNOS_USUARIO_ACTUAL
+(
+@id_usuario
+)
+AS BEGIN
+
+        SELECT firstname, lastname, pidm_banner, id 
+        FROM mdl_user 
+	WHERE id=@id_usuario
+END
+	
+	

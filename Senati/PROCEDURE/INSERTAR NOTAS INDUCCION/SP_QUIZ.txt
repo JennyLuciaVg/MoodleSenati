@@ -1,0 +1,19 @@
+
+CREATE PROCEDURE SP_QUIZ
+(
+@ID_USUARIO
+@ID_CURSO
+)
+AS
+BEGIN
+	SELECT distinct(A.id),(select max(B.grade) 
+		FROM mdl_quiz_grades B 
+		WHERE A.id=B.quiz and userid=@ID_USUARIO) as nota_grade
+		A.GRADE as nota_maxima, peso_recurso 
+		FROM mdl_quiz A 
+		LEFT JOIN senati_pesos_recursos 
+		on id_recurso=A.id and tipo_recurso=2 
+		WHERE UPPER(A.name) not like 'SUBSA%' and (peso_recurso<>0 or peso_recurso is not null) 
+			  and A.course=@ID_CURSO
+			  ORDER BY A.id
+END

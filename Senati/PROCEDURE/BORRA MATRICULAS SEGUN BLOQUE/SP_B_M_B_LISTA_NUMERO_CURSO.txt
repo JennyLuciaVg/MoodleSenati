@@ -1,0 +1,12 @@
+CREATE PROCEDURE SP_B_M_B_LISTA_NUMERO_CURSO
+(
+@id_curso_moodle,
+@bloque
+)
+AS
+BEGIN
+		SELECT count(*) as total 
+		FROM mdl_user_students 
+		WHERE course=@id_curso_moodle and bloque=@bloque
+			
+END			

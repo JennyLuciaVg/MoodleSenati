@@ -1,0 +1,22 @@
+/// AVERIGUO SI ES PADRE (1) o NO ES PADRE (0)  
+
+CREATE PROCEDURE SP_NOTAS_FUSIONADAS_SI_PADRE
+(
+@id_curso
+)
+AS
+BEGIN
+	SELECT COUNT(1) es_PADRE
+	FROM mdl_course
+	WHERE subsanacion_de=@id_curso 
+	SELECT COALESCE((
+		SELECT 1 
+		FROM mdl_course 
+		WHERE subsanacion_de=@id_curso   LIMIT 1),0)  as es_padre
+END	
+			
+
+
+			
+		
+		

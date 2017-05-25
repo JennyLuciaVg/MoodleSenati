@@ -1,0 +1,14 @@
+
+
+
+CREATE PROCEDURE SP_DATOS_GENERALES_CURSO_LISTA_TAREA
+(
+@id_tarea_induccion
+)
+AS
+BEGIN
+		SELECT name 
+		FROM mdl_assignment 
+		WHERE id=@id_tarea_induccion
+END
+		

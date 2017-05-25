@@ -1,0 +1,4 @@
+//// ESTO ES UNA FUNCION !!!!!! del 18 de OCTUBRE 2012 JUSCE
+		//select remplaza_slashes de la tabla mdl_forum_posts
+		Select remplaza_slashes(@id_new_post )
+		

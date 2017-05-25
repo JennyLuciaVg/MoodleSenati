@@ -1,0 +1,13 @@
+/// SI ES UN CURSO DE INDUCCION
+		// SI EL CURSO ESTA EN ACTAS NO DEBE PERMITIRSE BORRAR LA MATRICULA
+		
+CREATE PROCEDURE SP_E_M_C_I_EXISTE
+(
+@id_curso_moodle
+)
+AS
+BEGIN	
+	SELECT COALESCE((Select 1 
+		FROM senati_actas_notas 
+		WHERE id_curso=@id_curso_moodle  LIMIT 1),0) as existe_acta	
+END	

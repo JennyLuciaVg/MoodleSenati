@@ -1,0 +1,16 @@
+ ///LEER LOS CAMPUS ESPECIFICOS
+
+
+CREATE PROCEDURE SP_REPORTES_JEFES_LISTA_CAMPUS
+(
+@campus_repo
+)
+AS
+BEGIN
+	SELECT DISTINCT(camp), periodo, nombre_centro 
+	FROM mdl_user_Students 
+	INNER JOIN senati_centros on camp=id_centro 
+	WHERE periodo is not null
+	and camp in (@campus_repo)
+	ORDER BY nombre_centro, periodo desc 
+END

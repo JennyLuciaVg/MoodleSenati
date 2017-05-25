@@ -1,0 +1,18 @@
+N//TOTAL ALUMNOS CAMPUS-CARRERA
+
+CREATE PROCEDURE SP_REPORTE_EVIDENCIAS_ALUMNOS_CAMPUS
+(
+@id_cursox
+)
+AS
+BEGIN
+
+		SELECT DISTINCT(A.camp), B.nombre_centro, A.carr, C.materia_desc as carrera, COUNT(1) as total_alu 
+		FROM mdl_user_students A 
+		LEFT JOIN senati_centros B on B.id_centro=A.camp 
+		LEFT JOIN  senati_materias C on C.materia_code=A.carr 
+		WHERE A.course=@id_cursox 
+		GROUP BY A.camp, A.carr,B.nombre_centro,C.materia_desc 
+		ORDER BY B.nombre_centro
+END
+		

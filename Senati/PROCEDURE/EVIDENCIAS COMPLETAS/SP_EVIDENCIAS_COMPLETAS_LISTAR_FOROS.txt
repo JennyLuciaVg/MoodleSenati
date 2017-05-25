@@ -1,0 +1,27 @@
+//////////////////////////////////////////////   FOROS /////////////////////////////////
+
+
+CREATE PROCEDURE SP_EVIDENCIAS_COMPLETAS_LISTAS_FOROS
+(
+@id_cursox,
+@id_userx, 
+@id_foro 
+)
+AS
+BEGIN
+			SELECT a.id as id_foro, b.id as discuss, c.userid, d.post, d.rating,peso_recurso 
+			FROM mdl_forum a 
+			LEFT JOIN senati_pesos_recursos 
+			on id_recurso=A.id 
+			LEFT JOIN mdl_forum_discussions b
+			on a.id=b.forum 
+			LEFT JOIN mdl_forum_posts c 
+			on c.discussion=b.id 
+			LEFT JOIN mdl_forum_ratings d
+			on d.post=c.id 
+			WHERE a.course=@id_cursox 
+			and a.scale=20
+			and c.userid=@id_userx 
+			and a.id=@id_foro
+END
+					

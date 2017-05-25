@@ -1,0 +1,13 @@
+
+CREATE PROCEDURE SP_SUBSANACION_LISTAR_SUBSANACION
+(
+@id_cursox
+)
+AS
+BEGIN
+	SELECT fullname,subsanacion, induccion,id_publico,presencial 
+	FROM mdl_course 
+	WHERE id=@id_cursox
+END
+			
+		

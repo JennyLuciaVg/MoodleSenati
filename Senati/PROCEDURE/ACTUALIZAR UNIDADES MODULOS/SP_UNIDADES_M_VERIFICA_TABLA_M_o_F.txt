@@ -1,0 +1,25 @@
+// Verificar si tiene datos extra	Si la tabla es mdl_chat o mdl_feedback y leer su tutor desde mdl_user
+//INSTANCE mdl_course_modules		
+
+CREATE PROCEDURE SP_UNIDADES_M_VERIFICA_TABLA_M_o_F
+(
+@tablax,
+@instance
+)
+AS
+BEGIN	
+	IF (@tablax=="mdl_chat")
+				SELECT lastname||', '||firstname as nombre, id_tutor 
+				FROM mdl_chat A 
+				LEFT JOIN mdl_user B
+				on B.id=A.id_tutor 
+				WHERE A.id=@instance
+			ELSE IF(@tablax=="mdl_feedback")
+				SELECT lastname||', '||firstname as nombre,id_tutor
+					FROM mdl_feedback A
+					LEFT JOIN mdl_user B 
+					on B.id=A.id_tutor
+					WHERE A.id=@instance	
+			ELSE
+				return 0;
+END

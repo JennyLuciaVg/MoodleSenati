@@ -1,0 +1,14 @@
+/fecha de inicio
+//$fecha_inicio_curso=date("d-m-Y",$fecha_curso);
+
+CREATE PROCEDURE SP_ACTAS_NOTA_FINAL_INICIO_CURSO
+(
+@id_cursox
+)
+AS
+BEGIN			
+			SELECT startdate 
+			FROM mdl_course 
+			WHERE id=@id_cursox
+END
+			

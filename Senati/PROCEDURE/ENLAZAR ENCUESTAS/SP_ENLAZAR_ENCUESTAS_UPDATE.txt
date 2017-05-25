@@ -1,0 +1,12 @@
+
+CREATE PROCEDURE SP_ENLAZAR_ENCUESTAS_UPDATE
+(
+@id_tutor,
+@id_feedback 
+)
+AS
+BEGIN
+			UPDATE mdl_feedback
+			SET id_tutor=@id_tutor 
+			WHERE id=@id_feedback 
+END

@@ -1,0 +1,16 @@
+///LISTA DE ALUMNOS DEL CURSO	
+
+
+CREATE PROCEDURE SP_E_M_C_I_LISTA_ALUMNOS_CURSO
+(
+@id_curso_moodle
+)
+AS
+BEGIN   
+		SELECT A.id as id_matricula, userid, lastname, firstname, pidm_banner, bloque 
+		FROM mdl_user_students A 
+		INNER JOIN mdl_user B 
+		on A.userid=B.id 
+		WHERE A.course=@id_curso_moodle
+END
+		

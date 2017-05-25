@@ -1,0 +1,21 @@
+		
+
+CREATE PROCEDURE SP_REPORTES_RETIRADOS_LISTAR
+(
+@colu_ord, 
+@tip_ord
+)
+AS
+BEGIN
+	SELECT userid as id_moodle, pidm_banner as pidm, lastname||', '||firstname as nombre, fullname as curso, course as id_curso, campus, nombre_centro 
+	FROM mdl_user_students A 
+	INNER JOIN mdl_user B
+	on A.userid=B.id 
+	INNER JOIN mdl_course C 
+	on A.course=C.id 
+	INNER JOIN senati_centros D
+	on campus=id_centro 
+	WHERE A.periodo=@periodo_listar 
+	and status_sinfo='RET'
+	ORDER BY @colu_ord, @tip_ord;
+END

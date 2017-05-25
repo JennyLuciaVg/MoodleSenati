@@ -1,0 +1,14 @@
+
+
+CREATE PROCEDURE SP_DATOS_GENERALES_CURSO_ACTUALIZAR_RELA_CURSOS
+(
+@valor_id_cs,
+@id_curso_moodle
+)
+AS
+BEGIN
+			UPDATE senati_rela_cursos_cursos 
+			SET id_curso_senati=@valor_id_cs
+			WHERE id_course_moodle=@id_curso_moodle
+END
+				

@@ -1,0 +1,13 @@
+//// NRCS DISTINTOS
+
+
+CREATE PROCEDURE SP_C_M_LISTAR_DISTINTOS_NRC
+(
+@id_curso_moodle
+)
+AS
+BEGIN
+			SELECT distinct(nrc) 
+				FROM mdl_user_students A 
+				WHERE nrc<>'' and nrc is not null and A.course=@id_curso_moodle
+END

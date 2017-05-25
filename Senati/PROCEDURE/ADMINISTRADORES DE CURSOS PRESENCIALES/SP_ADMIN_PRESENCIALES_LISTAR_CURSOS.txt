@@ -1,0 +1,24 @@
+		// Listar los cursos presenciales que tengan matriculas en ese campus y periodo
+		
+
+
+CREATE PROCEDURE SP_ADMIN_PRESENCIALES_LISTAR_CURSOS
+(
+@camp_listar,
+@periodo_listar 
+)
+AS
+BEGIN
+		SELECT id, fullname, visible , B.existe
+		FROM mdl_course A 
+		JOIN(
+			SELECT COUNT(1) existe,B.course,B.camp
+			FROM mdl_user_students B
+			GROUP BY B.course,B.camp)
+			as B on B.course=A.id and B.camp=@camp_listar
+			)
+		WHERE periodo=@periodo_listar 
+		and presencial_de is not null 	
+		ORDER BY id DESC
+ENDD
+		

@@ -1,0 +1,15 @@
+
+CREATE PROCEDURE SP_UNIDADES_M_SEQUENCY
+(
+@id_section,
+@idcmoodle
+
+)
+AS 
+BEGIN
+		SELECT sequence
+		FROM mdl_course_sections
+		WHERE id=@id_section 
+		and course=@idcmoodle 
+END
+  

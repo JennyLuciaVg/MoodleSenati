@@ -1,0 +1,11 @@
+
+CREATE PROCEDURE SP_UNIDADES_M_GET_ACTU_UNIDADES
+(
+@idcursomoodle
+)
+AS
+BEGIN
+		SELECT fullname,startdate 
+			FROM mdl_course 
+			WHERE id=@idcursomoodle
+END

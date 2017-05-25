@@ -1,0 +1,19 @@
+/// RECUPERO EL NUMERO DE INCIDENCIA
+
+		
+
+CREATE PROCEDURE SP_INCIDENCIAS_NUMERO
+(
+@id_alumnox,
+@id_tutorx, 
+@id_cursox
+)
+AS
+BEGIN
+	SELECT max(id_inc) as idx f
+        FROM senati_reg_incidencias 
+        WHERE id_tutor=@id_tutorx 
+        and id_alu=@id_alumnox 
+        and id_curso=@id_cursox
+END
+			
